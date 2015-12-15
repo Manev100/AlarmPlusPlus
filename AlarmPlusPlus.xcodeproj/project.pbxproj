@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		D9B6D5B61C1DC5F200506C5B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6D5B51C1DC5F200506C5B /* main.m */; };
 		D9B6D5B91C1DC5F200506C5B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6D5B81C1DC5F200506C5B /* AppDelegate.m */; };
-		D9B6D5BC1C1DC5F200506C5B /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6D5BB1C1DC5F200506C5B /* FirstViewController.m */; };
-		D9B6D5BF1C1DC5F200506C5B /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6D5BE1C1DC5F200506C5B /* SecondViewController.m */; };
-		D9B6D5C21C1DC5F200506C5B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9B6D5C01C1DC5F200506C5B /* Main.storyboard */; };
 		D9B6D5C41C1DC5F200506C5B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9B6D5C31C1DC5F200506C5B /* Assets.xcassets */; };
 		D9B6D5C71C1DC5F200506C5B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9B6D5C51C1DC5F200506C5B /* LaunchScreen.storyboard */; };
 		D9B6D5D21C1DC5F200506C5B /* AlarmPlusPlusTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6D5D11C1DC5F200506C5B /* AlarmPlusPlusTests.m */; };
 		D9B6D5DD1C1DC5F200506C5B /* AlarmPlusPlusUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6D5DC1C1DC5F200506C5B /* AlarmPlusPlusUITests.m */; };
+		D9B6D5EF1C1F091D00506C5B /* AlarmOverviewViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6D5EE1C1F091D00506C5B /* AlarmOverviewViewControllerTableViewController.m */; };
+		D9B6D5F21C1F0C4500506C5B /* AlarmCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6D5F11C1F0C4500506C5B /* AlarmCellTableViewCell.m */; };
+		D9F6DD271C20652B0079B212 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9F6DD261C20652B0079B212 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,11 +40,6 @@
 		D9B6D5B51C1DC5F200506C5B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D9B6D5B71C1DC5F200506C5B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D9B6D5B81C1DC5F200506C5B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		D9B6D5BA1C1DC5F200506C5B /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
-		D9B6D5BB1C1DC5F200506C5B /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
-		D9B6D5BD1C1DC5F200506C5B /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
-		D9B6D5BE1C1DC5F200506C5B /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
-		D9B6D5C11C1DC5F200506C5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D9B6D5C31C1DC5F200506C5B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D9B6D5C61C1DC5F200506C5B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D9B6D5C81C1DC5F200506C5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -54,6 +49,11 @@
 		D9B6D5D81C1DC5F200506C5B /* AlarmPlusPlusUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AlarmPlusPlusUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9B6D5DC1C1DC5F200506C5B /* AlarmPlusPlusUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AlarmPlusPlusUITests.m; sourceTree = "<group>"; };
 		D9B6D5DE1C1DC5F200506C5B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D9B6D5ED1C1F091D00506C5B /* AlarmOverviewViewControllerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlarmOverviewViewControllerTableViewController.h; path = ../AlarmOverviewViewControllerTableViewController.h; sourceTree = "<group>"; };
+		D9B6D5EE1C1F091D00506C5B /* AlarmOverviewViewControllerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlarmOverviewViewControllerTableViewController.m; path = ../AlarmOverviewViewControllerTableViewController.m; sourceTree = "<group>"; };
+		D9B6D5F01C1F0C4500506C5B /* AlarmCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlarmCellTableViewCell.h; path = ../AlarmCellTableViewCell.h; sourceTree = "<group>"; };
+		D9B6D5F11C1F0C4500506C5B /* AlarmCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlarmCellTableViewCell.m; path = ../AlarmCellTableViewCell.m; sourceTree = "<group>"; };
+		D9F6DD261C20652B0079B212 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../../../.Trash/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,13 +104,13 @@
 		D9B6D5B31C1DC5F200506C5B /* AlarmPlusPlus */ = {
 			isa = PBXGroup;
 			children = (
+				D9B6D5F01C1F0C4500506C5B /* AlarmCellTableViewCell.h */,
+				D9B6D5F11C1F0C4500506C5B /* AlarmCellTableViewCell.m */,
+				D9B6D5ED1C1F091D00506C5B /* AlarmOverviewViewControllerTableViewController.h */,
+				D9B6D5EE1C1F091D00506C5B /* AlarmOverviewViewControllerTableViewController.m */,
+				D9F6DD261C20652B0079B212 /* Main.storyboard */,
 				D9B6D5B71C1DC5F200506C5B /* AppDelegate.h */,
 				D9B6D5B81C1DC5F200506C5B /* AppDelegate.m */,
-				D9B6D5BA1C1DC5F200506C5B /* FirstViewController.h */,
-				D9B6D5BB1C1DC5F200506C5B /* FirstViewController.m */,
-				D9B6D5BD1C1DC5F200506C5B /* SecondViewController.h */,
-				D9B6D5BE1C1DC5F200506C5B /* SecondViewController.m */,
-				D9B6D5C01C1DC5F200506C5B /* Main.storyboard */,
 				D9B6D5C31C1DC5F200506C5B /* Assets.xcassets */,
 				D9B6D5C51C1DC5F200506C5B /* LaunchScreen.storyboard */,
 				D9B6D5C81C1DC5F200506C5B /* Info.plist */,
@@ -248,9 +248,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9F6DD271C20652B0079B212 /* Main.storyboard in Resources */,
 				D9B6D5C71C1DC5F200506C5B /* LaunchScreen.storyboard in Resources */,
 				D9B6D5C41C1DC5F200506C5B /* Assets.xcassets in Resources */,
-				D9B6D5C21C1DC5F200506C5B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -275,9 +275,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9B6D5BF1C1DC5F200506C5B /* SecondViewController.m in Sources */,
 				D9B6D5B91C1DC5F200506C5B /* AppDelegate.m in Sources */,
-				D9B6D5BC1C1DC5F200506C5B /* FirstViewController.m in Sources */,
+				D9B6D5F21C1F0C4500506C5B /* AlarmCellTableViewCell.m in Sources */,
+				D9B6D5EF1C1F091D00506C5B /* AlarmOverviewViewControllerTableViewController.m in Sources */,
 				D9B6D5B61C1DC5F200506C5B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -314,14 +314,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		D9B6D5C01C1DC5F200506C5B /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D9B6D5C11C1DC5F200506C5B /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		D9B6D5C51C1DC5F200506C5B /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -502,6 +494,7 @@
 				D9B6D5E31C1DC5F200506C5B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D9B6D5E41C1DC5F200506C5B /* Build configuration list for PBXNativeTarget "AlarmPlusPlusTests" */ = {
 			isa = XCConfigurationList;
@@ -510,6 +503,7 @@
 				D9B6D5E61C1DC5F200506C5B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D9B6D5E71C1DC5F200506C5B /* Build configuration list for PBXNativeTarget "AlarmPlusPlusUITests" */ = {
 			isa = XCConfigurationList;
@@ -518,6 +512,7 @@
 				D9B6D5E91C1DC5F200506C5B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
