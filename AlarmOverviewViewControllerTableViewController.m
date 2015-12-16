@@ -146,6 +146,7 @@
             break;
         case 2:
             //statistics
+            [self performSegueWithIdentifier:@"StatisticsSegue" sender:self];
             break;
         case 3:
             //cancel

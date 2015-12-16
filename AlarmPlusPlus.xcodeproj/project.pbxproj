@@ -16,6 +16,8 @@
 		D9B6D5EF1C1F091D00506C5B /* AlarmOverviewViewControllerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6D5EE1C1F091D00506C5B /* AlarmOverviewViewControllerTableViewController.m */; };
 		D9B6D5F21C1F0C4500506C5B /* AlarmCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6D5F11C1F0C4500506C5B /* AlarmCellTableViewCell.m */; };
 		D9F6DD271C20652B0079B212 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9F6DD261C20652B0079B212 /* Main.storyboard */; };
+		D9F6DD2A1C21CC100079B212 /* StatisticsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F6DD291C21CC100079B212 /* StatisticsTableViewController.m */; };
+		D9F6DD2D1C21CCB60079B212 /* Statistic.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F6DD2C1C21CCB60079B212 /* Statistic.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,10 @@
 		D9B6D5F01C1F0C4500506C5B /* AlarmCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlarmCellTableViewCell.h; path = ../AlarmCellTableViewCell.h; sourceTree = "<group>"; };
 		D9B6D5F11C1F0C4500506C5B /* AlarmCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlarmCellTableViewCell.m; path = ../AlarmCellTableViewCell.m; sourceTree = "<group>"; };
 		D9F6DD261C20652B0079B212 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ../../../.Trash/Main.storyboard; sourceTree = "<group>"; };
+		D9F6DD281C21CC100079B212 /* StatisticsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatisticsTableViewController.h; sourceTree = "<group>"; };
+		D9F6DD291C21CC100079B212 /* StatisticsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatisticsTableViewController.m; sourceTree = "<group>"; };
+		D9F6DD2B1C21CCB60079B212 /* Statistic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Statistic.h; path = ../Statistic.h; sourceTree = "<group>"; };
+		D9F6DD2C1C21CCB60079B212 /* Statistic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Statistic.m; path = ../Statistic.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,10 +110,14 @@
 		D9B6D5B31C1DC5F200506C5B /* AlarmPlusPlus */ = {
 			isa = PBXGroup;
 			children = (
+				D9F6DD2B1C21CCB60079B212 /* Statistic.h */,
+				D9F6DD2C1C21CCB60079B212 /* Statistic.m */,
 				D9B6D5F01C1F0C4500506C5B /* AlarmCellTableViewCell.h */,
 				D9B6D5F11C1F0C4500506C5B /* AlarmCellTableViewCell.m */,
 				D9B6D5ED1C1F091D00506C5B /* AlarmOverviewViewControllerTableViewController.h */,
 				D9B6D5EE1C1F091D00506C5B /* AlarmOverviewViewControllerTableViewController.m */,
+				D9F6DD281C21CC100079B212 /* StatisticsTableViewController.h */,
+				D9F6DD291C21CC100079B212 /* StatisticsTableViewController.m */,
 				D9F6DD261C20652B0079B212 /* Main.storyboard */,
 				D9B6D5B71C1DC5F200506C5B /* AppDelegate.h */,
 				D9B6D5B81C1DC5F200506C5B /* AppDelegate.m */,
@@ -278,6 +288,8 @@
 				D9B6D5B91C1DC5F200506C5B /* AppDelegate.m in Sources */,
 				D9B6D5F21C1F0C4500506C5B /* AlarmCellTableViewCell.m in Sources */,
 				D9B6D5EF1C1F091D00506C5B /* AlarmOverviewViewControllerTableViewController.m in Sources */,
+				D9F6DD2A1C21CC100079B212 /* StatisticsTableViewController.m in Sources */,
+				D9F6DD2D1C21CCB60079B212 /* Statistic.m in Sources */,
 				D9B6D5B61C1DC5F200506C5B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
