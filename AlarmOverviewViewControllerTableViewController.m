@@ -58,15 +58,23 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    return 2;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AlarmCellTableViewCell *cell;
     cell = (AlarmCellTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"alarmCell" forIndexPath:indexPath];
-    cell.time.text = @"08:00";
-    cell.name.text = @"My alarm";
+    //TODO: fill alarms array correctely
+    if(indexPath.row == 1){
+        cell.time.text = @"08:00";
+        cell.name.text = @"My alarm";
+    }else{
+        cell.time.text = @"16:00";
+        cell.name.text = @"Test alarm";
+        
+    }
+    
     [cell.repeat setImage:[UIImage imageNamed:@"repeat_icon.png"]];
     [cell.stateImage setImage:[UIImage imageNamed:@"alarm_icon.png"]];
     return cell;
@@ -142,7 +150,7 @@
             //settings
             break;
         case 1:
-            //editor
+            [self performSegueWithIdentifier:@"EditorSegue" sender:self];
             break;
         case 2:
             //statistics

@@ -57,7 +57,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"statCell" forIndexPath:indexPath];
-    
+
     Statistic *stat = (Statistic*)[self.statistics objectAtIndex:indexPath.row];
     cell.textLabel.text = stat.name;
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", stat.value];
