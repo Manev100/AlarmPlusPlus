@@ -6,14 +6,16 @@
 //  Copyright © 2015 Marc Neveling. All rights reserved.
 //
 
-#import "AlarmOverviewViewControllerTableViewController.h"
+#import "AlarmOverviewViewController.h"
 #import "AlarmCellTableViewCell.h"
+#import "Alarm.h"
+#import "AlarmAddViewController.h"
 
-@interface AlarmOverviewViewControllerTableViewController ()
+@interface AlarmOverviewViewController ()
 
 @end
 
-@implementation AlarmOverviewViewControllerTableViewController
+@implementation AlarmOverviewViewController
 
 /* sif (sender.selectedSegmentIndex == 0) {
 [UIView animateWithDuration:(0.5) animations:^{
@@ -30,6 +32,19 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.alarms = [NSMutableArray arrayWithCapacity:20];
+    
+    //TEST ALARMS
+    Alarm *alarm1  = [Alarm new];
+    alarm1.name = @"Test1";
+    alarm1.date = [NSDate date];
+    
+    Alarm *alarm2  = [Alarm new];
+    alarm2.name = @"Test1";
+    alarm2.date = [NSDate dateWithTimeIntervalSinceNow:60*60*2];
+    
+    [self.alarms addObject:alarm1];
+    [self.alarms addObject:alarm2];
+    
     
     // Register notification types
     UIUserNotificationType types = UIUserNotificationTypeBadge |  UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
@@ -58,7 +73,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+    return [self.alarms count];
 }
 
 
@@ -66,18 +81,40 @@
     AlarmCellTableViewCell *cell;
     cell = (AlarmCellTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"alarmCell" forIndexPath:indexPath];
     //TODO: fill alarms array correctely
-    if(indexPath.row == 1){
-        cell.time.text = @"08:00";
-        cell.name.text = @"My alarm";
-    }else{
-        cell.time.text = @"16:00";
-        cell.name.text = @"Test alarm";
-        
-    }
+    Alarm *alarm = [self.alarms objectAtIndex:indexPath.row];
+    cell.name.text = alarm.name;
+    
+    NSString *dateString = [NSDateFormatter localizedStringFromDate:alarm.date
+                                                                    dateStyle:NSDateFormatterNoStyle
+                                                                    timeStyle:NSDateFormatterShortStyle];
+    
+    cell.time.text = dateString;
+    
     
     [cell.repeat setImage:[UIImage imageNamed:@"repeat_icon.png"]];
     [cell.stateImage setImage:[UIImage imageNamed:@"alarm_icon.png"]];
     return cell;
+}
+
+- (IBAction)unwindToPlayersViewControllerAdd:(UIStoryboardSegue *)unwindSegue{
+    AlarmAddViewController *vc = [unwindSegue sourceViewController];
+    
+    Alarm *alarm  = [Alarm new];
+    alarm.date = vc.datePicker.date;
+    //TODO: configure date if weekday is not today
+    
+    alarm.ringtone = vc.ringtoneLabel.text;
+    alarm.problem = vc.problemLabel.text;
+    alarm.difficulty = vc.difficultyLabel.text;
+    alarm.volume = vc.volumeSlider.value;
+    alarm.repeat = vc.repeatLabel.isOn;
+    
+    alarm.name = vc.nameLabel.text;
+    [self.alarms addObject:alarm];
+    [self.tableView reloadData];
+}
+- (IBAction)unwindToPlayersViewControllerCancel:(UIStoryboardSegue *)unwindSegue{
+    
 }
 
 
