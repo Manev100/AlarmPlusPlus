@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AlarmAddViewController : UITableViewController
+@interface AlarmAddViewController : UITableViewController <UIActionSheetDelegate>
+
+
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UISwitch *repeatLabel;
 @property (weak, nonatomic) IBOutlet UILabel *problemLabel;

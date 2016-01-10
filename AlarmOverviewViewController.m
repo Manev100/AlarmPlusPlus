@@ -96,6 +96,7 @@
     return cell;
 }
 
+
 - (IBAction)unwindToPlayersViewControllerAdd:(UIStoryboardSegue *)unwindSegue{
     AlarmAddViewController *vc = [unwindSegue sourceViewController];
     
@@ -166,6 +167,8 @@
 }
 
 // DETAILS NAV BAR ITEM ACTION SHEET HANDLING
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 - (IBAction)detailsButtonClicked:(id)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                             initWithTitle:nil
@@ -196,10 +199,9 @@
         case 3:
             //cancel
             break;
-
     }
 }
-
+#pragma GCC diagnostic pop
 
 
 

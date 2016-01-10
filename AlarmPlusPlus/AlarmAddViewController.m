@@ -7,6 +7,7 @@
 //
 
 #import "AlarmAddViewController.h"
+#import "PickAlarmsoundViewController.h"
 
 @interface AlarmAddViewController ()
 
@@ -29,6 +30,120 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)unwindToAlarmAddViewControllerSound:(UIStoryboardSegue *)unwindSegue{
+    PickAlarmsoundViewController *vc = [unwindSegue sourceViewController];
+    self.ringtoneLabel.text = vc.selectedAlarmsound;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([segue.identifier isEqualToString:@"PickAlarmtone"])
+    {
+        PickAlarmsoundViewController *vc;
+        
+        vc = segue.destinationViewController;
+        vc.selectedAlarmsound = self.ringtoneLabel.text;
+    }
+}
+
+- (IBAction)unwindToAlarmAddViewControllerProblem:(UIStoryboardSegue *)unwindSegue{
+    
+}
+
+
+- (IBAction)unwindToAlarmAddViewControllerDifficulty:(UIStoryboardSegue *)unwindSegue{
+    
+}
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    
+    switch (indexPath.row) {
+        case 3:{
+            //alarmsound
+
+            break;
+        }
+        case 5:{
+            //problem
+            UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Select Problem to solve:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+                                    @"Arithmetic Problem",
+                                    @"Prime-Numbers",
+                                    @"Equation",
+                                    nil];
+            popup.tag = 1;
+            [popup showInView:self.view];
+            break;
+        }
+        case 6:{
+            //difficulty
+            UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Select difficulty:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
+                                    @"Easy",
+                                    @"Normal",
+                                    @"Hard",
+                                    @"Custom",
+                                    nil];
+            popup.tag = 2;
+            [popup showInView:self.view];
+            break;
+        }
+    }
+    
+}
+
+
+
+
+
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(actionSheet.tag == 1){
+        switch (buttonIndex) {
+            case 0:
+                //arithmetic
+                self.problemLabel.text = @"Arithmetic Problem";
+                break;
+            case 1:
+                // prime-numbers
+                self.problemLabel.text = @"Prime-Numbers";
+                break;
+            case 2:
+                //equation
+                self.problemLabel.text = @"Equation";
+                break;
+            case 3:
+                //cancel
+                break;
+        }
+    }else if(actionSheet.tag == 2){
+        switch (buttonIndex) {
+            case 0:
+                //easy
+                self.difficultyLabel.text = @"Easy";
+                break;
+            case 1:
+                // normal
+                self.difficultyLabel.text = @"Normal";
+                break;
+            case 2:
+                //hard
+                self.difficultyLabel.text = @"Hard";
+                break;
+            case 3:
+                //custom
+                self.difficultyLabel.text = @"Custom";
+                break;
+            case 4:
+                //cancel
+                break;
+        }
+    }
+}
+#pragma GCC diagnostic pop
 
 
 
