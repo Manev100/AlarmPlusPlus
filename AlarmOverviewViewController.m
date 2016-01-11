@@ -37,10 +37,14 @@
     Alarm *alarm1  = [Alarm new];
     alarm1.name = @"Test1";
     alarm1.date = [NSDate date];
+    alarm1.active = true;
+    alarm1.repeat = false;
     
     Alarm *alarm2  = [Alarm new];
     alarm2.name = @"Test1";
     alarm2.date = [NSDate dateWithTimeIntervalSinceNow:60*60*2];
+    alarm2.active = true;
+    alarm2.repeat = true;
     
     [self.alarms addObject:alarm1];
     [self.alarms addObject:alarm2];
@@ -66,8 +70,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
-
+// TABLE DRAWING
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -90,13 +93,33 @@
     
     cell.time.text = dateString;
     
+    if(alarm.repeat == true){
+        [cell.repeat setImage:[UIImage imageNamed:@"repeat_icon.png"]];
+    }
     
-    [cell.repeat setImage:[UIImage imageNamed:@"repeat_icon.png"]];
-    [cell.stateImage setImage:[UIImage imageNamed:@"alarm_icon.png"]];
+    if(alarm.active == true){
+        [cell.stateImage setImage:[UIImage imageNamed:@"alarm_icon_on.png"]];
+    }else{
+        [cell.stateImage setImage:[UIImage imageNamed:@"alarm_icon.png"]];
+    }
+    
     return cell;
 }
 
+// INTERACTIONS
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    Alarm *alarm = [self.alarms objectAtIndex:indexPath.row];
+    
+    alarm.active = !alarm.active;
+    [self.tableView reloadData];
+    
+    // TODO: deaktivate/activate Notifications
+    
+}
 
+// SEGUE HANDLING
 - (IBAction)unwindToPlayersViewControllerAdd:(UIStoryboardSegue *)unwindSegue{
     AlarmAddViewController *vc = [unwindSegue sourceViewController];
     
@@ -111,6 +134,8 @@
     alarm.repeat = vc.repeatLabel.isOn;
     
     alarm.name = vc.nameLabel.text;
+    alarm.active = true;
+    
     [self.alarms addObject:alarm];
     [self.tableView reloadData];
 }
@@ -119,16 +144,37 @@
 }
 
 
-// NOTIFICATION HANDLING
+// NOTIFICATION SCHEDULING
 - (void)scheduleLocalNotificationWithDate:(NSDate *)fireDate {
+    
+    UIMutableUserNotificationAction *acceptAction = [[UIMutableUserNotificationAction alloc] init];
+    
+    acceptAction.identifier = @"ACCEPT_IDENTIFIER";
+    acceptAction.title = @"Accept";
+    acceptAction.activationMode = UIUserNotificationActivationModeBackground;
+    acceptAction.destructive = NO;
+    acceptAction.authenticationRequired = NO;
+    
+    UIMutableUserNotificationCategory *inviteCategory = [[UIMutableUserNotificationCategory alloc] init];
+    inviteCategory.identifier = @"ACCEPT_CATEGORY";
+    [inviteCategory setActions:@[acceptAction]
+                    forContext:UIUserNotificationActionContextDefault];
+    [inviteCategory setActions:@[acceptAction]
+                    forContext:UIUserNotificationActionContextMinimal];
+    
     
     UILocalNotification *notification = [[UILocalNotification alloc]init];
     notification.fireDate = fireDate;
     notification.alertBody = @"Wake up!!";
     notification.soundName = UILocalNotificationDefaultSoundName;
+    //notification.category = @"ACCEPT_CATEGORY";
     
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
+
+/*alternative:
+- (void)presentLocalNotificationNow:(UILocalNotification *)notification
+*/
 
 - (IBAction)test:(id)sender {
     NSDate *testDate = [self getDateWithMinutesFromNow:1];
@@ -165,6 +211,26 @@
     [self presentViewController:alert animated:YES completion:nil];
     
 }
+
+// NOTIFICATION HANDLING
+//in foreground
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification{
+    NSLog(@"Hello from foreground");
+}
+
+//from background
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
+    NSLog(@"Hello from background");
+    return YES;
+}
+
+/*
+//handle action
+- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)(void))completionHandler{
+    
+    completionHandler();
+}
+*/
 
 // DETAILS NAV BAR ITEM ACTION SHEET HANDLING
 #pragma GCC diagnostic push

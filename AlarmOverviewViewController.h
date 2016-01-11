@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AlarmOverviewViewController : UITableViewController <UIActionSheetDelegate>
+@interface AlarmOverviewViewController : UITableViewController <UIActionSheetDelegate, UIApplicationDelegate>
 
 @property (strong, nonatomic) NSMutableArray *alarms;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *detailsButton;

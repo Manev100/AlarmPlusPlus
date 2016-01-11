@@ -11,6 +11,7 @@
 @interface Alarm : NSObject
 - (id)init;
 
+
 @property (strong, nonatomic) NSDate *date;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *ringtone;
@@ -18,4 +19,5 @@
 @property (strong, nonatomic) NSString *difficulty;
 @property float volume;
 @property bool repeat;
+@property bool active;
 @end
