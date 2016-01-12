@@ -146,7 +146,7 @@
 
 // NOTIFICATION SCHEDULING
 - (void)scheduleLocalNotificationWithDate:(NSDate *)fireDate {
-    
+    /*
     UIMutableUserNotificationAction *acceptAction = [[UIMutableUserNotificationAction alloc] init];
     
     acceptAction.identifier = @"ACCEPT_IDENTIFIER";
@@ -162,13 +162,15 @@
     [inviteCategory setActions:@[acceptAction]
                     forContext:UIUserNotificationActionContextMinimal];
     
-    
+    */
     UILocalNotification *notification = [[UILocalNotification alloc]init];
+    //notification.repeatInterval = NSCalendarUnitMinute;
     notification.fireDate = fireDate;
     notification.alertBody = @"Wake up!!";
+    notification.timeZone = [NSTimeZone defaultTimeZone];
     notification.soundName = UILocalNotificationDefaultSoundName;
     //notification.category = @"ACCEPT_CATEGORY";
-    
+
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
 
@@ -210,18 +212,6 @@
     [alert addAction:defaultAction];
     [self presentViewController:alert animated:YES completion:nil];
     
-}
-
-// NOTIFICATION HANDLING
-//in foreground
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification{
-    NSLog(@"Hello from foreground");
-}
-
-//from background
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
-    NSLog(@"Hello from background");
-    return YES;
 }
 
 /*

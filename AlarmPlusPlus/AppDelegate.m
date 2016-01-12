@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "AlarmOverviewViewController.h"
 
 @interface AppDelegate ()
 
@@ -16,7 +17,16 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    UILocalNotification *notification = [launchOptions valueForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    if(notification != NULL){
+        /*
+        AlarmOverviewViewController *overviewVC = [[AlarmOverviewViewController alloc] init];
+        UINavigationController *nav = (UINavigationController *)self.window.rootViewController;
+        [nav pushViewController:overviewVC animated:YES];
+         */
+        NSLog(@"%@", notification.alertTitle);
+    }
+    
     return YES;
 }
 
@@ -26,6 +36,7 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
+    // SAVE ALL THE THINGS
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
@@ -40,6 +51,14 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+-(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    if ( application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground  )
+    {
+        NSLog(@"Hello from background");
+    }
+    NSLog(@"Hello from foreground");
 }
 
 @end
