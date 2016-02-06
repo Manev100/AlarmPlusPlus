@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSString *ringtone;
 @property (strong, nonatomic) NSString *problem;
 @property (strong, nonatomic) NSString *difficulty;
+@property (strong, nonatomic) NSString *alarmId;
 @property float volume;
 @property bool repeat;
 @property bool active;

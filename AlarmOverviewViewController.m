@@ -169,6 +169,7 @@
     notification.alertBody = @"Wake up!!";
     notification.timeZone = [NSTimeZone defaultTimeZone];
     notification.soundName = UILocalNotificationDefaultSoundName;
+    notification.userInfo = [NSDictionary dictionaryWithObject:@"123456" forKey:@"alarm_id"];
     //notification.category = @"ACCEPT_CATEGORY";
 
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];

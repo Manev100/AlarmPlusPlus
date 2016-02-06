@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D934203B1C665CFA00094D45 /* AlarmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D934203A1C665CFA00094D45 /* AlarmViewController.m */; };
 		D9B6D5B61C1DC5F200506C5B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6D5B51C1DC5F200506C5B /* main.m */; };
 		D9B6D5B91C1DC5F200506C5B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6D5B81C1DC5F200506C5B /* AppDelegate.m */; };
 		D9B6D5C41C1DC5F200506C5B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D9B6D5C31C1DC5F200506C5B /* Assets.xcassets */; };
@@ -41,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D93420391C665CFA00094D45 /* AlarmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmViewController.h; sourceTree = "<group>"; };
+		D934203A1C665CFA00094D45 /* AlarmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmViewController.m; sourceTree = "<group>"; };
 		D9B6D5B11C1DC5F200506C5B /* AlarmPlusPlus.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlarmPlusPlus.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9B6D5B51C1DC5F200506C5B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D9B6D5B71C1DC5F200506C5B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -127,6 +130,8 @@
 				D9F6DD321C416E2F0079B212 /* AlarmAddViewController.m */,
 				D9F6DD341C42C0B00079B212 /* PickAlarmsoundViewController.h */,
 				D9F6DD351C42C0B00079B212 /* PickAlarmsoundViewController.m */,
+				D93420391C665CFA00094D45 /* AlarmViewController.h */,
+				D934203A1C665CFA00094D45 /* AlarmViewController.m */,
 				D9F6DD2E1C416C790079B212 /* Alarm.h */,
 				D9F6DD2F1C416C790079B212 /* Alarm.m */,
 				D9F6DD2B1C21CCB60079B212 /* Statistic.h */,
@@ -306,6 +311,7 @@
 				D9B6D5F21C1F0C4500506C5B /* AlarmCellTableViewCell.m in Sources */,
 				D9F6DD361C42C0B00079B212 /* PickAlarmsoundViewController.m in Sources */,
 				D9B6D5EF1C1F091D00506C5B /* AlarmOverviewViewController.m in Sources */,
+				D934203B1C665CFA00094D45 /* AlarmViewController.m in Sources */,
 				D9F6DD2A1C21CC100079B212 /* StatisticsTableViewController.m in Sources */,
 				D9F6DD2D1C21CCB60079B212 /* Statistic.m in Sources */,
 				D9B6D5B61C1DC5F200506C5B /* main.m in Sources */,

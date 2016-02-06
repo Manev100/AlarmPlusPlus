@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "AlarmOverviewViewController.h"
+#import "AlarmViewController.h"
 
 @interface AppDelegate ()
 
@@ -20,13 +20,12 @@
     UILocalNotification *notification = [launchOptions valueForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if(notification != NULL){
         /*
-        AlarmOverviewViewController *overviewVC = [[AlarmOverviewViewController alloc] init];
+        AlarmViewController *alarmVC = [[AlarmViewController alloc] init];
         UINavigationController *nav = (UINavigationController *)self.window.rootViewController;
         [nav pushViewController:overviewVC animated:YES];
          */
         NSLog(@"%@", notification.alertTitle);
     }
-    
     return YES;
 }
 
@@ -59,6 +58,11 @@
         NSLog(@"Hello from background");
     }
     NSLog(@"Hello from foreground");
+    UINavigationController *nav = (UINavigationController *)self.window.rootViewController;
+    AlarmViewController *alarmVC = [nav.storyboard instantiateViewControllerWithIdentifier:@"alarmVC"];
+    [alarmVC SetupWithAlarm:NULL];
+    
+    [nav presentViewController:alarmVC animated:YES completion:nil];
 }
 
 @end
