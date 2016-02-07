@@ -10,5 +10,12 @@
 #import "Alarm.h"
 
 @interface AlarmViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UILabel *alarmName;
+@property (weak, nonatomic) IBOutlet UILabel *time;
+@property (weak, nonatomic) IBOutlet UILabel *tries;
+
+
+- (IBAction)submitPressed:(id)sender;
 - (void) SetupWithAlarm: (Alarm *) alarm;
+- (void)SetupWithDefaults;
 @end

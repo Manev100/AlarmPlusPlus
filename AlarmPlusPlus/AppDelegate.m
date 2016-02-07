@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "AlarmViewController.h"
+#import "Alarm.h"
 
 @interface AppDelegate ()
 
@@ -26,6 +27,7 @@
          */
         NSLog(@"%@", notification.alertTitle);
     }
+    //LOAD ALL THE THINGS
     return YES;
 }
 
@@ -58,11 +60,35 @@
         NSLog(@"Hello from background");
     }
     NSLog(@"Hello from foreground");
+    
+    // Look for alarm that fired notification
+    NSString* firedAlarmId;
+    Alarm *firedAlarm;
+    if((firedAlarmId = [notification.userInfo objectForKey:@"alarm_id"]) != nil){
+        for (Alarm* obj in self.alarms) {
+            if([obj.alarmId isEqualToString:firedAlarmId]){
+                firedAlarm = obj;
+            }
+        }
+    }
+    
     UINavigationController *nav = (UINavigationController *)self.window.rootViewController;
     AlarmViewController *alarmVC = [nav.storyboard instantiateViewControllerWithIdentifier:@"alarmVC"];
-    [alarmVC SetupWithAlarm:NULL];
     
+    if(firedAlarm != nil){
+        [alarmVC SetupWithAlarm:firedAlarm];
+    }else{
+        NSLog(@"Alarm could not be found. Loading Default Settings...");
+        [alarmVC SetupWithDefaults];
+    }
     [nav presentViewController:alarmVC animated:YES completion:nil];
+}
+
+-(NSMutableArray *) getAlarmArray{
+    if(self.alarms == NULL){
+        self.alarms = [NSMutableArray arrayWithCapacity:20];
+    }
+    return self.alarms;
 }
 
 @end

@@ -24,7 +24,16 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)submitPressed:(id)sender {
+}
+
 - (void)SetupWithAlarm: (Alarm *) alarm{
+    
+    self.alarmName.text = alarm.name;
+    NSLog(@"name: %@", alarm.name);
+}
+
+- (void)SetupWithDefaults{
     
 }
 

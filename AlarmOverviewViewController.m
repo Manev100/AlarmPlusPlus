@@ -10,6 +10,7 @@
 #import "AlarmCellTableViewCell.h"
 #import "Alarm.h"
 #import "AlarmAddViewController.h"
+#import "AppDelegate.h"
 
 @interface AlarmOverviewViewController ()
 
@@ -31,7 +32,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.alarms = [NSMutableArray arrayWithCapacity:20];
+    AppDelegate* appDelegate = [[UIApplication sharedApplication] delegate];
+    self.alarms = [appDelegate getAlarmArray];
     
     //TEST ALARMS
     Alarm *alarm1  = [Alarm new];
@@ -136,9 +138,19 @@
     alarm.name = vc.nameLabel.text;
     alarm.active = true;
     
+    
+    // TODO: Find better stringId
+    NSString *dateString = [NSDateFormatter localizedStringFromDate:alarm.date
+                                                          dateStyle:NSDateFormatterNoStyle
+                                                          timeStyle:NSDateFormatterShortStyle];
+    alarm.alarmId = [NSString stringWithFormat:@"%@%@", alarm.name, dateString];
+
+    
     [self.alarms addObject:alarm];
     [self.tableView reloadData];
+    [self scheduleLocalNotificationWithAlarm:alarm];
 }
+
 - (IBAction)unwindToPlayersViewControllerCancel:(UIStoryboardSegue *)unwindSegue{
     
 }
@@ -172,6 +184,18 @@
     notification.userInfo = [NSDictionary dictionaryWithObject:@"123456" forKey:@"alarm_id"];
     //notification.category = @"ACCEPT_CATEGORY";
 
+    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
+}
+
+- (void)scheduleLocalNotificationWithAlarm:(Alarm *)alarm {
+    UILocalNotification *notification = [[UILocalNotification alloc]init];
+    //notification.repeatInterval = NSCalendarUnitMinute;
+    notification.fireDate = alarm.date;
+    notification.alertBody = @"Wake up!!";
+    notification.timeZone = [NSTimeZone defaultTimeZone];
+    notification.soundName = alarm.ringtone;
+    notification.userInfo = [NSDictionary dictionaryWithObject:alarm.alarmId forKey:@"alarm_id"];
+    
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
 
