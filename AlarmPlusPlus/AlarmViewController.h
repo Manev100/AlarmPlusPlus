@@ -17,5 +17,4 @@
 
 - (IBAction)submitPressed:(id)sender;
 - (void) SetupWithAlarm: (Alarm *) alarm;
-- (void)SetupWithDefaults;
 @end

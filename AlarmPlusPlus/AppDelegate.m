@@ -79,7 +79,6 @@
         [alarmVC SetupWithAlarm:firedAlarm];
     }else{
         NSLog(@"Alarm could not be found. Loading Default Settings...");
-        [alarmVC SetupWithDefaults];
     }
     [nav presentViewController:alarmVC animated:YES completion:nil];
 }

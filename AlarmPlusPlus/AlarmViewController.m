@@ -8,14 +8,22 @@
 
 #import "AlarmViewController.h"
 
-@interface AlarmViewController ()
+@interface AlarmViewController (){
+    Alarm* myAlarm;
+}
 
 @end
 
 @implementation AlarmViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if(myAlarm == nil){
+        myAlarm = [Alarm new];
+    }
+    [self.alarmName setText:myAlarm.name];
+    NSLog(@"didload");
     // Do any additional setup after loading the view.
 }
 
@@ -25,17 +33,13 @@
 }
 
 - (IBAction)submitPressed:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)SetupWithAlarm: (Alarm *) alarm{
-    
-    self.alarmName.text = alarm.name;
-    NSLog(@"name: %@", alarm.name);
+    myAlarm = alarm;
 }
 
-- (void)SetupWithDefaults{
-    
-}
 
 /*
 #pragma mark - Navigation
