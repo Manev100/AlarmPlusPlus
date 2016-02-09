@@ -204,6 +204,9 @@
 */
 
 - (IBAction)test:(id)sender {
+    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    [delegate presentAlarmViewforAlarm:nil];
+    /*
     NSDate *testDate = [self getDateWithMinutesFromNow:1];
     [self scheduleLocalNotificationWithDate:testDate];
     
@@ -211,6 +214,7 @@
     long seconds = lroundf(interval);
     
     [self confirmMessage: [NSString stringWithFormat:@"%ld", seconds]];
+     */
 }
 
 - (NSDate *)getDateWithMinutesFromNow: (int) num {

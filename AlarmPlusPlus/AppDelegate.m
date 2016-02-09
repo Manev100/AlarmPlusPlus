@@ -72,15 +72,20 @@
         }
     }
     
+    [self presentAlarmViewforAlarm:firedAlarm];
+}
+
+-(void) presentAlarmViewforAlarm: (Alarm*) alarm{
     UINavigationController *nav = (UINavigationController *)self.window.rootViewController;
     AlarmViewController *alarmVC = [nav.storyboard instantiateViewControllerWithIdentifier:@"alarmVC"];
     
-    if(firedAlarm != nil){
-        [alarmVC SetupWithAlarm:firedAlarm];
+    if(alarm != nil){
+        [alarmVC SetupWithAlarm:alarm];
     }else{
         NSLog(@"Alarm could not be found. Loading Default Settings...");
     }
     [nav presentViewController:alarmVC animated:YES completion:nil];
+    
 }
 
 -(NSMutableArray *) getAlarmArray{

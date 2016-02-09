@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Alarm.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -14,6 +15,6 @@
 @property (strong, nonatomic) NSMutableArray *alarms;
 
 -(NSMutableArray *) getAlarmArray;
-
+-(void) presentAlarmViewforAlarm: (Alarm*) alarm;
 @end
 

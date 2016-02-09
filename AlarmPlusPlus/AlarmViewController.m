@@ -10,6 +10,9 @@
 
 @interface AlarmViewController (){
     Alarm* myAlarm;
+    int result;
+    int x,y;
+    int tries;
 }
 
 @end
@@ -23,7 +26,9 @@
         myAlarm = [Alarm new];
     }
     [self.alarmName setText:myAlarm.name];
-    NSLog(@"didload");
+    
+    [self setupProblem];
+    
     // Do any additional setup after loading the view.
 }
 
@@ -33,12 +38,43 @@
 }
 
 - (IBAction)submitPressed:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    int input =  [self.numberInputField.text intValue];
+    if(input == result){
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else{
+
+        tries--;
+        if(tries == 0){
+            // problem failed
+            [self setupProblem];
+        }else{
+            // flash screen red or something, music louder
+            [self.triesLabel setText:[NSString stringWithFormat:@"Tries: %d", tries]];
+        }
+        
+    }
+    
+    
 }
+
+- (void) setupProblem {
+    x = arc4random_uniform(100);
+    y = arc4random_uniform(100);
+    
+    result = x+y;
+    [self.problemField setText: [NSString stringWithFormat:@"%d  +  %d  =", x, y]];
+    
+    tries = 3;
+    [self.triesLabel setText:[NSString stringWithFormat:@"Tries: %d", tries]];
+    
+}
+
+
 
 - (void)SetupWithAlarm: (Alarm *) alarm{
     myAlarm = alarm;
 }
+
 
 
 /*
