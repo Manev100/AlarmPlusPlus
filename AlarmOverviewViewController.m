@@ -129,7 +129,8 @@
     alarm.date = vc.datePicker.date;
     //TODO: configure date if weekday is not today
     
-    alarm.ringtone = vc.ringtoneLabel.text;
+    //alarm.ringtone = vc.ringtoneLabel.text;
+    alarm.ringtone = @"alarm.caf";
     alarm.problem = vc.problemLabel.text;
     alarm.difficulty = vc.difficultyLabel.text;
     alarm.volume = vc.volumeSlider.value;
@@ -193,7 +194,7 @@
     notification.fireDate = alarm.date;
     notification.alertBody = @"Wake up!!";
     notification.timeZone = [NSTimeZone defaultTimeZone];
-    notification.soundName = alarm.ringtone;
+    notification.soundName = UILocalNotificationDefaultSoundName;
     notification.userInfo = [NSDictionary dictionaryWithObject:alarm.alarmId forKey:@"alarm_id"];
     
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
