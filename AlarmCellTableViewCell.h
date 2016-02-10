@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *name;
 @property (weak, nonatomic) IBOutlet UIImageView *repeat;
 @property (weak, nonatomic) IBOutlet UIStackView *weekdays;
-@property (weak, nonatomic) IBOutlet UIImageView *stateImage;
+
+@property (weak, nonatomic) IBOutlet UIButton *stateButton;
 
 @end

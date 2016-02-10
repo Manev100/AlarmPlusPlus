@@ -98,11 +98,37 @@
     if(alarm.repeat == true){
         [cell.repeat setImage:[UIImage imageNamed:@"repeat_icon.png"]];
     }
+    [cell.stateButton setImage:[UIImage imageNamed:@"alarm_icon.png"] forState:UIControlStateNormal];
     
+    NSArray *weekdayViews = cell.weekdays.arrangedSubviews;
+    
+    //iterate over weekdays and check whether flag for that weekday is checked and set tint for active state
+    for(int i = 0; i < 7; i++){
+        int mask = 1 << i;
+        UILabel *label = (UILabel*)[weekdayViews objectAtIndex:i];
+        if((alarm.weekdaysFlag & mask) != 0){
+            [label setFont:[UIFont boldSystemFontOfSize:14]];
+            [label setTextColor:[UIColor greenColor]];
+        }else{
+            [label setTextColor:[UIColor blackColor]];
+        }
+    }
+    
+    // Set tints for activated/deactivated Alarms
     if(alarm.active == true){
-        [cell.stateImage setImage:[UIImage imageNamed:@"alarm_icon_on.png"]];
+        [cell.time setTextColor:[UIColor blackColor]];
+        [cell.name setTextColor:[UIColor blackColor]];
+        [cell.stateButton setTintColor:[UIColor greenColor]];
+        [cell.repeat setTintColor:[UIColor blackColor]];
     }else{
-        [cell.stateImage setImage:[UIImage imageNamed:@"alarm_icon.png"]];
+        for (UIView *view in weekdayViews){
+            UILabel *label = (UILabel*) view;
+            [label setTextColor:[UIColor grayColor]];
+        }
+        [cell.time setTextColor:[UIColor grayColor]];
+        [cell.name setTextColor:[UIColor grayColor]];
+        [cell.stateButton setTintColor:[UIColor grayColor]];
+        [cell.repeat setTintColor:[UIColor grayColor]];
     }
     
     return cell;
@@ -112,13 +138,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    Alarm *alarm = [self.alarms objectAtIndex:indexPath.row];
     
+    
+}
+- (IBAction)activeButtonPressed:(id)sender {
+    CGPoint touchPoint = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
+    
+    Alarm *alarm = [self.alarms objectAtIndex:indexPath.row];
     alarm.active = !alarm.active;
-    [self.tableView reloadData];
     
     // TODO: deaktivate/activate Notifications
-    
+    [self.tableView reloadData];
 }
 
 // SEGUE HANDLING

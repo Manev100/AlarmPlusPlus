@@ -10,7 +10,6 @@
 
 @implementation Alarm
 - (id)init{
-    // allow superclass to initialize its state first
     if (self = [super init]) {
         // do our initialization...
         self.date = [NSDate date];
@@ -22,12 +21,38 @@
         self.volume = 1.0;
         self.active = true;
         self.repeat = false;
+        self.weekdaysFlag = WeekdayMonday;
         
     }
-    // note that you must explicitly return the newly created object
     return self;
 }
 
-
++(NSString*) weekdayToString:(Weekdays)weekday{
+    switch (weekday) {
+        case WeekdayMonday:
+            return @"Monday";
+            break;
+        case WeekdayTuesday:
+            return @"Tuesday";
+            break;
+        case WeekdayWednesday:
+            return @"Wednesday";
+            break;
+        case WeekdayThursday:
+            return @"Thursday";
+            break;
+        case WeekdayFriday:
+            return @"Friday";
+            break;
+        case WeekdaySaturday:
+            return @"Saturday";
+            break;
+        case WeekdaySunday:
+            return @"Sunday";
+            break;
+        default:
+            break;
+    }
+}
 
 @end
