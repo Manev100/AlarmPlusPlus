@@ -11,6 +11,22 @@
 @interface Alarm : NSObject
 - (id)init;
 
+typedef NS_ENUM(NSInteger, Difficulties) {
+    DifficultyEasy = 0,
+    DifficultyNormal,
+    DifficultyHard,
+    DifficultyCustom,
+    
+    DifficulyCount
+};
+
+typedef NS_ENUM(NSInteger, ProblemTypes) {
+    ProblemTypeArithmetic = 0,
+    ProblemTypePrime,
+    ProblemTypeEquation,
+    
+    ProblemTypeCount
+};
 
 typedef NS_OPTIONS(NSInteger, Weekdays) {
     WeekdayMonday = 1 << 0,
@@ -22,14 +38,17 @@ typedef NS_OPTIONS(NSInteger, Weekdays) {
     WeekdaySunday = 1 << 6
 };
 
++(NSString*) difficultyToString:(Difficulties)difficulty;
++(NSString*) problemTypeToString:(ProblemTypes) problemType;
 +(NSString*) weekdayToString:(Weekdays)weekday;
++(NSMutableArray*) weekdaysToArray;
 
 @property (strong, nonatomic) NSDate *date;
 @property (strong, nonatomic) NSString *name;
 @property (strong, nonatomic) NSString *ringtone;
-@property (strong, nonatomic) NSString *problem;
-@property (strong, nonatomic) NSString *difficulty;
+@property ProblemTypes problem;
 @property (strong, nonatomic) NSString *alarmId;
+@property Difficulties difficulty;
 @property int weekdaysFlag;
 @property float volume;
 @property bool repeat;

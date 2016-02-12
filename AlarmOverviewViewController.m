@@ -160,10 +160,38 @@
     alarm.date = vc.datePicker.date;
     //TODO: configure date if weekday is not today
     
+    
+    
+    
     //alarm.ringtone = vc.ringtoneLabel.text;
     alarm.ringtone = @"alarm.caf";
-    alarm.problem = vc.problemLabel.text;
-    alarm.difficulty = vc.difficultyLabel.text;
+    
+    //Parse difficulty
+    for (int i = 0; i < DifficulyCount; ++i){
+        NSString *difficultyStr = [Alarm difficultyToString:(Difficulties) i];
+        if([difficultyStr isEqualToString:vc.difficultyLabel.text]){
+            alarm.difficulty = (Difficulties) i;
+        }
+    }
+    
+    //parse selected Problem Type
+    for (int i = 0; i < ProblemTypeCount; ++i){
+        NSString *problemStr = [Alarm problemTypeToString:(ProblemTypes) i];
+        if([problemStr isEqualToString:vc.problemLabel.text]){
+            alarm.problem = (ProblemTypes) i;
+        }
+    }
+    
+    
+    // Parse Selected weekdays from segmented control
+    NSMutableArray *weekdaysArray = [Alarm weekdaysToArray];
+    NSIndexSet *selectedWeekdaysIndexSet = vc.weekdaysControl.selectedSegmentIndexes;
+    int weekdaysFlag = 0;
+    for (NSNumber *weekday in [weekdaysArray objectsAtIndexes:selectedWeekdaysIndexSet]){
+        weekdaysFlag += [weekday intValue];
+    }
+    alarm.weekdaysFlag = weekdaysFlag;
+    
     alarm.volume = vc.volumeSlider.value;
     alarm.repeat = vc.repeatLabel.isOn;
     

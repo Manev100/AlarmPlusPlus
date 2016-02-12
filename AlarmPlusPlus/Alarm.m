@@ -15,8 +15,8 @@
         self.date = [NSDate date];
         self.name = @"Test1";
         self.ringtone = @"ring.mp3";
-        self.problem = @"a";
-        self.difficulty = @"Normal";
+        self.problem = ProblemTypeArithmetic;
+        self.difficulty = DifficultyNormal;
         self.alarmId = @"0";
         self.volume = 1.0;
         self.active = true;
@@ -25,6 +25,57 @@
         
     }
     return self;
+}
+
++(NSString*) difficultyToString:(Difficulties)difficulty{
+    switch (difficulty) {
+        case DifficultyEasy:
+            return @"Easy";
+            break;
+        case DifficultyNormal:
+            return @"Normal";
+            break;
+        case DifficultyHard:
+            return @"Hard";
+            break;
+        case DifficultyCustom:
+            return @"Custom";
+            break;
+        case DifficulyCount:
+            return @"INVALID";
+            break;
+        default:
+            break;
+    }
+    
+}
+
++(NSString*) problemTypeToString:(ProblemTypes) problemType{
+    switch (problemType) {
+        case ProblemTypeArithmetic:
+            return @"Arithmetic Problem";
+            break;
+        case ProblemTypePrime:
+            return @"Prime-Numbers";
+            break;
+        case ProblemTypeEquation:
+            return @"Equation";
+            break;
+        case ProblemTypeCount:
+            return @"INVALID";
+            break;
+        default:
+            break;
+    }
+    
+}
+
++(NSMutableArray*) weekdaysToArray{
+    NSMutableArray *weekdaysArray = [NSMutableArray arrayWithCapacity:7];
+    for (int i = 1; i<= 1 << 6 ; i = i << 1) {
+        [weekdaysArray addObject:[NSNumber numberWithInt:i]];
+    }
+    return weekdaysArray;
 }
 
 +(NSString*) weekdayToString:(Weekdays)weekday{

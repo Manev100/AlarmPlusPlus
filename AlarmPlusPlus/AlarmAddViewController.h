@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "MultiSelectSegmentedControl.h"
 @interface AlarmAddViewController : UITableViewController <UIActionSheetDelegate>
 
 
@@ -18,5 +18,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *ringtoneLabel;
 @property (weak, nonatomic) IBOutlet UISlider *volumeSlider;
 @property (weak, nonatomic) IBOutlet UITextField *nameLabel;
+@property (weak, nonatomic) IBOutlet MultiSelectSegmentedControl *weekdaysControl;
 
 @end

@@ -8,6 +8,7 @@
 
 #import "AlarmAddViewController.h"
 #import "PickAlarmsoundViewController.h"
+#import "Alarm.h"
 
 @interface AlarmAddViewController ()
 
@@ -70,9 +71,9 @@
         case 5:{
             //problem
             UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Select Problem to solve:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
-                                    @"Arithmetic Problem",
-                                    @"Prime-Numbers",
-                                    @"Equation",
+                                    [Alarm problemTypeToString:ProblemTypeArithmetic],
+                                    [Alarm problemTypeToString:ProblemTypePrime],
+                                    [Alarm problemTypeToString:ProblemTypeEquation],
                                     nil];
             popup.tag = 1;
             [popup showInView:self.view];
@@ -81,10 +82,10 @@
         case 6:{
             //difficulty
             UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Select difficulty:" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
-                                    @"Easy",
-                                    @"Normal",
-                                    @"Hard",
-                                    @"Custom",
+                                    [Alarm difficultyToString:DifficultyEasy],
+                                    [Alarm difficultyToString:DifficultyNormal],
+                                    [Alarm difficultyToString:DifficultyHard],
+                                    [Alarm difficultyToString:DifficultyCustom],
                                     nil];
             popup.tag = 2;
             [popup showInView:self.view];
