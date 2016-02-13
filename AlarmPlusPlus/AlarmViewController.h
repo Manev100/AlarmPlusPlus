@@ -19,6 +19,11 @@
 @property (weak, nonatomic) IBOutlet UITextField *numberInputField;
 @property (weak, nonatomic) IBOutlet UILabel *problemField;
 
+@property (weak, nonatomic) IBOutlet UIView *primeContainer;
+@property (weak, nonatomic) IBOutlet UIView *equationContainer;
+@property (weak, nonatomic) IBOutlet UIView *arithmeticContainer;
+
+
 
 - (IBAction)submitPressed:(id)sender;
 - (void) SetupWithAlarm: (Alarm *) alarm;

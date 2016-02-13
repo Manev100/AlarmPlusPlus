@@ -7,6 +7,7 @@
 //
 
 #import "AlarmViewController.h"
+#import "EquationViewController.h"
 
 @interface AlarmViewController (){
     Alarm* myAlarm;
@@ -28,9 +29,11 @@
     [self.alarmName setText:myAlarm.name];
     
     [self setupProblem];
-    
-    // Do any additional setup after loading the view.
+    self.equationContainer.alpha = 1;
+    self.primeContainer.alpha = 0;
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

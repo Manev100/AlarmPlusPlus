@@ -10,6 +10,7 @@
 #import "AlarmViewController.h"
 #import "Alarm.h"
 
+
 @interface AppDelegate ()
 
 @end
@@ -77,6 +78,7 @@
 
 -(void) presentAlarmViewforAlarm: (Alarm*) alarm{
     UINavigationController *nav = (UINavigationController *)self.window.rootViewController;
+
     AlarmViewController *alarmVC = [nav.storyboard instantiateViewControllerWithIdentifier:@"alarmVC"];
     
     if(alarm != nil){
@@ -85,6 +87,7 @@
         NSLog(@"Alarm could not be found. Loading Default Settings...");
     }
     [nav presentViewController:alarmVC animated:YES completion:nil];
+  
     
 }
 
