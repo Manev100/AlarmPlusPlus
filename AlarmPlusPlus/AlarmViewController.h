@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Alarm.h"
+#import "MathProblemViewController.h"
 
 @interface AlarmViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UILabel *alarmName;
@@ -22,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet UIView *primeContainer;
 @property (weak, nonatomic) IBOutlet UIView *equationContainer;
 @property (weak, nonatomic) IBOutlet UIView *arithmeticContainer;
+@property (weak, nonatomic) MathProblemViewController *activeProblemViewController;
+@property (strong, nonatomic) NSMutableDictionary *childProblemViewControllers;
 
 
 

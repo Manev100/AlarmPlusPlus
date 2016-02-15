@@ -1,18 +1,19 @@
 //
-//  EquationViewController.m
+//  ArithmeticProblemViewController.m
 //  AlarmPlusPlus
 //
-//  Created by Justin Sane on 13/02/16.
+//  Created by Justin Sane on 15/02/16.
 //  Copyright © 2016 Marc Neveling. All rights reserved.
 //
 
-#import "EquationViewController.h"
+#import "ArithmeticProblemViewController.h"
 
-@interface EquationViewController ()
+@interface ArithmeticProblemViewController ()
 
 @end
 
-@implementation EquationViewController
+@implementation ArithmeticProblemViewController
+int _result;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -22,6 +23,24 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void) setupViewForDifficulty: (Difficulties) difficulty{
+    int x = arc4random_uniform(100);
+    int y = arc4random_uniform(100);
+    
+    _result = x+y;
+    [self.problemField setText: [NSString stringWithFormat:@"%d  +  %d  =", x, y]];
+    
+}
+
+-(BOOL) confirmResult{
+    int input = [self.inputField.text intValue];
+    if(_result == input){
+        return true;
+    }else{
+        return false;
+    }
 }
 
 /*

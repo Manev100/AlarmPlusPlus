@@ -7,7 +7,6 @@
 //
 
 #import "AlarmViewController.h"
-#import "EquationViewController.h"
 
 @interface AlarmViewController (){
     Alarm* myAlarm;
@@ -28,9 +27,26 @@
     }
     [self.alarmName setText:myAlarm.name];
     
-    [self setupProblem];
-    self.equationContainer.alpha = 1;
+    
+    
+    self.arithmeticContainer.alpha = 0;
+    self.equationContainer.alpha = 0;
     self.primeContainer.alpha = 0;
+    
+
+    if(myAlarm.problem == ProblemTypeArithmetic){
+        self.activeProblemViewController = [self.childProblemViewControllers objectForKey:@"arithmeticVC"];
+        self.arithmeticContainer.alpha = 1;
+    }else if (myAlarm.problem == ProblemTypeEquation){
+        self.activeProblemViewController = [self.childProblemViewControllers objectForKey:@"equationVC"];
+        self.equationContainer.alpha = 1;
+    }else if(myAlarm.problem == ProblemTypePrime){
+        self.activeProblemViewController = [self.childProblemViewControllers objectForKey:@"primeVC"];
+        self.primeContainer.alpha = 1;
+    }
+    
+    [self.activeProblemViewController setupViewForDifficulty:myAlarm.difficulty];
+    tries = 3;
 }
 
 
@@ -41,44 +57,48 @@
 }
 
 - (IBAction)submitPressed:(id)sender {
-    int input =  [self.numberInputField.text intValue];
-    if(input == result){
+    if([self.activeProblemViewController confirmResult]){
         [self dismissViewControllerAnimated:YES completion:nil];
     }else{
-
+        NSLog(@"aaa");
         tries--;
-        if(tries == 0){
+        if(tries <= 0){
             // problem failed
-            [self setupProblem];
+            tries = 3;
+            
+            [self.activeProblemViewController setupViewForDifficulty:myAlarm.difficulty];
         }else{
             // flash screen red or something, music louder
-            [self.triesLabel setText:[NSString stringWithFormat:@"Tries: %d", tries]];
         }
+        [self.triesLabel setText:[NSString stringWithFormat:@"Tries: %d", tries]];
         
     }
-    
-    
 }
-
-- (void) setupProblem {
-    x = arc4random_uniform(100);
-    y = arc4random_uniform(100);
-    
-    result = x+y;
-    [self.problemField setText: [NSString stringWithFormat:@"%d  +  %d  =", x, y]];
-    
-    tries = 3;
-    [self.triesLabel setText:[NSString stringWithFormat:@"Tries: %d", tries]];
-    
-}
-
 
 
 - (void)SetupWithAlarm: (Alarm *) alarm{
     myAlarm = alarm;
 }
 
+//Access child viewcontrollers
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if(self.childProblemViewControllers == nil){
+        self.childProblemViewControllers = [NSMutableDictionary dictionaryWithCapacity:ProblemTypeCount];
+    }
 
+    NSString * segueName = segue.identifier;
+    if ([segueName isEqualToString: @"container_embed_prime"]) {
+        UIViewController * childViewController = (UIViewController *) [segue destinationViewController];
+        [self.childProblemViewControllers setValue:childViewController forKey:@"primeVC"];
+    }else if([segueName isEqualToString: @"container_embed_equation"]){
+        UIViewController * childViewController = (UIViewController *) [segue destinationViewController];
+        [self.childProblemViewControllers setValue:childViewController forKey:@"equationVC"];
+    }else if([segueName isEqualToString: @"container_embed_arithmetic"]){
+        UIViewController * childViewController = (UIViewController *) [segue destinationViewController];
+        [self.childProblemViewControllers setValue:childViewController forKey:@"arithmeticVC"];
+    }
+}
 
 /*
 #pragma mark - Navigation
