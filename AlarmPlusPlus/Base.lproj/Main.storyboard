@@ -1062,9 +1062,6 @@
                                 <segments>
                                     <segment title="First"/>
                                     <segment title="Second"/>
-                                    <segment title=""/>
-                                    <segment title=""/>
-                                    <segment title=""/>
                                 </segments>
                             </segmentedControl>
                         </subviews>
@@ -1075,6 +1072,9 @@
                             <constraint firstAttribute="trailingMargin" secondItem="WnA-m9-fmO" secondAttribute="trailing" id="aV3-Ag-0mf"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="primeSelectSegmentControl" destination="WnA-m9-fmO" id="XkY-WZ-vxY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3X0-QG-vxA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

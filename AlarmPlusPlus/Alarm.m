@@ -15,7 +15,7 @@
         self.date = [NSDate date];
         self.name = @"Test1";
         self.ringtone = @"ring.mp3";
-        self.problem = ProblemTypeEquation;
+        self.problem = ProblemTypePrime;
         self.difficulty = DifficultyNormal;
         self.alarmId = @"0";
         self.volume = 1.0;
