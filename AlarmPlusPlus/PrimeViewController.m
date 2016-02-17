@@ -74,7 +74,6 @@
 
 // potentially endless loop when self.primes.count < size
 -(NSMutableArray*) getPrimesArrayOfSize: (int) size{
-    NSLog(@"second");
     NSMutableIndexSet *picks = [NSMutableIndexSet indexSet];
     do {
         [picks addIndex:arc4random_uniform((int) [self.primes count])];

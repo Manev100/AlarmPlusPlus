@@ -60,7 +60,6 @@
     if([self.activeProblemViewController confirmResult]){
         [self dismissViewControllerAnimated:YES completion:nil];
     }else{
-        NSLog(@"aaa");
         tries--;
         if(tries <= 0){
             // problem failed

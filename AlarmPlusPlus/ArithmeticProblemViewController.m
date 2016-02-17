@@ -31,7 +31,6 @@ int _result;
     
     _result = x+y;
     [self.problemField setText: [NSString stringWithFormat:@"%d  +  %d  =", x, y]];
-    
 }
 
 -(BOOL) confirmResult{
