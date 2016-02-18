@@ -12,6 +12,7 @@
 		D93B326D1C722ED10025135B /* ArithmeticProblemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D93B326C1C722ED10025135B /* ArithmeticProblemViewController.m */; };
 		D93B32701C7231F90025135B /* EquationProblemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D93B326F1C7231F90025135B /* EquationProblemViewController.m */; };
 		D93B32731C7232200025135B /* PrimeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D93B32721C7232200025135B /* PrimeViewController.m */; };
+		D93B32791C761E3D0025135B /* APEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D93B32781C761E3D0025135B /* APEditorViewController.m */; };
 		D98942601C6B8F9C00779BF9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D989425E1C6B8F9C00779BF9 /* Main.storyboard */; };
 		D98942631C6DFD8E00779BF9 /* MultiSelectSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = D98942621C6DFD8E00779BF9 /* MultiSelectSegmentedControl.m */; };
 		D9B6D5B61C1DC5F200506C5B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6D5B51C1DC5F200506C5B /* main.m */; };
@@ -57,6 +58,8 @@
 		D93B326F1C7231F90025135B /* EquationProblemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EquationProblemViewController.m; path = ../EquationProblemViewController.m; sourceTree = "<group>"; };
 		D93B32711C7232200025135B /* PrimeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrimeViewController.h; sourceTree = "<group>"; };
 		D93B32721C7232200025135B /* PrimeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrimeViewController.m; sourceTree = "<group>"; };
+		D93B32771C761E3D0025135B /* APEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APEditorViewController.h; path = ../APEditorViewController.h; sourceTree = "<group>"; };
+		D93B32781C761E3D0025135B /* APEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APEditorViewController.m; path = ../APEditorViewController.m; sourceTree = "<group>"; };
 		D989425F1C6B8F9C00779BF9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D98942611C6DFD8E00779BF9 /* MultiSelectSegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiSelectSegmentedControl.h; sourceTree = "<group>"; };
 		D98942621C6DFD8E00779BF9 /* MultiSelectSegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiSelectSegmentedControl.m; sourceTree = "<group>"; };
@@ -114,6 +117,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D93B327A1C761E4A0025135B /* AlarmView */ = {
+			isa = PBXGroup;
+			children = (
+				D93420391C665CFA00094D45 /* AlarmViewController.h */,
+				D934203A1C665CFA00094D45 /* AlarmViewController.m */,
+				D93B32681C722D930025135B /* MathProblemViewController.h */,
+				D93B32691C722D930025135B /* MathProblemViewController.m */,
+				D93B326B1C722ED10025135B /* ArithmeticProblemViewController.h */,
+				D93B326C1C722ED10025135B /* ArithmeticProblemViewController.m */,
+				D93B326E1C7231F90025135B /* EquationProblemViewController.h */,
+				D93B326F1C7231F90025135B /* EquationProblemViewController.m */,
+				D93B32711C7232200025135B /* PrimeViewController.h */,
+				D93B32721C7232200025135B /* PrimeViewController.m */,
+			);
+			name = AlarmView;
+			sourceTree = "<group>";
+		};
+		D93B327B1C761E830025135B /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				D93B32771C761E3D0025135B /* APEditorViewController.h */,
+				D93B32781C761E3D0025135B /* APEditorViewController.m */,
+			);
+			name = Editor;
+			sourceTree = "<group>";
+		};
 		D9B6D5A81C1DC5F200506C5B = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +166,8 @@
 		D9B6D5B31C1DC5F200506C5B /* AlarmPlusPlus */ = {
 			isa = PBXGroup;
 			children = (
+				D93B327B1C761E830025135B /* Editor */,
+				D93B327A1C761E4A0025135B /* AlarmView */,
 				D9B6D5ED1C1F091D00506C5B /* AlarmOverviewViewController.h */,
 				D9B6D5EE1C1F091D00506C5B /* AlarmOverviewViewController.m */,
 				D9B6D5F01C1F0C4500506C5B /* AlarmCellTableViewCell.h */,
@@ -145,8 +176,6 @@
 				D9F6DD321C416E2F0079B212 /* AlarmAddViewController.m */,
 				D9F6DD341C42C0B00079B212 /* PickAlarmsoundViewController.h */,
 				D9F6DD351C42C0B00079B212 /* PickAlarmsoundViewController.m */,
-				D93420391C665CFA00094D45 /* AlarmViewController.h */,
-				D934203A1C665CFA00094D45 /* AlarmViewController.m */,
 				D9F6DD2E1C416C790079B212 /* Alarm.h */,
 				D9F6DD2F1C416C790079B212 /* Alarm.m */,
 				D9F6DD2B1C21CCB60079B212 /* Statistic.h */,
@@ -156,14 +185,6 @@
 				D9F6DD281C21CC100079B212 /* StatisticsTableViewController.h */,
 				D9F6DD291C21CC100079B212 /* StatisticsTableViewController.m */,
 				D989425E1C6B8F9C00779BF9 /* Main.storyboard */,
-				D93B32681C722D930025135B /* MathProblemViewController.h */,
-				D93B32691C722D930025135B /* MathProblemViewController.m */,
-				D93B326B1C722ED10025135B /* ArithmeticProblemViewController.h */,
-				D93B326C1C722ED10025135B /* ArithmeticProblemViewController.m */,
-				D93B326E1C7231F90025135B /* EquationProblemViewController.h */,
-				D93B326F1C7231F90025135B /* EquationProblemViewController.m */,
-				D93B32711C7232200025135B /* PrimeViewController.h */,
-				D93B32721C7232200025135B /* PrimeViewController.m */,
 				D9B6D5B71C1DC5F200506C5B /* AppDelegate.h */,
 				D9B6D5B81C1DC5F200506C5B /* AppDelegate.m */,
 				D9B6D5C31C1DC5F200506C5B /* Assets.xcassets */,
@@ -340,6 +361,7 @@
 				D98942631C6DFD8E00779BF9 /* MultiSelectSegmentedControl.m in Sources */,
 				D9F6DD361C42C0B00079B212 /* PickAlarmsoundViewController.m in Sources */,
 				D9B6D5EF1C1F091D00506C5B /* AlarmOverviewViewController.m in Sources */,
+				D93B32791C761E3D0025135B /* APEditorViewController.m in Sources */,
 				D934203B1C665CFA00094D45 /* AlarmViewController.m in Sources */,
 				D9F6DD2A1C21CC100079B212 /* StatisticsTableViewController.m in Sources */,
 				D9F6DD2D1C21CCB60079B212 /* Statistic.m in Sources */,
