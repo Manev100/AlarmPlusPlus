@@ -719,7 +719,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wjX-Mh-ZWk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="425" y="-969"/>
+            <point key="canvasLocation" x="336" y="-997"/>
         </scene>
         <!--Arithmetic Problems Editor-->
         <scene sceneID="8To-uR-fOV">
@@ -743,7 +743,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="C41-zY-die">
                                                     <rect key="frame" x="436" y="7" width="126" height="30"/>
                                                     <subviews>
-                                                        <textField opaque="NO" clipsSubviews="YES" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eP3-lR-lKu">
+                                                        <textField opaque="NO" clipsSubviews="YES" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eP3-lR-lKu">
                                                             <rect key="frame" x="0.0" y="0.0" width="50" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="50" id="4JX-Ws-9a1"/>
@@ -757,7 +757,7 @@
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <textField opaque="NO" clipsSubviews="YES" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nlc-VO-Lr6">
+                                                        <textField opaque="NO" clipsSubviews="YES" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nlc-VO-Lr6">
                                                             <rect key="frame" x="76" y="0.0" width="50" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="50" id="6eH-YA-NZB"/>
@@ -799,7 +799,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="dmF-d5-Crr">
                                                     <rect key="frame" x="436" y="7" width="126" height="30"/>
                                                     <subviews>
-                                                        <textField opaque="NO" clipsSubviews="YES" tag="200" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zYE-5n-pdl">
+                                                        <textField opaque="NO" clipsSubviews="YES" tag="200" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zYE-5n-pdl">
                                                             <rect key="frame" x="0.0" y="0.0" width="50" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="50" id="M3S-Nd-vG5"/>
@@ -813,7 +813,7 @@
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <textField opaque="NO" clipsSubviews="YES" tag="201" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IiX-aB-PXp">
+                                                        <textField opaque="NO" clipsSubviews="YES" tag="201" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IiX-aB-PXp">
                                                             <rect key="frame" x="76" y="0.0" width="50" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="50" id="lbZ-HJ-cyW"/>
@@ -958,6 +958,7 @@
                     <connections>
                         <outlet property="numberOfOperantsField" destination="J9q-xu-QJc" id="QWB-g0-hfi"/>
                         <outlet property="operatorsSegmentControl" destination="vZX-LX-dfO" id="gDQ-MT-qOK"/>
+                        <outlet property="previewLabel" destination="m6G-51-ibY" id="kAn-Ax-4Ga"/>
                         <outletCollection property="rangeTextFields" destination="eP3-lR-lKu" id="hCl-W0-cl4"/>
                         <outletCollection property="rangeTextFields" destination="nlc-VO-Lr6" id="UPM-nV-rgd"/>
                         <outletCollection property="rangeTextFields" destination="zYE-5n-pdl" id="wuO-8U-beT"/>

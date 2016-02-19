@@ -17,6 +17,8 @@ typedef NS_ENUM(NSInteger, APTextFields) {
 };
 @end
 
+int const MAX_NUMBER_OF_OPERANDS = 4;
+
 @implementation APEditorViewController
 
 - (void)viewDidLoad {
@@ -27,7 +29,14 @@ typedef NS_ENUM(NSInteger, APTextFields) {
         [textField addTarget:self action:@selector(textFieldEditingEnds:) forControlEvents:UIControlEventEditingDidEnd];
     }
     
+    [self.numberOfOperantsField addTarget:self action:@selector(numberOfOperandsFieldEditingEnds:) forControlEvents:UIControlEventEditingDidEnd];
+    
+    self.operatorsSegmentControl.delegate = self;
+    
+    self.countOfFaultyCells = 0;
+    
     [self loadDefaults];
+    [self makePreview];
 }
 -(void) loadDefaults{
     [self findTextFieldByTag:APRangeOfOperantsX].text = @"0";
@@ -51,30 +60,12 @@ typedef NS_ENUM(NSInteger, APTextFields) {
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
-}
-
-- (IBAction)signButtonPressed:(id)sender{
-    for(UITextField* textField in self.rangeTextFields){
-        if(textField.isEditing){
-            [self changeSign:textField];
-        }
-    }
-}
-
-
--(void) changeSign:(UITextField*) textField{
-    if ([textField.text hasPrefix:@"-"]) {
-        textField.text = [textField.text substringFromIndex:1];
-    }else{
-        textField.text = [@"-" stringByAppendingString: textField.text ];
-    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -87,9 +78,117 @@ typedef NS_ENUM(NSInteger, APTextFields) {
     }
 }
 
--(void)textFieldEditingEnds :(UITextField *)theTextField{
-    //validate
+- (IBAction)signButtonPressed:(id)sender{
+    for(UITextField* textField in self.rangeTextFields){
+        if(textField.isEditing){
+            [self changeSign:textField];
+        }
+    }
 }
+
+-(void) changeSign:(UITextField*) textField{
+    if ([textField.text hasPrefix:@"-"]) {
+        textField.text = [textField.text substringFromIndex:1];
+    }else{
+        textField.text = [@"-" stringByAppendingString: textField.text ];
+    }
+}
+
+
+
+// number of operands needs to be between 2 and MAX_NUMBER_OF_OPERANDS
+-(void)numberOfOperandsFieldEditingEnds :(UITextField *)theTextField{
+    int numberOfOperands = [theTextField.text intValue];
+    if(numberOfOperands < 2){
+        theTextField.text = @"2";
+    }else if(numberOfOperands> MAX_NUMBER_OF_OPERANDS){
+        theTextField.text = [NSString stringWithFormat:@"%d", MAX_NUMBER_OF_OPERANDS];
+    }
+    
+    if(self.countOfFaultyCells <= 0){
+        [self makePreview];
+    }
+}
+
+-(void)textFieldEditingEnds :(UITextField *)theTextField{
+    
+    
+    BOOL cellIsFaulty = false;
+    if([theTextField.backgroundColor isEqual:[UIColor redColor]]){
+        cellIsFaulty = true;
+    }
+    
+    
+    UITextField* otherTextField;
+    int x,y;
+    switch (theTextField.tag) {
+        case APRangeOfOperantsX:
+            otherTextField = [self findTextFieldByTag: APRangeOfOperantsY];
+            x = [theTextField.text intValue];
+            y = [otherTextField.text intValue];
+            break;
+        case APRangeOfOperantsY:
+            otherTextField = [self findTextFieldByTag: APRangeOfOperantsX];
+            x = [otherTextField.text intValue];
+            y = [theTextField.text intValue];
+            break;
+        case APRangeOfResultX:
+            otherTextField = [self findTextFieldByTag: APRangeOfResultY];
+            x = [theTextField.text intValue];
+            y = [otherTextField.text intValue];
+            break;
+        case APRangeOfResultY:
+            otherTextField = [self findTextFieldByTag: APRangeOfResultX];
+            x = [otherTextField.text intValue];
+            y = [theTextField.text intValue];
+            break;
+        default:
+            break;
+    }
+    
+    if( x > y){
+        NSLog(@"range wrong");
+        [theTextField setBackgroundColor:[UIColor redColor]];
+        [otherTextField setBackgroundColor:[UIColor redColor]];
+        if(cellIsFaulty){
+            self.countOfFaultyCells++;
+        }
+    }else{
+        [theTextField setBackgroundColor:[UIColor whiteColor]];
+        [otherTextField setBackgroundColor:[UIColor whiteColor]];
+        
+        // if cell was faulty when editing started
+        if(cellIsFaulty){
+            self.countOfFaultyCells--;
+        }
+    }
+    
+    if(self.countOfFaultyCells <= 0){
+        [self makePreview];
+        
+    }else{
+        [self displayMessageInPreview:@"Chosen Ranges not proper"];
+    }
+}
+
+// one operator needs to be selected
+-(void)multiSelect:(MultiSelectSegmentedControl *)multiSelectSegmentedControl didChangeValue:(BOOL)selected atIndex:(NSUInteger)index {
+    if([self.operatorsSegmentControl.selectedSegmentTitles count] <= 0){
+        [self.operatorsSegmentControl setSelectedSegmentIndex:index];
+    }
+}
+
+
+
+-(void) makePreview{
+    
+}
+
+-(void) displayMessageInPreview: (NSString*) message{
+    self.previewLabel.text = message;
+}
+
+
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];

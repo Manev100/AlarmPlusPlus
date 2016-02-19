@@ -9,10 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "MultiSelectSegmentedControl.h"
 
-@interface APEditorViewController : UITableViewController
+@interface APEditorViewController : UITableViewController <MultiSelectSegmentedControlDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *numberOfOperantsField;
 @property (weak, nonatomic) IBOutlet MultiSelectSegmentedControl *operatorsSegmentControl;
-- (IBAction)signButtonPressed:(id)sender;
 @property (strong, nonatomic) IBOutletCollection(UITextField) NSArray *rangeTextFields;
+@property int countOfFaultyCells;
+@property (weak, nonatomic) IBOutlet UILabel *previewLabel;
+
+- (IBAction)signButtonPressed:(id)sender;
+
 
 @end
