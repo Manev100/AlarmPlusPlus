@@ -25,6 +25,8 @@
 		D9B6D5DD1C1DC5F200506C5B /* AlarmPlusPlusUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6D5DC1C1DC5F200506C5B /* AlarmPlusPlusUITests.m */; };
 		D9B6D5EF1C1F091D00506C5B /* AlarmOverviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6D5EE1C1F091D00506C5B /* AlarmOverviewViewController.m */; };
 		D9B6D5F21C1F0C4500506C5B /* AlarmCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D9B6D5F11C1F0C4500506C5B /* AlarmCellTableViewCell.m */; };
+		D9F2EF791C78C58F006339AD /* PrimeEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F2EF781C78C58F006339AD /* PrimeEditorViewController.m */; };
+		D9F2EF7C1C78C5A6006339AD /* EqEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F2EF7B1C78C5A6006339AD /* EqEditorViewController.m */; };
 		D9F6DD2A1C21CC100079B212 /* StatisticsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F6DD291C21CC100079B212 /* StatisticsTableViewController.m */; };
 		D9F6DD2D1C21CCB60079B212 /* Statistic.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F6DD2C1C21CCB60079B212 /* Statistic.m */; };
 		D9F6DD301C416C790079B212 /* Alarm.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F6DD2F1C416C790079B212 /* Alarm.m */; };
@@ -86,6 +88,10 @@
 		D9B6D5EE1C1F091D00506C5B /* AlarmOverviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlarmOverviewViewController.m; path = ../AlarmOverviewViewController.m; sourceTree = "<group>"; };
 		D9B6D5F01C1F0C4500506C5B /* AlarmCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AlarmCellTableViewCell.h; path = ../AlarmCellTableViewCell.h; sourceTree = "<group>"; };
 		D9B6D5F11C1F0C4500506C5B /* AlarmCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AlarmCellTableViewCell.m; path = ../AlarmCellTableViewCell.m; sourceTree = "<group>"; };
+		D9F2EF771C78C58F006339AD /* PrimeEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrimeEditorViewController.h; sourceTree = "<group>"; };
+		D9F2EF781C78C58F006339AD /* PrimeEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrimeEditorViewController.m; sourceTree = "<group>"; };
+		D9F2EF7A1C78C5A6006339AD /* EqEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EqEditorViewController.h; sourceTree = "<group>"; };
+		D9F2EF7B1C78C5A6006339AD /* EqEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EqEditorViewController.m; sourceTree = "<group>"; };
 		D9F6DD281C21CC100079B212 /* StatisticsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatisticsTableViewController.h; sourceTree = "<group>"; };
 		D9F6DD291C21CC100079B212 /* StatisticsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatisticsTableViewController.m; sourceTree = "<group>"; };
 		D9F6DD2B1C21CCB60079B212 /* Statistic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Statistic.h; path = ../Statistic.h; sourceTree = "<group>"; };
@@ -145,6 +151,10 @@
 			children = (
 				D93B32771C761E3D0025135B /* APEditorViewController.h */,
 				D93B32781C761E3D0025135B /* APEditorViewController.m */,
+				D9F2EF771C78C58F006339AD /* PrimeEditorViewController.h */,
+				D9F2EF781C78C58F006339AD /* PrimeEditorViewController.m */,
+				D9F2EF7A1C78C5A6006339AD /* EqEditorViewController.h */,
+				D9F2EF7B1C78C5A6006339AD /* EqEditorViewController.m */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -370,6 +380,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D93B32821C77582D0025135B /* ArithmeticProblemGenerator.m in Sources */,
+				D9F2EF791C78C58F006339AD /* PrimeEditorViewController.m in Sources */,
 				D9F6DD331C416E2F0079B212 /* AlarmAddViewController.m in Sources */,
 				D9B6D5B91C1DC5F200506C5B /* AppDelegate.m in Sources */,
 				D93B32851C775FEE0025135B /* ProblemDefaults.m in Sources */,
@@ -379,6 +390,7 @@
 				D9B6D5F21C1F0C4500506C5B /* AlarmCellTableViewCell.m in Sources */,
 				D93B32701C7231F90025135B /* EquationProblemViewController.m in Sources */,
 				D98942631C6DFD8E00779BF9 /* MultiSelectSegmentedControl.m in Sources */,
+				D9F2EF7C1C78C5A6006339AD /* EqEditorViewController.m in Sources */,
 				D9F6DD361C42C0B00079B212 /* PickAlarmsoundViewController.m in Sources */,
 				D9B6D5EF1C1F091D00506C5B /* AlarmOverviewViewController.m in Sources */,
 				D93B32791C761E3D0025135B /* APEditorViewController.m in Sources */,

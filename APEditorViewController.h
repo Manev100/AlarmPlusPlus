@@ -13,8 +13,10 @@
 @property (weak, nonatomic) IBOutlet UITextField *numberOfOperantsField;
 @property (weak, nonatomic) IBOutlet MultiSelectSegmentedControl *operatorsSegmentControl;
 @property (strong, nonatomic) IBOutletCollection(UITextField) NSArray *rangeTextFields;
-@property int countOfFaultyCells;
 @property (weak, nonatomic) IBOutlet UILabel *previewLabel;
+@property int countOfFaultyCells;
+
+
 
 - (IBAction)signButtonPressed:(id)sender;
 

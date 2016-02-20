@@ -263,10 +263,10 @@
             </objects>
             <point key="canvasLocation" x="2641" y="-173"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Equations Editor-->
         <scene sceneID="azr-Uc-ieA">
             <objects>
-                <tableViewController id="aZx-fR-24e" sceneMemberID="viewController">
+                <tableViewController id="aZx-fR-24e" customClass="EqEditorViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="76D-SZ-cF0">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -715,16 +715,18 @@
                             <outlet property="delegate" destination="aZx-fR-24e" id="FO3-ks-Hs9"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="uwd-eg-UHR"/>
+                    <navigationItem key="navigationItem" title="Equations Editor" id="uwd-eg-UHR"/>
+                    <connections>
+                        <outlet property="linQuadSegmentControl" destination="lOU-Vr-C60" id="6xZ-ld-Ndv"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wjX-Mh-ZWk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="336" y="-997"/>
+            <point key="canvasLocation" x="327" y="-1018"/>
         </scene>
         <!--Arithmetic Problems Editor-->
         <scene sceneID="8To-uR-fOV">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WrF-Ny-umw" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tableViewController id="wsd-Bd-rUq" customClass="APEditorViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="WjJ-V6-WEn">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
@@ -922,7 +924,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m6G-51-ibY">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 + 1 = 2" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m6G-51-ibY">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -965,13 +967,13 @@
                         <outletCollection property="rangeTextFields" destination="IiX-aB-PXp" id="rpF-YS-n45"/>
                     </connections>
                 </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WrF-Ny-umw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="270" y="-2421"/>
+            <point key="canvasLocation" x="219" y="-2443"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Ddx-MS-vno">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="d5w-4y-hFb" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tabBarController id="GCM-GE-hAU" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="esd-Px-C8j">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -984,6 +986,7 @@
                         <segue destination="YfG-Nb-N5q" kind="relationship" relationship="viewControllers" id="eSK-q7-PV4"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d5w-4y-hFb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1116" y="-1268"/>
         </scene>
@@ -1546,7 +1549,6 @@
         <!--Equations-->
         <scene sceneID="7Qv-DC-oDZ">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Si2-cm-opT" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="kOL-SB-bCU" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Equations" id="vZm-9B-YEX"/>
                     <toolbarItems/>
@@ -1559,13 +1561,14 @@
                         <segue destination="aZx-fR-24e" kind="relationship" relationship="rootViewController" id="b1A-gP-r1S"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Si2-cm-opT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="253" y="-943"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Prime Numbers Editor-->
         <scene sceneID="3BR-3Y-0k3">
             <objects>
-                <tableViewController id="pad-Ot-8ji" sceneMemberID="viewController">
+                <tableViewController id="pad-Ot-8ji" customClass="PrimeEditorViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="89b-0r-3ct">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1700,16 +1703,21 @@
                             <outlet property="delegate" destination="pad-Ot-8ji" id="G3H-MR-4yQ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="aHg-Rc-Zj8"/>
+                    <navigationItem key="navigationItem" title="Prime Numbers Editor" id="aHg-Rc-Zj8"/>
+                    <connections>
+                        <outlet property="maxPrimeField" destination="pyu-29-MnV" id="TEM-iz-vQT"/>
+                        <outlet property="numberOfOptionsField" destination="M0D-GD-L3A" id="OfV-yZ-ebR"/>
+                        <outlet property="numberOfPrimesField" destination="jZG-Mx-ITv" id="RYQ-5E-ccQ"/>
+                        <outlet property="previewLabel" destination="OOy-OS-PXs" id="tCO-xx-vvq"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pPf-xq-hlG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="323" y="-1655"/>
+            <point key="canvasLocation" x="327" y="-1626"/>
         </scene>
         <!--Prime-Numbers-->
         <scene sceneID="Gi1-yc-J6J">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RMx-35-tyg" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="YfG-Nb-N5q" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Prime-Numbers" id="fVd-Sz-GWF"/>
                     <toolbarItems/>
@@ -1722,13 +1730,13 @@
                         <segue destination="pad-Ot-8ji" kind="relationship" relationship="rootViewController" id="UQg-ia-Xwr"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RMx-35-tyg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="380" y="-1684"/>
         </scene>
         <!--Arithmetic Problems-->
         <scene sceneID="sVv-QC-jNS">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="OUD-Pt-8OY" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tgd-Mv-7Yh" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Arithmetic Problems" id="7Qg-QJ-Mkm"/>
                     <toolbarItems/>
@@ -1741,6 +1749,7 @@
                         <segue destination="wsd-Bd-rUq" kind="relationship" relationship="rootViewController" id="XnN-F7-CuT"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OUD-Pt-8OY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="688" y="-2430"/>
         </scene>
@@ -1830,6 +1839,10 @@
         <scene sceneID="AI9-MV-eU1">
             <objects>
                 <viewController id="uBQ-Ms-1Uc" customClass="PrimeViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Rql-Bt-86K"/>
+                        <viewControllerLayoutGuide type="bottom" id="ntC-Nw-ngu"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="74P-nA-xs0">
                         <rect key="frame" x="0.0" y="0.0" width="501" height="100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1864,6 +1877,10 @@
         <scene sceneID="S6V-eM-9EP">
             <objects>
                 <viewController id="Pgl-c3-BmT" customClass="ArithmeticProblemViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HR4-S8-HIZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="rUA-F9-wYB"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="hIG-ag-WsF">
                         <rect key="frame" x="0.0" y="0.0" width="501" height="100"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

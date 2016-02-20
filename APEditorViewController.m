@@ -7,6 +7,7 @@
 //
 
 #import "APEditorViewController.h"
+#import "ArithmeticProblemGenerator.h"
 
 @interface APEditorViewController ()
 typedef NS_ENUM(NSInteger, APTextFields) {
@@ -36,6 +37,7 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
     self.countOfFaultyCells = 0;
     
     [self loadDefaults];
+    
     [self makePreview];
 }
 -(void) loadDefaults{
@@ -71,7 +73,7 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if(section == 0){
         return 4;
-    }else if(section == 0){
+    }else if(section == 1){
         return 1;
     }else{
         return 0;
@@ -146,26 +148,18 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
             break;
     }
     
-    if( x > y){
-        NSLog(@"range wrong");
+    if( x > y && !cellIsFaulty){
         [theTextField setBackgroundColor:[UIColor redColor]];
         [otherTextField setBackgroundColor:[UIColor redColor]];
-        if(cellIsFaulty){
-            self.countOfFaultyCells++;
-        }
-    }else{
+        self.countOfFaultyCells++;
+    }else if(x <= y && cellIsFaulty){
         [theTextField setBackgroundColor:[UIColor whiteColor]];
         [otherTextField setBackgroundColor:[UIColor whiteColor]];
-        
-        // if cell was faulty when editing started
-        if(cellIsFaulty){
-            self.countOfFaultyCells--;
-        }
+        self.countOfFaultyCells--;
     }
     
     if(self.countOfFaultyCells <= 0){
         [self makePreview];
-        
     }else{
         [self displayMessageInPreview:@"Chosen Ranges not proper"];
     }
@@ -181,7 +175,9 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
 
 
 -(void) makePreview{
-    
+    ArithmeticProblemGenerator *APGen = [[ArithmeticProblemGenerator alloc] initWithDifficulty:DifficultyHard];
+    NSString *problemWithResult = [APGen getResultString];
+    [self.previewLabel setText:problemWithResult];
 }
 
 -(void) displayMessageInPreview: (NSString*) message{

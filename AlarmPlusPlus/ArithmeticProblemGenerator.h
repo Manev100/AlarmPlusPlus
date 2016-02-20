@@ -29,8 +29,8 @@ typedef NS_OPTIONS(NSInteger, Operators) {
 @property NSNumber* numberOfOperands;
 @property NSNumber* operatorsFlag;
 
-@property (weak, nonatomic) NSMutableArray* operands;
-@property (weak, nonatomic) NSMutableArray* operators;
+@property (strong, nonatomic) NSMutableArray* operands;
+@property (strong, nonatomic) NSMutableArray* operators;
 @property int result;
 
 @end
