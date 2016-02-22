@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MultiSelectSegmentedControl.h"
 
 @interface PrimeEditorViewController : UITableViewController
 @property (weak, nonatomic) IBOutlet UITextField *numberOfOptionsField;
 @property (weak, nonatomic) IBOutlet UITextField *numberOfPrimesField;
 @property (weak, nonatomic) IBOutlet UITextField *maxPrimeField;
-@property (weak, nonatomic) IBOutlet UILabel *previewLabel;
+@property (strong, nonatomic) IBOutlet MultiSelectSegmentedControl *previewSegmentControl;
 
 @end

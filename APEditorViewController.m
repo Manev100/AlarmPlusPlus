@@ -8,6 +8,8 @@
 
 #import "APEditorViewController.h"
 #import "ArithmeticProblemGenerator.h"
+#import "ProblemDefaults.h"
+#import "Alarm.h"
 
 @interface APEditorViewController ()
 typedef NS_ENUM(NSInteger, APTextFields) {
@@ -41,14 +43,24 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
     [self makePreview];
 }
 -(void) loadDefaults{
-    [self findTextFieldByTag:APRangeOfOperantsX].text = @"0";
-    [self findTextFieldByTag:APRangeOfOperantsY].text = @"2";
-    [self findTextFieldByTag:APRangeOfResultX].text = @"0";
-    [self findTextFieldByTag:APRangeOfResultY].text = @"2";
+    NSDictionary* defaultValues = [ProblemDefaults getArithmeticProblemDefaultsForDifficulty:DifficultyCustom];
     
-    [self.operatorsSegmentControl setSelectedSegmentIndex:0];
+    [self findTextFieldByTag:APRangeOfOperantsX].text = [((NSNumber*)[defaultValues objectForKey:@"operandsRangeX"]) description];
+    [self findTextFieldByTag:APRangeOfOperantsY].text = [((NSNumber*)[defaultValues objectForKey:@"operandsRangeY"]) description];
+    [self findTextFieldByTag:APRangeOfResultX].text = [((NSNumber*)[defaultValues objectForKey:@"resultRangeX"]) description];
+    [self findTextFieldByTag:APRangeOfResultY].text = [((NSNumber*)[defaultValues objectForKey:@"resultRangeY"]) description];
     
-    self.numberOfOperantsField.text = @"2";
+    self.numberOfOperantsField.text = [((NSNumber*)[defaultValues objectForKey:@"numberOfOperands"]) description];
+    
+    int flag = [((NSNumber*)[defaultValues objectForKey:@"operatorsFlag"]) intValue];
+    NSMutableIndexSet *selectedIndices = [NSMutableIndexSet indexSet];
+    for(int i = 0; i < 4; i++){
+        int mask = 1 << i;
+        if((flag & mask) != 0){
+            [selectedIndices addIndex:i];
+        }
+    }
+    [self.operatorsSegmentControl setSelectedSegmentIndexes:(NSIndexSet*)selectedIndices];
 }
 
 -(UITextField*) findTextFieldByTag: (int) tag{

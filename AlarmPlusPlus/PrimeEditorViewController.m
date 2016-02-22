@@ -7,21 +7,119 @@
 //
 
 #import "PrimeEditorViewController.h"
+#import "PrimesProblemGenerator.h"
+#import "ProblemDefaults.h"
 
 @interface PrimeEditorViewController ()
+typedef NS_ENUM(NSInteger, PrimesTextFields) {
+    PrimesNumberOfOptions = 100,
+    PrimesNumberOfPrimes = 101,
+    PrimesMaxPrimes = 102,
+};
 
 @end
+
+int const MAX_NUMBER_OF_OPTIONS = 12;
+int const MAX_NUMBER_OF_PRIMES = 12;
+int const MAX_PRIME = 200;
 
 @implementation PrimeEditorViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+    [self setUpUserInteraction];
+    [self loadDefaults];
+    [self makePreview];
+}
+
+-(void) loadDefaults{
+    NSDictionary* defaultValues = [ProblemDefaults getPrimeProblemDefaultsForDifficulty:DifficultyCustom];
+    NSNumber* numberOfOptions = (NSNumber*)[defaultValues objectForKey:@"numberOfOptions"];
+    NSNumber* numberOfPrimes = (NSNumber*)[defaultValues objectForKey:@"numberOfPrimes"];
+    NSNumber* maxPrime = (NSNumber*)[defaultValues objectForKey:@"maxPrime"];
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.numberOfOptionsField.text = [numberOfOptions description];
+    self.numberOfPrimesField.text = [numberOfPrimes description];
+    self.maxPrimeField.text = [maxPrime description];
+}
+
+-(void) makePreview{
+    PrimesProblemGenerator * pPGen = [[PrimesProblemGenerator alloc] initWithDifficulty:DifficultyCustom];
+    
+    [self.previewSegmentControl removeAllSegments];
+    for(int i = 0; i< [pPGen.numberOfOptions intValue]; i++){
+        NSNumber *numberToAdd = (NSNumber*)[pPGen.selectableNumbers objectAtIndex:i];
+        NSString *numberString = [numberToAdd stringValue];
+        [self.previewSegmentControl insertSegmentWithTitle:numberString atIndex:i animated:false];
+    }
+    
+    [self.previewSegmentControl selectAllSegments:false];
+}
+
+-(void) setUpUserInteraction{
+    [self.numberOfOptionsField addTarget:self action:@selector(numFieldEditingEnds:) forControlEvents:UIControlEventEditingDidEnd];
+    [self.numberOfPrimesField addTarget:self action:@selector(numFieldEditingEnds:) forControlEvents:UIControlEventEditingDidEnd];
+    [self.maxPrimeField addTarget:self action:@selector(numFieldEditingEnds:) forControlEvents:UIControlEventEditingDidEnd];
+    
+}
+
+
+// Validating input
+-(void)numFieldEditingEnds :(UITextField *)theTextField{
+    int value;
+    switch (theTextField.tag) {
+        case PrimesNumberOfOptions:
+            value  = [theTextField.text intValue];
+            if(value < 1){
+                theTextField.text = [NSString stringWithFormat:@"%d", 1];
+            }else if(value > MAX_NUMBER_OF_OPTIONS){
+                theTextField.text = [NSString stringWithFormat:@"%d", MAX_NUMBER_OF_OPTIONS];
+            }
+            break;
+        case PrimesNumberOfPrimes:
+            value  = [theTextField.text intValue];
+            if(value < 1){
+                theTextField.text = [NSString stringWithFormat:@"%d", 1];
+            }else if(value > MAX_NUMBER_OF_PRIMES){
+                theTextField.text = [NSString stringWithFormat:@"%d", MAX_NUMBER_OF_PRIMES];
+            }
+            break;
+        case PrimesMaxPrimes:
+            value  = [theTextField.text intValue];
+            if(value < 1){
+                theTextField.text = [NSString stringWithFormat:@"%d", 1];
+            }else if(value > MAX_PRIME){
+                theTextField.text = [NSString stringWithFormat:@"%d", MAX_PRIME];
+            }
+            
+            break;
+        default:
+            break;
+    }
+    // only checked edge cases before
+    [self validateInput];
+    
+    [self makePreview];
+}
+
+-(void) validateInput{
+    int numOfOptions = [self.numberOfOptionsField.text intValue];
+    int numOfPrimes = [self.numberOfPrimesField.text intValue];
+    int maxPrime = [self.maxPrimeField.text intValue];
+    
+    if(numOfOptions < numOfPrimes){
+        numOfOptions = numOfPrimes;
+    }
+    
+    // not good, need to retrieve primes list and count primes up to maxPrime
+    if(maxPrime/2 + 1  < numOfPrimes){
+        numOfPrimes = maxPrime/2 + 1;
+    }
+    
+    self.numberOfOptionsField.text = [NSString stringWithFormat:@"%d", numOfOptions];
+    self.numberOfPrimesField.text = [NSString stringWithFormat:@"%d", numOfPrimes];
+    self.maxPrimeField.text = [NSString stringWithFormat:@"%d", maxPrime];
 }
 
 - (void)didReceiveMemoryWarning {
