@@ -62,7 +62,7 @@
             [theDictionary setObject:@(NO) forKey:@"quad"];
             [theDictionary setObject:@(1) forKey:@"linAX"];
             [theDictionary setObject:@(1) forKey:@"linAY"];
-            [theDictionary setObject:@(0) forKey:@"linBX"];
+            [theDictionary setObject:@(-10) forKey:@"linBX"];
             [theDictionary setObject:@(10) forKey:@"linBY"];
             [theDictionary setObject:@(1) forKey:@"quadAX"];
             [theDictionary setObject:@(1) forKey:@"quadAY"];
@@ -74,7 +74,7 @@
         case DifficultyNormal:
             [theDictionary setObject:@(YES) forKey:@"lin"];
             [theDictionary setObject:@(NO) forKey:@"quad"];
-            [theDictionary setObject:@(0) forKey:@"linAX"];
+            [theDictionary setObject:@(-10) forKey:@"linAX"];
             [theDictionary setObject:@(10) forKey:@"linAY"];
             [theDictionary setObject:@(-10) forKey:@"linBX"];
             [theDictionary setObject:@(10) forKey:@"linBY"];

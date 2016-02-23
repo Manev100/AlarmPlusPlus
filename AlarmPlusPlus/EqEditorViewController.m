@@ -8,6 +8,7 @@
 
 #import "EqEditorViewController.h"
 #import "ProblemDefaults.h"
+#import "EquationProblemGenerator.h"
 
 @interface EqEditorViewController ()
 typedef NS_ENUM(NSInteger, EquationEditorFields) {
@@ -120,7 +121,9 @@ typedef NS_ENUM(NSInteger, EquationEditorFields) {
 }
 
 -(void) makePreview{
-    self.previewLabel.text = @"2x² + 3x + 4 = 0";
+    EquationProblemGenerator *EPGen = [[EquationProblemGenerator alloc] initWithDifficulty:DifficultyHard];
+    NSString *problemWithResult = [EPGen getResultString];
+    [self.previewLabel setText:problemWithResult];
 }
 
 -(void) loadDefaults{

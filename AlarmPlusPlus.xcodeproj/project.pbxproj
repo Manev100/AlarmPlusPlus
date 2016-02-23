@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D91DE36B1C7B50ED007979F8 /* PrimesProblemGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D91DE36A1C7B50ED007979F8 /* PrimesProblemGenerator.m */; };
+		D91DE36E1C7CB344007979F8 /* EquationProblemGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = D91DE36D1C7CB344007979F8 /* EquationProblemGenerator.m */; };
 		D934203B1C665CFA00094D45 /* AlarmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D934203A1C665CFA00094D45 /* AlarmViewController.m */; };
 		D93B326A1C722D930025135B /* MathProblemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D93B32691C722D930025135B /* MathProblemViewController.m */; };
 		D93B326D1C722ED10025135B /* ArithmeticProblemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D93B326C1C722ED10025135B /* ArithmeticProblemViewController.m */; };
@@ -55,6 +56,8 @@
 /* Begin PBXFileReference section */
 		D91DE3691C7B50ED007979F8 /* PrimesProblemGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrimesProblemGenerator.h; sourceTree = "<group>"; };
 		D91DE36A1C7B50ED007979F8 /* PrimesProblemGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrimesProblemGenerator.m; sourceTree = "<group>"; };
+		D91DE36C1C7CB344007979F8 /* EquationProblemGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EquationProblemGenerator.h; sourceTree = "<group>"; };
+		D91DE36D1C7CB344007979F8 /* EquationProblemGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EquationProblemGenerator.m; sourceTree = "<group>"; };
 		D93420391C665CFA00094D45 /* AlarmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmViewController.h; sourceTree = "<group>"; };
 		D934203A1C665CFA00094D45 /* AlarmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmViewController.m; sourceTree = "<group>"; };
 		D93B32681C722D930025135B /* MathProblemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MathProblemViewController.h; path = "Math Problem Classes/MathProblemViewController.h"; sourceTree = "<group>"; };
@@ -165,10 +168,12 @@
 		D93B327F1C77580D0025135B /* Math Generators */ = {
 			isa = PBXGroup;
 			children = (
-				D91DE3691C7B50ED007979F8 /* PrimesProblemGenerator.h */,
-				D91DE36A1C7B50ED007979F8 /* PrimesProblemGenerator.m */,
 				D93B32801C77582D0025135B /* ArithmeticProblemGenerator.h */,
 				D93B32811C77582D0025135B /* ArithmeticProblemGenerator.m */,
+				D91DE3691C7B50ED007979F8 /* PrimesProblemGenerator.h */,
+				D91DE36A1C7B50ED007979F8 /* PrimesProblemGenerator.m */,
+				D91DE36C1C7CB344007979F8 /* EquationProblemGenerator.h */,
+				D91DE36D1C7CB344007979F8 /* EquationProblemGenerator.m */,
 				D93B32831C775FEE0025135B /* ProblemDefaults.h */,
 				D93B32841C775FEE0025135B /* ProblemDefaults.m */,
 			);
@@ -397,6 +402,7 @@
 				D98942631C6DFD8E00779BF9 /* MultiSelectSegmentedControl.m in Sources */,
 				D9F2EF7C1C78C5A6006339AD /* EqEditorViewController.m in Sources */,
 				D9F6DD361C42C0B00079B212 /* PickAlarmsoundViewController.m in Sources */,
+				D91DE36E1C7CB344007979F8 /* EquationProblemGenerator.m in Sources */,
 				D9B6D5EF1C1F091D00506C5B /* AlarmOverviewViewController.m in Sources */,
 				D93B32791C761E3D0025135B /* APEditorViewController.m in Sources */,
 				D934203B1C665CFA00094D45 /* AlarmViewController.m in Sources */,
