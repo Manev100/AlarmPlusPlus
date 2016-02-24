@@ -187,7 +187,7 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
 
 
 -(void) makePreview{
-    ArithmeticProblemGenerator *APGen = [[ArithmeticProblemGenerator alloc] initWithDifficulty:DifficultyHard];
+    ArithmeticProblemGenerator *APGen = [[ArithmeticProblemGenerator alloc] initWithDifficulty:DifficultyCustom];
     NSString *problemWithResult = [APGen getResultString];
     [self.previewLabel setText:problemWithResult];
 }
@@ -196,6 +196,42 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
     self.previewLabel.text = message;
 }
 
+
+
+-(NSMutableDictionary*) saveInputsInDictionary{
+    NSMutableDictionary* dictionary = [NSMutableDictionary dictionaryWithCapacity:6];
+    [dictionary setObject:@([[self findTextFieldByTag:APRangeOfOperantsX].text intValue]) forKey:@"operandsRangeX"];
+    [dictionary setObject:@([[self findTextFieldByTag:APRangeOfOperantsY].text intValue]) forKey:@"operandsRangeY"];
+    [dictionary setObject:@([[self findTextFieldByTag:APRangeOfResultX].text intValue]) forKey:@"resultRangeX"];
+    [dictionary setObject:@([[self findTextFieldByTag:APRangeOfResultY].text intValue]) forKey:@"resultRangeY"];
+    [dictionary setObject:@([self.numberOfOperantsField.text intValue]) forKey:@"numberOfOperands"];
+    
+    NSIndexSet* indexes =  self.operatorsSegmentControl.selectedSegmentIndexes;
+    int flag = 0;
+    for(int i = 0; i < 4; i++){
+        if([indexes containsIndex:i]){
+            flag += (1 << i);
+        }
+    }
+    [dictionary setObject:@(flag) forKey:@"operatorsFlag"];
+    
+    return dictionary;
+}
+
+-(void) saveInputs{
+    NSLog(@"Saving values to plist...");
+    NSMutableDictionary* valuesToSave = [self saveInputsInDictionary];
+    NSLog(@"%@",[valuesToSave description]);
+    [ProblemDefaults saveArithmeticProblemCustomDifficultyValues:valuesToSave];
+}
+
+// before exiting editor, tell tabbar to save all inputvalues
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"EditorExitSegue"]){
+        //[(EditorTabBarController*)self.tabBarController saveAllInputValues];
+    }
+}
 
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

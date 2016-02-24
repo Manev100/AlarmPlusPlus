@@ -39,13 +39,21 @@
             break;
             
         case DifficultyCustom:
-            //TODO: plists
-            [theDictionary setObject:@(0) forKey:@"operandsRangeX"];
-            [theDictionary setObject:@(100) forKey:@"operandsRangeY"];
-            [theDictionary setObject:@(0) forKey:@"resultRangeX"];
-            [theDictionary setObject:@(200) forKey:@"resultRangeY"];
-            [theDictionary setObject:@(4) forKey:@"numberOfOperands"];
-            [theDictionary setObject:@(15) forKey:@"operatorsFlag"];
+            theDictionary = [self loadValuesFromFile:@"ArithmeticProblemValues.plist"];
+            if(theDictionary == nil){
+                NSLog(@"No plist found, creating plist with default values...");
+                theDictionary = [NSMutableDictionary dictionaryWithCapacity:6];
+                [theDictionary setObject:@(0) forKey:@"operandsRangeX"];
+                [theDictionary setObject:@(100) forKey:@"operandsRangeY"];
+                [theDictionary setObject:@(0) forKey:@"resultRangeX"];
+                [theDictionary setObject:@(200) forKey:@"resultRangeY"];
+                [theDictionary setObject:@(4) forKey:@"numberOfOperands"];
+                [theDictionary setObject:@(15) forKey:@"operatorsFlag"];
+                BOOL success = [self saveValuesFromDictionary:theDictionary ToFile:@"ArithmeticProblemValues.plist"];
+                if(!success){
+                    NSLog(@"Creating plist failed");
+                }
+            }
             break;
         default:
             break;
@@ -102,19 +110,27 @@
             break;
             
         case DifficultyCustom:
-            //TODO: plist
-            [theDictionary setObject:@(NO) forKey:@"lin"];
-            [theDictionary setObject:@(YES) forKey:@"quad"];
-            [theDictionary setObject:@(0) forKey:@"linAX"];
-            [theDictionary setObject:@(10) forKey:@"linAY"];
-            [theDictionary setObject:@(-10) forKey:@"linBX"];
-            [theDictionary setObject:@(10) forKey:@"linBY"];
-            [theDictionary setObject:@(1) forKey:@"quadAX"];
-            [theDictionary setObject:@(1) forKey:@"quadAY"];
-            [theDictionary setObject:@(-10) forKey:@"quadBX"];
-            [theDictionary setObject:@(10) forKey:@"quadBY"];
-            [theDictionary setObject:@(-10) forKey:@"quadCX"];
-            [theDictionary setObject:@(10) forKey:@"quadCY"];
+            theDictionary = [self loadValuesFromFile:@"EquationProblemValues.plist"];
+            if(theDictionary == nil){
+                NSLog(@"No plist found, creating plist with default values...");
+                theDictionary = [NSMutableDictionary dictionaryWithCapacity:6];
+                [theDictionary setObject:@(NO) forKey:@"lin"];
+                [theDictionary setObject:@(YES) forKey:@"quad"];
+                [theDictionary setObject:@(0) forKey:@"linAX"];
+                [theDictionary setObject:@(10) forKey:@"linAY"];
+                [theDictionary setObject:@(-10) forKey:@"linBX"];
+                [theDictionary setObject:@(10) forKey:@"linBY"];
+                [theDictionary setObject:@(1) forKey:@"quadAX"];
+                [theDictionary setObject:@(1) forKey:@"quadAY"];
+                [theDictionary setObject:@(-10) forKey:@"quadBX"];
+                [theDictionary setObject:@(10) forKey:@"quadBY"];
+                [theDictionary setObject:@(-10) forKey:@"quadCX"];
+                [theDictionary setObject:@(10) forKey:@"quadCY"];
+                BOOL success = [self saveValuesFromDictionary:theDictionary ToFile:@"EquationProblemValues.plist"];
+                if(!success){
+                    NSLog(@"Creating plist failed");
+                }
+            }
             break;
         default:
             break;
@@ -144,10 +160,18 @@
             break;
             
         case DifficultyCustom:
-            //TODO: plists
-            [theDictionary setObject:@(8) forKey:@"numberOfOptions"];
-            [theDictionary setObject:@(4) forKey:@"numberOfPrimes"];
-            [theDictionary setObject:@(200) forKey:@"maxPrime"];
+            theDictionary = [self loadValuesFromFile:@"PrimeProblemValues.plist"];
+            if(theDictionary == nil){
+                NSLog(@"No plist found, creating plist with default values...");
+                theDictionary = [NSMutableDictionary dictionaryWithCapacity:6];
+                [theDictionary setObject:@(8) forKey:@"numberOfOptions"];
+                [theDictionary setObject:@(4) forKey:@"numberOfPrimes"];
+                [theDictionary setObject:@(200) forKey:@"maxPrime"];
+                BOOL success = [self saveValuesFromDictionary:theDictionary ToFile:@"PrimeProblemValues.plist"];
+                if(!success){
+                    NSLog(@"Creating plist failed");
+                }
+            }
             break;
         default:
             break;
@@ -156,5 +180,37 @@
     return theDictionary;
 }
 
++(NSMutableDictionary*) loadValuesFromFile: (NSString*) filename{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *finalPath = [documentsPath stringByAppendingString:filename];
+    
+    NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:finalPath];
+    if(dict == nil){
+        return nil;
+    }else{
+        return [NSMutableDictionary dictionaryWithDictionary:dict];
+    }
+}
+
++(BOOL)saveValuesFromDictionary:(NSMutableDictionary*) theDictionary ToFile:(NSString*) fileName{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *finalPath = [documentsPath stringByAppendingString:fileName];
+    
+    return [theDictionary writeToFile:finalPath atomically:YES];
+}
+
++(void) saveArithmeticProblemCustomDifficultyValues: (NSMutableDictionary*) theDictionary{
+    [self saveValuesFromDictionary:theDictionary ToFile:@"ArithmeticProblemValues.plist"];
+}
+
++(void) saveEquationProblemCustomDifficultyValues: (NSMutableDictionary*) theDictionary{
+    [self saveValuesFromDictionary:theDictionary ToFile:@"EquationProblemValues.plist"];
+}
+
++(void) savePrimeProblemCustomDifficultyValues: (NSMutableDictionary*) theDictionary{
+    [self saveValuesFromDictionary:theDictionary ToFile:@"PrimeProblemValues.plist"];
+}
 
 @end
