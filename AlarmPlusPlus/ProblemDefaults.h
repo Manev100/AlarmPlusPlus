@@ -14,4 +14,6 @@
 +(NSDictionary*) getEquationProblemDefaultsForDifficulty: (Difficulties) difficulty;
 +(NSDictionary*) getPrimeProblemDefaultsForDifficulty: (Difficulties) difficulty;
 +(void) saveArithmeticProblemCustomDifficultyValues: (NSMutableDictionary*) theDictionary;
++(void) saveEquationProblemCustomDifficultyValues: (NSMutableDictionary*) theDictionary;
++(void) savePrimeProblemCustomDifficultyValues: (NSMutableDictionary*) theDictionary;
 @end

@@ -12,6 +12,7 @@
 @interface ArithmeticProblemGenerator : NSObject
 - (id)init;
 - (id)initWithDifficulty: (Difficulties) difficulty;
+- (id)initWithDictionary: (NSDictionary*) dictionary;
 - (void) setUpWithDifficulty: (Difficulties) difficulty;
 - (NSString*) getResultString;
 

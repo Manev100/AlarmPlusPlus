@@ -267,7 +267,7 @@
         <scene sceneID="azr-Uc-ieA">
             <objects>
                 <tableViewController id="aZx-fR-24e" customClass="EqEditorViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="76D-SZ-cF0">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="76D-SZ-cF0">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -675,7 +675,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Equations Editor" id="uwd-eg-UHR">
                         <rightBarButtonItems>
-                            <barButtonItem title="Done" id="COr-mP-848"/>
+                            <barButtonItem systemItem="done" id="COr-mP-848">
+                                <connections>
+                                    <segue destination="Zsx-ok-waw" kind="unwind" unwindAction="unwindToEditorDone:" id="WqD-Ul-YkH"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem title="+/-" id="Dov-kD-XgV">
                                 <connections>
                                     <action selector="signButtonPressed:" destination="aZx-fR-24e" id="Sx8-Dy-qLb"/>
@@ -699,6 +703,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wjX-Mh-ZWk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Zsx-ok-waw" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="327" y="-1018"/>
         </scene>
@@ -706,7 +711,7 @@
         <scene sceneID="8To-uR-fOV">
             <objects>
                 <tableViewController id="wsd-Bd-rUq" customClass="APEditorViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="WjJ-V6-WEn">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="WjJ-V6-WEn">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -927,7 +932,11 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Arithmetic Problems Editor" id="5H2-Ne-qXv">
                         <rightBarButtonItems>
-                            <barButtonItem style="plain" systemItem="done" id="Sbi-JR-G1G"/>
+                            <barButtonItem style="plain" systemItem="done" id="Sbi-JR-G1G">
+                                <connections>
+                                    <segue destination="Icl-M4-RIG" kind="unwind" unwindAction="unwindToEditorDone:" id="e97-gm-Ql0"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem title="+/-" id="Lib-AS-eLg">
                                 <connections>
                                     <action selector="signButtonPressed:" destination="wsd-Bd-rUq" id="qiO-Dg-u0W"/>
@@ -946,6 +955,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WrF-Ny-umw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Icl-M4-RIG" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="219" y="-2443"/>
         </scene>
@@ -1547,7 +1557,7 @@
         <scene sceneID="3BR-3Y-0k3">
             <objects>
                 <tableViewController id="pad-Ot-8ji" customClass="PrimeEditorViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="89b-0r-3ct">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="89b-0r-3ct">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1680,7 +1690,13 @@
                             <outlet property="delegate" destination="pad-Ot-8ji" id="G3H-MR-4yQ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Prime Numbers Editor" id="aHg-Rc-Zj8"/>
+                    <navigationItem key="navigationItem" title="Prime Numbers Editor" id="aHg-Rc-Zj8">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="azn-8N-UCY">
+                            <connections>
+                                <segue destination="blD-F1-WGJ" kind="unwind" unwindAction="unwindToEditorDone:" id="Pzq-kn-aLN"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="maxPrimeField" destination="pyu-29-MnV" id="TEM-iz-vQT"/>
                         <outlet property="numberOfOptionsField" destination="M0D-GD-L3A" id="OfV-yZ-ebR"/>
@@ -1689,6 +1705,7 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pPf-xq-hlG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="blD-F1-WGJ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="327" y="-1626"/>
         </scene>

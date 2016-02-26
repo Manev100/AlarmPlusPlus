@@ -23,14 +23,30 @@
     return self;
 }
 
+- (id)initWithDictionary: (NSDictionary*) dictionary{
+    if (self = [super init]) {
+        [self setUpWithDictionary:dictionary];
+    }
+    return self;
+}
+
 - (void) setUpWithDifficulty: (Difficulties) difficulty{
     NSDictionary* defaultValues = [ProblemDefaults getArithmeticProblemDefaultsForDifficulty:difficulty];
-    self.operandsRangeX = (NSNumber*)[defaultValues objectForKey:@"operandsRangeX"];
-    self.operandsRangeY = (NSNumber*)[defaultValues objectForKey:@"operandsRangeY"];
-    self.resultRangeX = (NSNumber*)[defaultValues objectForKey:@"resultRangeX"];
-    self.resultRangeY = (NSNumber*)[defaultValues objectForKey:@"resultRangeY"];
-    self.operatorsFlag = (NSNumber*)[defaultValues objectForKey:@"operatorsFlag"];
-    self.numberOfOperands = (NSNumber*)[defaultValues objectForKey:@"numberOfOperands"];
+    [self setUpWithDictionary:defaultValues];
+}
+- (void)setUpWithDictionary: (NSDictionary*) dictionary{
+    NSArray* requiredKeys = [NSArray arrayWithObjects:@"operandsRangeX",@"operandsRangeY", @"resultRangeX",@"resultRangeY", @"operatorsFlag",@"numberOfOperands", nil];
+    NSArray* objectsFound = [dictionary objectsForKeys:requiredKeys notFoundMarker:[NSNull null]];
+    if([objectsFound containsObject:[NSNull null]]){
+        NSLog(@"Invalid dictionary. Does not contain all necessary values.");
+    }
+    
+    self.operandsRangeX = (NSNumber*)[dictionary objectForKey:@"operandsRangeX"];
+    self.operandsRangeY = (NSNumber*)[dictionary objectForKey:@"operandsRangeY"];
+    self.resultRangeX = (NSNumber*)[dictionary objectForKey:@"resultRangeX"];
+    self.resultRangeY = (NSNumber*)[dictionary objectForKey:@"resultRangeY"];
+    self.operatorsFlag = (NSNumber*)[dictionary objectForKey:@"operatorsFlag"];
+    self.numberOfOperands = (NSNumber*)[dictionary objectForKey:@"numberOfOperands"];
     
     [self computeResult];
 }

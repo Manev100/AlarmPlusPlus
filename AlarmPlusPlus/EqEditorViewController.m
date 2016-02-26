@@ -121,7 +121,7 @@ typedef NS_ENUM(NSInteger, EquationEditorFields) {
 }
 
 -(void) makePreview{
-    EquationProblemGenerator *EPGen = [[EquationProblemGenerator alloc] initWithDifficulty:DifficultyHard];
+    EquationProblemGenerator *EPGen = [[EquationProblemGenerator alloc] initWithDictionary:[self saveInputsInDictionary]];
     NSString *problemWithResult = [EPGen getResultString];
     [self.previewLabel setText:problemWithResult];
 }
@@ -194,6 +194,47 @@ typedef NS_ENUM(NSInteger, EquationEditorFields) {
     
     return 0;
 }
+
+
+-(NSMutableDictionary*) saveInputsInDictionary{
+    NSMutableDictionary* dictionary = [NSMutableDictionary dictionaryWithCapacity:6];
+    [dictionary setObject:@([[self findTextFieldByTag:EqLinAX].text intValue]) forKey:@"linAX"];
+    [dictionary setObject:@([[self findTextFieldByTag:EqLinAY].text intValue]) forKey:@"linAY"];
+    [dictionary setObject:@([[self findTextFieldByTag:EqLinBX].text intValue]) forKey:@"linBX"];
+    [dictionary setObject:@([[self findTextFieldByTag:EqLinBY].text intValue]) forKey:@"linBY"];
+    [dictionary setObject:@([[self findTextFieldByTag:EqQuadAX].text intValue]) forKey:@"quadAX"];
+    [dictionary setObject:@([[self findTextFieldByTag:EqQuadAY].text intValue]) forKey:@"quadAY"];
+    [dictionary setObject:@([[self findTextFieldByTag:EqQuadBX].text intValue]) forKey:@"quadBX"];
+    [dictionary setObject:@([[self findTextFieldByTag:EqQuadBY].text intValue]) forKey:@"quadBY"];
+    [dictionary setObject:@([[self findTextFieldByTag:EqQuadCX].text intValue]) forKey:@"quadCX"];
+    [dictionary setObject:@([[self findTextFieldByTag:EqQuadCY].text intValue]) forKey:@"quadCY"];
+    
+    if(self.linQuadSegmentControl.selectedSegmentIndex == 0){
+        [dictionary setObject:@(YES) forKey:@"lin"];
+        [dictionary setObject:@(NO) forKey:@"quad"];
+    }else{
+        [dictionary setObject:@(NO) forKey:@"lin"];
+        [dictionary setObject:@(YES) forKey:@"quad"];
+    }
+    
+    return dictionary;
+}
+
+-(void) saveInputs{
+    NSLog(@"Saving values to plist...");
+    NSMutableDictionary* valuesToSave = [self saveInputsInDictionary];
+    NSLog(@"%@",[valuesToSave description]);
+    [ProblemDefaults saveEquationProblemCustomDifficultyValues:valuesToSave];
+}
+
+// before exiting editor, tell tabbar to save all inputvalues
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"EditorExitSegue"]){
+        //[(EditorTabBarController*)self.tabBarController saveAllInputValues];
+    }
+}
+
 
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

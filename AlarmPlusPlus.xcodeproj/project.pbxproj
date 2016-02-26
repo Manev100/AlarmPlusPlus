@@ -157,10 +157,10 @@
 			children = (
 				D93B32771C761E3D0025135B /* APEditorViewController.h */,
 				D93B32781C761E3D0025135B /* APEditorViewController.m */,
-				D9F2EF771C78C58F006339AD /* PrimeEditorViewController.h */,
-				D9F2EF781C78C58F006339AD /* PrimeEditorViewController.m */,
 				D9F2EF7A1C78C5A6006339AD /* EqEditorViewController.h */,
 				D9F2EF7B1C78C5A6006339AD /* EqEditorViewController.m */,
+				D9F2EF771C78C58F006339AD /* PrimeEditorViewController.h */,
+				D9F2EF781C78C58F006339AD /* PrimeEditorViewController.m */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -170,10 +170,10 @@
 			children = (
 				D93B32801C77582D0025135B /* ArithmeticProblemGenerator.h */,
 				D93B32811C77582D0025135B /* ArithmeticProblemGenerator.m */,
-				D91DE3691C7B50ED007979F8 /* PrimesProblemGenerator.h */,
-				D91DE36A1C7B50ED007979F8 /* PrimesProblemGenerator.m */,
 				D91DE36C1C7CB344007979F8 /* EquationProblemGenerator.h */,
 				D91DE36D1C7CB344007979F8 /* EquationProblemGenerator.m */,
+				D91DE3691C7B50ED007979F8 /* PrimesProblemGenerator.h */,
+				D91DE36A1C7B50ED007979F8 /* PrimesProblemGenerator.m */,
 				D93B32831C775FEE0025135B /* ProblemDefaults.h */,
 				D93B32841C775FEE0025135B /* ProblemDefaults.m */,
 			);

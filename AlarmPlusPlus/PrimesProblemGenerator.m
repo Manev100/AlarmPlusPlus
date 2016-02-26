@@ -26,14 +26,31 @@
     return self;
 }
 
+- (id)initWithDictionary: (NSDictionary*) dictionary{
+    if (self = [super init]) {
+        self.primes = @[@(2), @(3), @(5), @(7), @(11), @(13), @(17), @(19), @(23), @(29), @(31), @(37), @(41), @(43), @(47), @(53), @(59), @(61), @(67), @(71), @(73), @(79), @(83), @(89), @(97), @(101), @(103), @(107), @(109), @(113), @(127), @(131), @(137), @(139), @(149), @(151), @(157), @(163), @(167), @(173), @(179), @(181), @(191), @(193), @(197), @(199), @(211)];
+        [self setUpWithDictionary:dictionary];
+    }
+    return self;
+}
+
 - (void) setUpWithDifficulty: (Difficulties) difficulty{
     NSDictionary* defaultValues = [ProblemDefaults getPrimeProblemDefaultsForDifficulty:difficulty];
-    self.numberOfOptions = (NSNumber*)[defaultValues objectForKey:@"numberOfOptions"];
-    self.numberOfPrimes = (NSNumber*)[defaultValues objectForKey:@"numberOfPrimes"];
-    self.maxPrime = (NSNumber*)[defaultValues objectForKey:@"maxPrime"];
+    [self setUpWithDictionary:defaultValues];
+}
+
+- (void)setUpWithDictionary: (NSDictionary*) dictionary{
+    NSArray* requiredKeys = [NSArray arrayWithObjects:@"numberOfOptions",@"numberOfPrimes", @"maxPrime", nil];
+    NSArray* objectsFound = [dictionary objectsForKeys:requiredKeys notFoundMarker:[NSNull null]];
+    if([objectsFound containsObject:[NSNull null]]){
+        NSLog(@"Invalid dictionary. Does not contain all necessary values.");
+    }
+    
+    self.numberOfOptions = (NSNumber*)[dictionary objectForKey:@"numberOfOptions"];
+    self.numberOfPrimes = (NSNumber*)[dictionary objectForKey:@"numberOfPrimes"];
+    self.maxPrime = (NSNumber*)[dictionary objectForKey:@"maxPrime"];
     
     [self computeProblem];
-    
 }
 
 - (void) computeProblem{
@@ -86,15 +103,16 @@
 
 -(NSMutableArray*) getNonPrimesArrayOfSize: (int) size{
     NSMutableArray *output = [NSMutableArray arrayWithCapacity:size];
-    
-    int nonPrimesFound = 0;
-    do{
-        NSNumber *number = [NSNumber numberWithInt:arc4random_uniform(200)];
-        if(![self.primes containsObject:number] && ![output containsObject:number]){
-            [output addObject:number];
-            nonPrimesFound++;
-        }
-    }while(nonPrimesFound < size);
+    if(size != 0){
+        int nonPrimesFound = 0;
+        do{
+            NSNumber *number = [NSNumber numberWithInt:arc4random_uniform(200)];
+            if(![self.primes containsObject:number] && ![output containsObject:number]){
+                [output addObject:number];
+                nonPrimesFound++;
+            }
+        }while(nonPrimesFound < size);
+    }
     return output;
 }
 

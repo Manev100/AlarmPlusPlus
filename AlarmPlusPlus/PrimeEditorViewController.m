@@ -45,7 +45,7 @@ int const MAX_PRIME = 200;
 }
 
 -(void) makePreview{
-    PrimesProblemGenerator * pPGen = [[PrimesProblemGenerator alloc] initWithDifficulty:DifficultyCustom];
+    PrimesProblemGenerator * pPGen = [[PrimesProblemGenerator alloc] initWithDictionary:[self saveInputsInDictionary]];
     
     [self.previewSegmentControl removeAllSegments];
     for(int i = 0; i< [pPGen.numberOfOptions intValue]; i++){
@@ -140,6 +140,30 @@ int const MAX_PRIME = 200;
         return 1;
     }
     return 0;
+}
+
+-(NSMutableDictionary*) saveInputsInDictionary{
+    NSMutableDictionary* dictionary = [NSMutableDictionary dictionaryWithCapacity:3];
+    [dictionary setObject:@([self.numberOfOptionsField.text intValue]) forKey:@"numberOfOptions"];
+    [dictionary setObject:@([self.numberOfPrimesField.text intValue]) forKey:@"numberOfPrimes"];
+    [dictionary setObject:@([self.maxPrimeField.text intValue]) forKey:@"maxPrime"];
+    
+    return dictionary;
+}
+
+-(void) saveInputs{
+    NSLog(@"Saving values to plist...");
+    NSMutableDictionary* valuesToSave = [self saveInputsInDictionary];
+    NSLog(@"%@",[valuesToSave description]);
+    [ProblemDefaults savePrimeProblemCustomDifficultyValues:valuesToSave];
+}
+
+// before exiting editor, tell tabbar to save all inputvalues
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"EditorExitSegue"]){
+        //[(EditorTabBarController*)self.tabBarController saveAllInputValues];
+    }
 }
 
 /*

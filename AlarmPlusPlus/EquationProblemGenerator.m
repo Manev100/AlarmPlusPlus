@@ -22,8 +22,26 @@
     return self;
 }
 
+- (id)initWithDictionary: (NSDictionary*) dictionary{
+    if (self = [super init]) {
+        [self setUpWithDictionary: dictionary];
+    }
+    return self;
+}
+
 - (void) setUpWithDifficulty: (Difficulties) difficulty{
-    self.equationRanges = [ProblemDefaults getEquationProblemDefaultsForDifficulty:difficulty];
+    [self setUpWithDictionary:[ProblemDefaults getEquationProblemDefaultsForDifficulty:difficulty]];
+    [self computeProblem];
+}
+
+- (void) setUpWithDictionary: (NSDictionary*) dictionary{
+    /*NSArray* requiredKeys = [NSArray arrayWithObjects:@"linAX",@"linAY", @"linBX", @"linBY",@"quadAX", @"quadAY", @"quadBX",@"quadBY", @"quadCX", @"quadCY", "lin", @"quad" , nil];
+    NSArray* objectsFound = [dictionary objectsForKeys:requiredKeys notFoundMarker:[NSNull null]];
+    if([objectsFound containsObject:[NSNull null]]){
+        NSLog(@"Invalid dictionary. Does not contain all necessary values.");
+    }
+    */
+    self.equationRanges = dictionary;
     self.problemIsLinear = [(NSNumber*)[self.equationRanges objectForKey:@"lin"] boolValue];
     self.problemIsQuadratic = [(NSNumber*)[self.equationRanges objectForKey:@"quad"] boolValue];
     
@@ -72,23 +90,26 @@
             potentialB = arc4random_uniform((rangeBY - rangeBX) + 1) + rangeBX;
             potentialC = arc4random_uniform((rangeCY - rangeCX) + 1) + rangeCX;
             
-            // constraints on a,b,c
+            // a mustn't be zero
             BOOL aNonZero = (potentialA != 0);
-            BOOL bToARatioOK = (potentialB % 2*potentialA == 0);
-            BOOL cToARationOK = (potentialC % potentialA == 0);
-            BOOL sqrtWhole = false;
-            
-            // squaroot evaluates to whole number?
-            if(aNonZero && bToARatioOK && cToARationOK){
-                int numberToSquare = pow(potentialB/(2*potentialA),2) - (potentialC/potentialA);
-                int squareRoot = sqrt(numberToSquare);
-                if(pow(squareRoot,2) == numberToSquare){
-                    sqrtWhole = true;
+            if(aNonZero){
+                // constraints on a,b,c
+                BOOL bToARatioOK = (potentialB % 2*potentialA == 0);
+                BOOL cToARationOK = (potentialC % potentialA == 0);
+                BOOL sqrtWhole = false;
+                
+                // squaroot evaluates to whole number?
+                if(bToARatioOK && cToARationOK){
+                    int numberToSquare = pow(potentialB/(2*potentialA),2) - (potentialC/potentialA);
+                    int squareRoot = sqrt(numberToSquare);
+                    if(pow(squareRoot,2) == numberToSquare){
+                        sqrtWhole = true;
+                    }
                 }
-            }
-            
-            if(sqrtWhole){
-                foundGoodValues = true;
+                
+                if(sqrtWhole){
+                    foundGoodValues = true;
+                }
             }
         }while (!foundGoodValues);
         
@@ -119,7 +140,7 @@
         }else if([self.b intValue] < 0){
             output = [output stringByAppendingFormat:@"- %d = 0", abs([self.b intValue]) ];
         }else{
-            output = [NSString stringWithFormat:@"+ %@ = 0", self.b];
+            output = [output stringByAppendingFormat:@"+ %@ = 0", self.b];
         }
     }else if (self.problemIsQuadratic){
         if([self.a intValue] == 1){

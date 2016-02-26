@@ -185,9 +185,9 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
 }
 
 
-
 -(void) makePreview{
-    ArithmeticProblemGenerator *APGen = [[ArithmeticProblemGenerator alloc] initWithDifficulty:DifficultyCustom];
+    NSDictionary* inputValues = [self saveInputsInDictionary];
+    ArithmeticProblemGenerator *APGen = [[ArithmeticProblemGenerator alloc] initWithDictionary:inputValues];
     NSString *problemWithResult = [APGen getResultString];
     [self.previewLabel setText:problemWithResult];
 }
@@ -232,6 +232,7 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
         //[(EditorTabBarController*)self.tabBarController saveAllInputValues];
     }
 }
+
 
 /*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
