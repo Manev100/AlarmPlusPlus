@@ -14,5 +14,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *numberOfPrimesField;
 @property (weak, nonatomic) IBOutlet UITextField *maxPrimeField;
 @property (strong, nonatomic) IBOutlet MultiSelectSegmentedControl *previewSegmentControl;
+@property BOOL loadedDefaults;
 
+-(void) saveInputs;
 @end

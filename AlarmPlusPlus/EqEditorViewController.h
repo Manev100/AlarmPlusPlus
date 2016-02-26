@@ -15,7 +15,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *previewLabel;
 @property BOOL linearEquationsEnabled;
 @property BOOL quadraticEquationsEnabled;
+@property BOOL loadedDefaults;
 
 - (IBAction)signButtonPressed:(id)sender;
-
+-(void) saveInputs;
 @end

@@ -11,6 +11,7 @@
 #import "Alarm.h"
 #import "AlarmAddViewController.h"
 #import "AppDelegate.h"
+#import "EditorTabBarController.h"
 
 @interface AlarmOverviewViewController ()
 
@@ -216,7 +217,7 @@
 }
 
 - (IBAction)unwindToEditorDone:(UIStoryboardSegue *)unwindSegue{
-    NSLog([unwindSegue.sourceViewController.tabBarController description]);
+    [(EditorTabBarController*)unwindSegue.sourceViewController.tabBarController saveAllInputs];
 }
 
 // NOTIFICATION SCHEDULING

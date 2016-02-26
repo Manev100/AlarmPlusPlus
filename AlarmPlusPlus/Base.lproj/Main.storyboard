@@ -959,10 +959,10 @@
             </objects>
             <point key="canvasLocation" x="219" y="-2443"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Editor Tab Bar Controller-->
         <scene sceneID="Ddx-MS-vno">
             <objects>
-                <tabBarController id="GCM-GE-hAU" sceneMemberID="viewController">
+                <tabBarController id="GCM-GE-hAU" customClass="EditorTabBarController" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="esd-Px-C8j">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -976,7 +976,7 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d5w-4y-hFb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1116" y="-1268"/>
+            <point key="canvasLocation" x="1132" y="-1285"/>
         </scene>
         <!--Alarm Overview View Controller-->
         <scene sceneID="5Zc-nj-VC7">

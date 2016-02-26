@@ -15,10 +15,10 @@
 @property (strong, nonatomic) IBOutletCollection(UITextField) NSArray *rangeTextFields;
 @property (weak, nonatomic) IBOutlet UILabel *previewLabel;
 @property int countOfFaultyCells;
-
+@property BOOL loadedDefaults;
 
 
 - (IBAction)signButtonPressed:(id)sender;
-
+-(void) saveInputs;
 
 @end
