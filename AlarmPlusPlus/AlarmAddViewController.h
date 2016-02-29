@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "MultiSelectSegmentedControl.h"
-@interface AlarmAddViewController : UITableViewController <UIActionSheetDelegate>
+@interface AlarmAddViewController : UITableViewController <UIActionSheetDelegate, UITextFieldDelegate>
 
 
 @property (weak, nonatomic) IBOutlet UIDatePicker *datePicker;

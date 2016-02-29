@@ -10,8 +10,6 @@
 
 @interface AlarmViewController (){
     Alarm* myAlarm;
-    int result;
-    int x,y;
     int tries;
 }
 
@@ -27,12 +25,17 @@
     }
     [self.alarmName setText:myAlarm.name];
     
+    [self updateTimeLabelToNow];
+    [NSTimer scheduledTimerWithTimeInterval:1.0
+                                     target:self
+                                   selector:@selector(updateEverySecond)
+                                   userInfo:nil
+                                    repeats:YES];
     
     
     self.arithmeticContainer.alpha = 0;
     self.equationContainer.alpha = 0;
     self.primeContainer.alpha = 0;
-    
 
     if(myAlarm.problem == ProblemTypeArithmetic){
         self.activeProblemViewController = [self.childProblemViewControllers objectForKey:@"arithmeticVC"];
@@ -101,6 +104,17 @@
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [[self view] endEditing:YES];
+}
+
+- (void)updateEverySecond {
+    [self updateTimeLabelToNow];
+}
+
+- (void) updateTimeLabelToNow{
+    NSDate *now = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"hh:mm"];
+    self.timeLabel.text = [dateFormatter stringFromDate: now];
 }
 
 /*

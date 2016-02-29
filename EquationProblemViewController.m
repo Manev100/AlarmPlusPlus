@@ -62,4 +62,19 @@
 }
 */
 
+- (IBAction)signSwitch1Clicked:(id)sender {
+    if ([self.firstInputField.text hasPrefix:@"-"]) {
+        self.firstInputField.text = [self.firstInputField.text substringFromIndex:1];
+    }else{
+        self.firstInputField.text = [@"-" stringByAppendingString: self.firstInputField.text];
+    }
+}
+
+- (IBAction)signSwitch2Clicked:(id)sender {
+    if ([self.secondInputField.text hasPrefix:@"-"]) {
+        self.secondInputField.text = [self.secondInputField.text substringFromIndex:1];
+    }else{
+        self.secondInputField.text = [@"-" stringByAppendingString: self.secondInputField.text];
+    }
+}
 @end

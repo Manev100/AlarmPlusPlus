@@ -17,15 +17,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *alarmNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *triesLabel;
-@property (weak, nonatomic) IBOutlet UITextField *numberInputField;
-@property (weak, nonatomic) IBOutlet UILabel *problemField;
 
 @property (weak, nonatomic) IBOutlet UIView *primeContainer;
 @property (weak, nonatomic) IBOutlet UIView *equationContainer;
 @property (weak, nonatomic) IBOutlet UIView *arithmeticContainer;
 @property (weak, nonatomic) MathProblemViewController *activeProblemViewController;
 @property (strong, nonatomic) NSMutableDictionary *childProblemViewControllers;
-
 
 
 - (IBAction)submitPressed:(id)sender;

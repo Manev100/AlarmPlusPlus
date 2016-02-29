@@ -40,14 +40,11 @@
     }
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (IBAction)signSwitchClicked:(id)sender {
+    if ([self.inputField.text hasPrefix:@"-"]) {
+        self.inputField.text = [self.inputField.text substringFromIndex:1];
+    }else{
+        self.inputField.text = [@"-" stringByAppendingString: self.inputField.text];
+    }
 }
-*/
-
 @end

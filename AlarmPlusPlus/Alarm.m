@@ -11,7 +11,6 @@
 @implementation Alarm
 - (id)init{
     if (self = [super init]) {
-        // do our initialization...
         self.date = [NSDate date];
         self.name = @"Test1";
         self.ringtone = @"ring.mp3";
@@ -106,4 +105,36 @@
     }
 }
 
+- (void) encodeWithCoder:(NSCoder *) coder{
+    [coder encodeObject:self.date forKey:@"date"];
+    [coder encodeObject:self.name forKey:@"name"];
+    [coder encodeObject:self.ringtone forKey:@"ringtone"];
+    [coder encodeInt:self.problem forKey:@"problemType"];
+    [coder encodeObject:self.alarmId forKey:@"ID"];
+    [coder encodeInt:self.difficulty forKey:@"difficulty"];
+    [coder encodeInt:self.weekdaysFlag forKey:@"weekdaysFlag"];
+    [coder encodeFloat:self.volume forKey:@"volume"];
+    [coder encodeBool:self.repeat forKey:@"repeat"];
+    [coder encodeBool:self.active forKey:@"active"];
+}
+
+- (id) initWithCoder:(NSCoder *) decoder{
+    if(self = [super init]){
+        self.date = [decoder decodeObjectForKey:@"date"];
+        self.name = [decoder decodeObjectForKey:@"name"];
+        self.ringtone = [decoder decodeObjectForKey:@"ringtone"];
+        self.problem = [decoder decodeIntForKey:@"problem"];
+        self.alarmId = [decoder decodeObjectForKey:@"ID"];
+        self.difficulty = [decoder decodeIntForKey:@"difficulty"];
+        self.weekdaysFlag = [decoder decodeIntForKey:@"weekdaysFlag"];
+        self.volume = [decoder decodeFloatForKey:@"volume"];
+        self.repeat = [decoder decodeBoolForKey:@"repeat"];
+        self.active = [decoder decodeBoolForKey:@"active"];
+        
+    }
+    return self;
+}
+
+
 @end
+

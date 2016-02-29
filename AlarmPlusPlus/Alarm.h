@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface Alarm : NSObject
+@interface Alarm : NSObject <NSCoding>
 - (id)init;
 
 typedef NS_ENUM(NSInteger, Difficulties) {

@@ -13,6 +13,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *firstInputField;
 @property (weak, nonatomic) IBOutlet UITextField *secondInputField;
 
+- (IBAction)signSwitch1Clicked:(id)sender;
+- (IBAction)signSwitch2Clicked:(id)sender;
 
 @property BOOL problemIsLinear;
 @property BOOL problemIsQuadratic;
