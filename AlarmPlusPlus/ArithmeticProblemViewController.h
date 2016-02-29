@@ -11,5 +11,6 @@
 @interface ArithmeticProblemViewController : MathProblemViewController
 @property (weak, nonatomic) IBOutlet UILabel *problemField;
 @property (weak, nonatomic) IBOutlet UITextField *inputField;
+@property int result;
 
 @end

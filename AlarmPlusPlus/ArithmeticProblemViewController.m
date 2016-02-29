@@ -7,13 +7,13 @@
 //
 
 #import "ArithmeticProblemViewController.h"
+#import "ArithmeticProblemGenerator.h"
 
 @interface ArithmeticProblemViewController ()
 
 @end
 
 @implementation ArithmeticProblemViewController
-int _result;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -26,16 +26,14 @@ int _result;
 }
 
 -(void) setupViewForDifficulty: (Difficulties) difficulty{
-    int x = arc4random_uniform(100);
-    int y = arc4random_uniform(100);
-    
-    _result = x+y;
-    [self.problemField setText: [NSString stringWithFormat:@"%d  +  %d  =", x, y]];
+    ArithmeticProblemGenerator *APGen = [[ArithmeticProblemGenerator alloc] initWithDifficulty:difficulty];
+    self.result = APGen.result;
+    [self.problemField setText: [APGen getResultString]];
 }
 
 -(BOOL) confirmResult{
     int input = [self.inputField.text intValue];
-    if(_result == input){
+    if(self.result == input){
         return true;
     }else{
         return false;

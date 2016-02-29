@@ -7,15 +7,13 @@
 //
 
 #import "EquationProblemViewController.h"
+#import "EquationProblemGenerator.h"
 
 @interface EquationProblemViewController ()
 
 @end
 
 @implementation EquationProblemViewController
-int _x1;
-int _x2;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -27,42 +25,32 @@ int _x2;
 }
 
 -(void) setupViewForDifficulty: (Difficulties) difficulty{
-    // TODO: Negative numbers
-    _x1 = arc4random_uniform(10);
-    _x2 = arc4random_uniform(10);
-    int a = -(_x1 + _x2);
-    int b = _x1*_x2;
+    EquationProblemGenerator* EqPGen = [[EquationProblemGenerator alloc] initWithDifficulty:difficulty];
+    self.resultX1 = [EqPGen.x1 intValue];
+    self.resultX2 = [EqPGen.x2 intValue];
+    self.problemIsLinear = EqPGen.problemIsLinear;
+    self.problemIsQuadratic = EqPGen.problemIsQuadratic;
     
-    self.problemField.text = [self buildEquationStringWitha: a Andb: b];
+    self.problemField.text = [EqPGen getResultString];
 }
 
 -(BOOL) confirmResult{
     int input1 = [self.firstInputField.text intValue];
     int input2 = [self.secondInputField.text intValue];
-    if((input1 == _x1 && input2 == _x2) || (input1 == _x2 && input2 == _x1)){
-        return true;
+    
+    if(self.problemIsLinear){
+        if(input1 == self.resultX1 || input2 == self.resultX1){
+            return true;
+        }
+    }else if(self.problemIsQuadratic){
+        if((input1 == self.resultX1 && input2 == self.resultX2) || (input1 == self.resultX2 && input2 == self.resultX1)){
+            return true;
+        }
     }
     return false;
 }
 
--(NSString*) buildEquationStringWitha:(int) a Andb:(int)b{
-    NSString *str = @"x² ";
-    if(a > 0){
-        str = [str stringByAppendingFormat:@"+ %dx ", a];
-    }else if(a < 0){
-        str = [str stringByAppendingFormat:@"- %dx ", -a];
-    }
-    
-    if(b > 0){
-        str = [str stringByAppendingFormat:@"+ %d ", b];
-    }else if (b < 0){
-        str = [str stringByAppendingFormat:@"- %d ", -b];
-    }
-    
-    str = [str stringByAppendingFormat:@"= 0"];
-    
-    return str;
-}
+
 
 /*
 #pragma mark - Navigation

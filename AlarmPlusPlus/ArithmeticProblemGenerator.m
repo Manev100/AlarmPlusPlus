@@ -161,14 +161,25 @@
 }
 
 - (NSString*) getResultString{
+    
+    NSString* output = [self getProblemString];
+    output = [NSString stringWithFormat:@"%@= %d", output, self.result];
+    return output;
+}
+
+- (NSString*) getProblemString{
     NSString* output = [NSString stringWithFormat:@"%@ ",[self.operands objectAtIndex:0]];
     for(int i = 0; i< [self.numberOfOperands intValue] -1 ; i++){
         int operator = [[self.operators objectAtIndex:i] intValue];
+        int operand = [[self.operands objectAtIndex:i+1] intValue];
+        if(operand < 0){
+            output = [NSString stringWithFormat:@"%@%@ (%@) ", output, [self getSignForOperator:operator] ,@(operand)];
+        }else {
+            output = [NSString stringWithFormat:@"%@%@ %@ ", output, [self getSignForOperator:operator] ,@(operand)];
+        }
         
-        output = [NSString stringWithFormat:@"%@%@ %@ ", output, [self getSignForOperator:operator] ,[self.operands objectAtIndex:i+1]];
+        
     }
-    
-    output = [NSString stringWithFormat:@"%@= %d", output, self.result];
     return output;
 }
 

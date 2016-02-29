@@ -28,15 +28,6 @@
 }
 
 -(void) saveAllInputs{
-    // in case we didn't switch to the other tabs we need to initialize them
-    /*self.selectedViewController  = [self.viewControllers objectAtIndex:0];
-    [(APEditorViewController*)[[self.selectedViewController viewControllers] objectAtIndex:0] saveInputs];
-    self.selectedViewController  = [self.viewControllers objectAtIndex:1];
-    [(EqEditorViewController*)[[self.selectedViewController viewControllers] objectAtIndex:0] saveInputs];
-    self.selectedViewController  = [self.viewControllers objectAtIndex:2];
-    [(PrimeEditorViewController*)[[self.selectedViewController viewControllers] objectAtIndex:0] saveInputs];
-    */
-    
     NSArray* subviews = self.viewControllers;
     [(APEditorViewController*)[[[subviews objectAtIndex:0] viewControllers] objectAtIndex:0] saveInputs];
     [(EqEditorViewController*)[[[subviews objectAtIndex:1] viewControllers] objectAtIndex:0] saveInputs];

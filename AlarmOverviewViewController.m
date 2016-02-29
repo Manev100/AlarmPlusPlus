@@ -153,6 +153,20 @@
     [self.tableView reloadData];
 }
 
+- (IBAction)test:(id)sender {
+    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+    [delegate presentAlarmViewforAlarm:nil];
+    /*
+     NSDate *testDate = [self getDateWithMinutesFromNow:1];
+     [self scheduleLocalNotificationWithDate:testDate];
+     
+     NSTimeInterval interval = [testDate timeIntervalSinceNow];
+     long seconds = lroundf(interval);
+     
+     [self confirmMessage: [NSString stringWithFormat:@"%ld", seconds]];
+     */
+}
+
 // SEGUE HANDLING
 - (IBAction)unwindToPlayersViewControllerAdd:(UIStoryboardSegue *)unwindSegue{
     AlarmAddViewController *vc = [unwindSegue sourceViewController];
@@ -200,13 +214,10 @@
     alarm.active = true;
     
     
-    // TODO: Find better stringId
-    NSString *dateString = [NSDateFormatter localizedStringFromDate:alarm.date
-                                                          dateStyle:NSDateFormatterNoStyle
-                                                          timeStyle:NSDateFormatterShortStyle];
-    alarm.alarmId = [NSString stringWithFormat:@"%@%@", alarm.name, dateString];
+    // id should be unique. name + time of creating
+    double timeInterval = [[NSDate date] timeIntervalSince1970];
+    alarm.alarmId = [NSString stringWithFormat:@"%@%f", alarm.name, timeInterval];
 
-    
     [self.alarms addObject:alarm];
     [self.tableView reloadData];
     [self scheduleLocalNotificationWithAlarm:alarm];
@@ -267,19 +278,7 @@
 - (void)presentLocalNotificationNow:(UILocalNotification *)notification
 */
 
-- (IBAction)test:(id)sender {
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-    [delegate presentAlarmViewforAlarm:nil];
-    /*
-    NSDate *testDate = [self getDateWithMinutesFromNow:1];
-    [self scheduleLocalNotificationWithDate:testDate];
-    
-    NSTimeInterval interval = [testDate timeIntervalSinceNow];
-    long seconds = lroundf(interval);
-    
-    [self confirmMessage: [NSString stringWithFormat:@"%ld", seconds]];
-     */
-}
+
 
 - (NSDate *)getDateWithMinutesFromNow: (int) num {
     NSDate *now = [NSDate date];
