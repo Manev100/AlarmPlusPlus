@@ -227,8 +227,6 @@
 				D9F6DD2F1C416C790079B212 /* Alarm.m */,
 				D98942611C6DFD8E00779BF9 /* MultiSelectSegmentedControl.h */,
 				D98942621C6DFD8E00779BF9 /* MultiSelectSegmentedControl.m */,
-				D9F6DD281C21CC100079B212 /* StatisticsTableViewController.h */,
-				D9F6DD291C21CC100079B212 /* StatisticsTableViewController.m */,
 				D989425E1C6B8F9C00779BF9 /* Main.storyboard */,
 				D9B6D5B71C1DC5F200506C5B /* AppDelegate.h */,
 				D9B6D5B81C1DC5F200506C5B /* AppDelegate.m */,
@@ -273,6 +271,8 @@
 				D9E35D621C85E42500388E5E /* StatisticsManager.m */,
 				D9E35D5E1C85E15100388E5E /* StatisticsSession.h */,
 				D9E35D5F1C85E15100388E5E /* StatisticsSession.m */,
+				D9F6DD281C21CC100079B212 /* StatisticsTableViewController.h */,
+				D9F6DD291C21CC100079B212 /* StatisticsTableViewController.m */,
 			);
 			name = Statistics;
 			sourceTree = "<group>";

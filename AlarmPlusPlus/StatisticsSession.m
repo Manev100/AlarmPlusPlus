@@ -19,6 +19,14 @@
     return self;
 }
 
+-(id) initWithType:(ProblemTypes) problemType AndDifficulty: (Difficulties) difficulty{
+    if(self = [self init]){
+        self.problemType = problemType;
+        self.difficulty = difficulty;
+    }
+    return self;
+}
+
 -(void) endSession{
     self.endingTime = [NSDate date];
 }

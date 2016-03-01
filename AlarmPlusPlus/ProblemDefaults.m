@@ -82,8 +82,8 @@
         case DifficultyNormal:
             [theDictionary setObject:@(YES) forKey:@"lin"];
             [theDictionary setObject:@(NO) forKey:@"quad"];
-            [theDictionary setObject:@(-10) forKey:@"linAX"];
-            [theDictionary setObject:@(10) forKey:@"linAY"];
+            [theDictionary setObject:@(-2) forKey:@"linAX"];
+            [theDictionary setObject:@(2) forKey:@"linAY"];
             [theDictionary setObject:@(-10) forKey:@"linBX"];
             [theDictionary setObject:@(10) forKey:@"linBY"];
             [theDictionary setObject:@(1) forKey:@"quadAX"];

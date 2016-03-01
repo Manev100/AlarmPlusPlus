@@ -10,7 +10,8 @@
 
 @implementation StatisticsManager
 
-#pragma mark Initialization
+
+#pragma mark - Initialization
 -(id) init{
     if(self = [super init]){
         self.sessions = [self loadSessionsFromPlist];
@@ -22,6 +23,10 @@
 #pragma mark Session Control
 -(void) startNewSession{
     self.currentSession = [[StatisticsSession alloc] init];
+}
+
+-(void) startNewSessionWithType: (ProblemTypes) type AndDifficulty: (Difficulties)difficulty{
+    self.currentSession = [[StatisticsSession alloc] initWithType:type AndDifficulty:difficulty];
 }
 
 -(void) problemAnsweredCorrectly{
@@ -46,7 +51,9 @@
 -(void) endCurrentSession{
     [self.currentSession endSession];
     [self.sessions addObject:self.currentSession];
+    NSLog([NSString stringWithFormat:@"Session ended: start: %@, end: %@, tries: %@, problems: %@", [self.currentSession.startingTime description], [self.currentSession.endingTime description], self.currentSession.numberOfTries, self.currentSession.numberOfProblems]);
     self.currentSession = nil;
+    
 }
 
 

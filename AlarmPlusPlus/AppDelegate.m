@@ -28,6 +28,8 @@
          */
         NSLog(@"%@", notification.alertTitle);
     }
+    
+    self.statisticsManager = [[StatisticsManager alloc] init];
     //LOAD ALL THE THINGS
     return YES;
 }
@@ -39,6 +41,8 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // SAVE ALL THE THINGS
+    
+    [self.statisticsManager saveSessionsToPlist];
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
@@ -96,6 +100,13 @@
         self.alarms = [NSMutableArray arrayWithCapacity:20];
     }
     return self.alarms;
+}
+
+-(StatisticsManager*) getStatisticsManager{
+    if(self.statisticsManager == nil){
+        self.statisticsManager = [[StatisticsManager alloc] init];
+    }
+    return self.statisticsManager;
 }
 
 @end

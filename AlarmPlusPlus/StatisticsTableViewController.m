@@ -7,7 +7,6 @@
 //
 
 #import "StatisticsTableViewController.h"
-#import "Statistic.h"
 
 @interface StatisticsTableViewController ()
 
@@ -30,7 +29,7 @@
 }
 
 - (NSMutableArray*) setupStatistics {
-    NSMutableArray * stats = [NSMutableArray arrayWithObject:[[Statistic alloc] initWithName:@"Alarms rang" AndValue:0]];
+    NSMutableArray * stats = [NSMutableArray array];
     return stats;
 }
 
@@ -57,11 +56,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"statCell" forIndexPath:indexPath];
-
-    Statistic *stat = (Statistic*)[self.statistics objectAtIndex:indexPath.row];
-    cell.textLabel.text = stat.name;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%d", stat.value];
-    
     return cell;
 }
 

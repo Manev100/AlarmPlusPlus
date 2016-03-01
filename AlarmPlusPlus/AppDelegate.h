@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "Alarm.h"
-
+#import "StatisticsManager.h"
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) NSMutableArray *alarms;
+@property (strong, nonatomic) StatisticsManager* statisticsManager;
 
 -(NSMutableArray *) getAlarmArray;
+-(StatisticsManager*) getStatisticsManager;
 -(void) presentAlarmViewforAlarm: (Alarm*) alarm;
 @end
 

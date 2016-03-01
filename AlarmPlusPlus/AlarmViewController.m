@@ -7,6 +7,7 @@
 //
 
 #import "AlarmViewController.h"
+#import "AppDelegate.h"
 
 @interface AlarmViewController (){
     Alarm* myAlarm;
@@ -50,6 +51,9 @@
     
     [self.activeProblemViewController setupViewForDifficulty:myAlarm.difficulty];
     tries = 3;
+    
+    self.statisticsManager = [(AppDelegate*)[[UIApplication sharedApplication] delegate] getStatisticsManager];
+    [self.statisticsManager startNewSessionWithType: myAlarm.problem AndDifficulty: myAlarm.difficulty];
 }
 
 
@@ -61,13 +65,15 @@
 
 - (IBAction)submitPressed:(id)sender {
     if([self.activeProblemViewController confirmResult]){
+        [self.statisticsManager problemAnsweredCorrectly];
         [self dismissViewControllerAnimated:YES completion:nil];
     }else{
+        [self.statisticsManager problemAnsweredWrongly];
         tries--;
         if(tries <= 0){
             // problem failed
             tries = 3;
-            
+            [self.statisticsManager nextProblem];
             [self.activeProblemViewController setupViewForDifficulty:myAlarm.difficulty];
         }else{
             // flash screen red or something, music louder

@@ -8,14 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import "StatisticsSession.h"
+#import "Alarm.h"
 
 @interface StatisticsManager : NSObject
 -(id) init;
 
 -(void) startNewSession;
+-(void) startNewSessionWithType: (ProblemTypes) type AndDifficulty: (Difficulties)difficulty;
+
 -(void) problemAnsweredCorrectly;
 -(void) problemAnsweredWrongly;
 -(void) nextProblem;
+-(BOOL) saveSessionsToPlist;
 
 @property (strong, nonatomic) NSMutableArray *sessions;
 @property (strong, nonatomic) StatisticsSession* currentSession;
