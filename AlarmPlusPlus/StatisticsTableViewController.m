@@ -7,6 +7,7 @@
 //
 
 #import "StatisticsTableViewController.h"
+#import "AppDelegate.h"
 
 @interface StatisticsTableViewController ()
 
@@ -16,11 +17,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    self.statisticsManager = [(AppDelegate*)[[UIApplication sharedApplication] delegate] getStatisticsManager];
     
-    if(!(self.statistics = [self loadStatistics])){
-        self.statistics = [self setupStatistics];
-        
-    }
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -28,14 +28,48 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
-- (NSMutableArray*) setupStatistics {
-    NSMutableArray * stats = [NSMutableArray array];
-    return stats;
+-(void)viewDidAppear:(BOOL)animated{
+    [self fillInStatistics];
 }
 
-- (NSMutableArray*) loadStatistics {
+-(void) fillInStatistics{
+    NSDictionary *generalStatistics = [self.statisticsManager evaluateGeneralStatistics];
+    [self getLabelForRow:0 InSection:0].text = [NSString stringWithFormat:@"%@s",[generalStatistics objectForKey:@"totalTime"]];
+    [self getLabelForRow:1 InSection:0].text = [NSString stringWithFormat:@"%@",[generalStatistics objectForKey:@"solves"]];
+    [self getLabelForRow:2 InSection:0].text = [NSString stringWithFormat:@"%@",[generalStatistics objectForKey:@"wrongTries"]];
+    [self getLabelForRow:3 InSection:0].text = [NSString stringWithFormat:@"%@",[generalStatistics objectForKey:@"averageTries"]];
+    [self getLabelForRow:4 InSection:0].text = [NSString stringWithFormat:@"%@s",[generalStatistics objectForKey:@"averageTime"]];
     
-    return nil;
+    NSDictionary *problemTypesStatistics = [self.statisticsManager evaluateProblemTypeStatistics];
+    [self getLabelForRow:0 InSection:1].text = [NSString stringWithFormat:@"%@",[problemTypesStatistics objectForKey:@"aPTried"]];
+    [self getLabelForRow:1 InSection:1].text = [NSString stringWithFormat:@"%@",[problemTypesStatistics objectForKey:@"aPSolved"]];
+    [self getLabelForRow:2 InSection:1].text = [NSString stringWithFormat:@"%@",[problemTypesStatistics objectForKey:@"eqPTried"]];
+    [self getLabelForRow:3 InSection:1].text = [NSString stringWithFormat:@"%@",[problemTypesStatistics objectForKey:@"eqPSolved"]];
+    [self getLabelForRow:4 InSection:1].text = [NSString stringWithFormat:@"%@",[problemTypesStatistics objectForKey:@"pPTried"]];
+    [self getLabelForRow:5 InSection:1].text = [NSString stringWithFormat:@"%@",[problemTypesStatistics objectForKey:@"pPSolved"]];
+    NSString *typePercentages = [NSString stringWithFormat:@"%@/%@/%@", [problemTypesStatistics objectForKey:@"percentageAP"],[problemTypesStatistics objectForKey:@"percentageEP"],[problemTypesStatistics objectForKey:@"percentagePP"]];
+    [self getLabelForRow:6 InSection:1].text = typePercentages;
+    
+    NSDictionary *difficultyStatistics = [self.statisticsManager evaluateDifficultyStatistics];
+    [self getLabelForRow:0 InSection:2].text = [NSString stringWithFormat:@"%@",[difficultyStatistics objectForKey:@"easyTries"]];
+    [self getLabelForRow:1 InSection:2].text = [NSString stringWithFormat:@"%@",[difficultyStatistics objectForKey:@"easySolves"]];
+    [self getLabelForRow:2 InSection:2].text = [NSString stringWithFormat:@"%@",[difficultyStatistics objectForKey:@"normalTries"]];
+    [self getLabelForRow:3 InSection:2].text = [NSString stringWithFormat:@"%@",[difficultyStatistics objectForKey:@"normalSolves"]];
+    [self getLabelForRow:4 InSection:2].text = [NSString stringWithFormat:@"%@",[difficultyStatistics objectForKey:@"hardTries"]];
+    [self getLabelForRow:5 InSection:2].text = [NSString stringWithFormat:@"%@",[difficultyStatistics objectForKey:@"hardSolves"]];
+    [self getLabelForRow:6 InSection:2].text = [NSString stringWithFormat:@"%@",[difficultyStatistics objectForKey:@"customTries"]];
+    [self getLabelForRow:7 InSection:2].text = [NSString stringWithFormat:@"%@",[difficultyStatistics objectForKey:@"customSolves"]];
+    NSString* diffPercentages = [NSString stringWithFormat:@"%@/%@/%@/%@", [difficultyStatistics objectForKey:@"percentageEasy"],[difficultyStatistics objectForKey:@"percentageNormal"],[difficultyStatistics objectForKey:@"percentageHard"], [difficultyStatistics objectForKey:@"percentageCustom"]];
+    [self getLabelForRow:8 InSection:2].text = diffPercentages;
+    
+    NSLog(@"%@ %@ %@", [generalStatistics description], [problemTypesStatistics description], [difficultyStatistics description]);
+    
+}
+
+-(UILabel*) getLabelForRow:(int)row InSection: (int) section{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    return cell.detailTextLabel;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,17 +80,24 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 3;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.statistics count];
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"statCell" forIndexPath:indexPath];
-    return cell;
+    switch (section) {
+        case 0:
+            return 5;
+            break;
+        case 1:
+            return 7;
+            break;
+        case 2:
+            return 9;
+            break;
+        default:
+            return 0;
+            break;
+    }
 }
 
 

@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "StatisticsManager.h"
 
 @interface StatisticsTableViewController : UITableViewController
 @property (strong, nonatomic) NSMutableArray *statistics;
+
+@property (strong, nonatomic) StatisticsManager* statisticsManager;
 @end

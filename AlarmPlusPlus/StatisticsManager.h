@@ -21,6 +21,11 @@
 -(void) nextProblem;
 -(BOOL) saveSessionsToPlist;
 
+-(NSDictionary*) evaluateGeneralStatistics;
+-(NSDictionary*) evaluateProblemTypeStatistics;
+-(NSDictionary*) evaluateDifficultyStatistics;
+
+
 @property (strong, nonatomic) NSMutableArray *sessions;
 @property (strong, nonatomic) StatisticsSession* currentSession;
 
