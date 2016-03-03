@@ -37,7 +37,8 @@
         self.endingTime = [decoder decodeObjectForKey:@"enddate"];
         self.numberOfTries = @([decoder decodeIntForKey:@"tries"]);
         self.numberOfProblems = @([decoder decodeIntForKey:@"problems"]);
-        
+        self.difficulty = [decoder decodeIntForKey:@"difficulty"];
+        self.problemType = [decoder decodeIntForKey:@"type"];
     }
     return self;
 }
@@ -47,6 +48,8 @@
     [coder encodeObject:self.endingTime forKey:@"enddate"];
     [coder encodeInt:[self.numberOfTries intValue] forKey:@"tries"];
     [coder encodeInt:[self.numberOfProblems intValue] forKey:@"problems"];
+    [coder encodeInt:self.difficulty forKey:@"difficulty"];
+    [coder encodeInt:self.problemType forKey:@"type"];
 }
 
 

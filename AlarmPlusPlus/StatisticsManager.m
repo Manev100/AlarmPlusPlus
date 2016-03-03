@@ -20,7 +20,7 @@
 }
 
 
-#pragma mark Session Control
+#pragma mark - Session Control
 -(void) startNewSession{
     self.currentSession = [[StatisticsSession alloc] init];
 }
@@ -56,7 +56,7 @@
     
 }
 
-#pragma mark Statistics Output
+#pragma mark - Statistics Output
 
 -(NSDictionary*) evaluateGeneralStatistics{
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
@@ -72,14 +72,14 @@
     
     
     
-    [dict setObject:@(totalTimeInSeconds) forKey:@"totalTime"];
+    [dict setObject:@((int)totalTimeInSeconds) forKey:@"totalTime"];
     [dict setObject:@(numberOfTries-numberOfSolves) forKey:@"wrongTries"];
     [dict setObject:@(numberOfSolves) forKey:@"solves"];
     
     if(numberOfSolves == 0){
         numberOfSolves = 1;
     }
-    [dict setObject:@(totalTimeInSeconds/numberOfSolves) forKey:@"averageTime"];
+    [dict setObject:@((int)(totalTimeInSeconds/numberOfSolves)) forKey:@"averageTime"];
     
     [dict setObject:@(numberOfTries/numberOfSolves) forKey:@"averageTries"];
     
@@ -192,16 +192,33 @@
     return dict;
 }
 
-#pragma mark Persistence
+#pragma mark - Persistence
 
 - (NSMutableArray*) loadSessionsFromPlist{
-    NSMutableArray* loadedSessions = [NSMutableArray array];
+    NSLog(@"Loading statistics sessions...");
+    NSMutableArray* loadedSessions = [NSKeyedUnarchiver unarchiveObjectWithFile:[self getFilePath]];;
+    if(loadedSessions == nil){
+        loadedSessions = [NSMutableArray array];
+    }
+    NSLog(@"%@",[loadedSessions description]);
     return loadedSessions;
 }
 
 - (BOOL) saveSessionsToPlist{
-    
+    NSLog(@"Saving statistics sessions...");
+    BOOL status = [NSKeyedArchiver archiveRootObject:self.sessions toFile:[self getFilePath]];
+    if (!status) {
+        NSLog(@"Error saving sessions");
+        return false;
+    }
     return true;
+}
+
+-(NSString*) getFilePath{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *finalPath = [documentsPath stringByAppendingString:@"Statistics.plist"];
+    return finalPath;
 }
 
 @end

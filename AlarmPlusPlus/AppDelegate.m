@@ -30,7 +30,8 @@
     }
     
     self.statisticsManager = [[StatisticsManager alloc] init];
-    //LOAD ALL THE THINGS
+    self.alarms = [self loadAlarmsFromPlist];
+    
     return YES;
 }
 
@@ -43,6 +44,7 @@
     // SAVE ALL THE THINGS
     
     [self.statisticsManager saveSessionsToPlist];
+    [self saveAlarmsToPlist];
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
@@ -108,5 +110,36 @@
     }
     return self.statisticsManager;
 }
+
+#pragma mark - Alarms Persistence
+
+-(BOOL) saveAlarmsToPlist{
+    NSLog(@"Saving alarms...");
+    BOOL status = [NSKeyedArchiver archiveRootObject:self.alarms toFile:[self getAlarmsPlistFileName]];
+    if (!status) {
+        NSLog(@"Error saving alarms");
+        return false;
+    }
+    return true;
+}
+
+-(NSMutableArray*) loadAlarmsFromPlist{
+    NSLog(@"Loading alarms...");
+    NSMutableArray* loadedAlarms = [NSKeyedUnarchiver unarchiveObjectWithFile:[self getAlarmsPlistFileName]];;
+    if(loadedAlarms == nil){
+        loadedAlarms = [NSMutableArray array];
+    }
+    NSLog(@"%@",[loadedAlarms description]);
+    return loadedAlarms;
+}
+
+-(NSString*) getAlarmsPlistFileName{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsPath = [paths objectAtIndex:0];
+    NSString *finalPath = [documentsPath stringByAppendingString:@"Alarms.plist"];
+    return finalPath;
+}
+
+
 
 @end

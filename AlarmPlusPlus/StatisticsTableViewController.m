@@ -96,7 +96,7 @@
     
     int row = (int)[indexPath row];
     int section = (int)[indexPath section];
-    NSLog(@"%d %d", section, row);
+
     // go to section, go to row, and assign correct values
     switch (section) {
         case 0:
