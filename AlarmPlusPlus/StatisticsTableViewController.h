@@ -13,4 +13,12 @@
 @property (strong, nonatomic) NSMutableArray *statistics;
 
 @property (strong, nonatomic) StatisticsManager* statisticsManager;
+@property (strong, nonatomic) NSMutableArray *generalLabelNames;
+@property (strong, nonatomic) NSMutableArray *typesLabelNames;
+@property (strong, nonatomic) NSMutableArray *difficultyLabelNames;
+
+@property (strong, nonatomic) NSDictionary *generalStatistics;
+@property (strong, nonatomic) NSDictionary *problemTypesStatistics;
+@property (strong, nonatomic) NSDictionary *difficultyStatistics;
+
 @end
