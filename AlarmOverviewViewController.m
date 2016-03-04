@@ -12,6 +12,7 @@
 #import "AlarmAddViewController.h"
 #import "AppDelegate.h"
 #import "EditorTabBarController.h"
+#import "DateUtils.h"
 
 @interface AlarmOverviewViewController ()
 
@@ -36,7 +37,7 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.leftBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -106,6 +107,18 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        Alarm *deletedAlarm = (Alarm*) [self.alarms objectAtIndex:indexPath.row];
+        [self.alarms removeObjectAtIndex:indexPath.row];
+        [self.tableView reloadData];
+        if(deletedAlarm.active){
+            //TODO: dequeue alarm
+        }
+        
+    }
+}
+
 #pragma mark - User Interaction
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -114,6 +127,7 @@
     
     
 }
+
 - (IBAction)activeButtonPressed:(id)sender {
     CGPoint touchPoint = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
@@ -121,7 +135,8 @@
     Alarm *alarm = [self.alarms objectAtIndex:indexPath.row];
     alarm.active = !alarm.active;
     
-    // TODO: deaktivate/activate Notifications
+    
+    //TODO: deaktivate/activate Notifications
     [self.tableView reloadData];
 }
 
@@ -145,11 +160,6 @@
     AlarmAddViewController *vc = [unwindSegue sourceViewController];
     
     Alarm *alarm  = [Alarm new];
-    alarm.date = vc.datePicker.date;
-    //TODO: configure date if weekday is not today
-    
-    
-    
     
     //alarm.ringtone = vc.ringtoneLabel.text;
     alarm.ringtone = @"alarm.caf";
@@ -179,6 +189,7 @@
         weekdaysFlag += [weekday intValue];
     }
     alarm.weekdaysFlag = weekdaysFlag;
+    // no weekday set(weekdaysFlag == 0) is handled later
     
     alarm.volume = vc.volumeSlider.value;
     alarm.repeat = vc.repeatLabel.isOn;
@@ -186,11 +197,61 @@
     alarm.name = vc.nameLabel.text;
     alarm.active = true;
     
-    
     // id should be unique. name + time of creating
     double timeInterval = [[NSDate date] timeIntervalSince1970];
     alarm.alarmId = [NSString stringWithFormat:@"%@%f", alarm.name, timeInterval];
-
+    
+    
+    // we now have to choose the correct next date the alarm is fired.
+    // if we pick a time that is earlier (or equal) than the current time, we
+    //  - pick tommorrow if no weekday is selected
+    //  - pick next day that is a selected weekday
+    // if we pick a time that is later than the current time, we
+    // - pick now if the weekday is the same or no weekday has been selected
+    // - pick next day that is a selected weekday
+    NSDate *pickedTime = vc.datePicker.date;
+    
+    NSCalendar *cal = [NSCalendar currentCalendar];
+    
+    // extract year, month, day, hour, minute, we dont need seconds nad milliseconds
+    unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute;
+    NSDateComponents *comps = [cal components:unitFlags fromDate:pickedTime];
+    
+    NSDate *pickedDate = [cal dateFromComponents:comps];
+    
+    // get current weekday
+    NSDateComponents *weekdayComp = [cal components:NSCalendarUnitWeekday fromDate:pickedDate];
+    int currentWeekday = (int)[weekdayComp weekday];
+    // we want to us NSDateCompoennt convenience methods to get weekdays,
+    // NSDateComponents weekday method assigns 1 - sunday, 2 - monday,..., 7 - saturday
+    // Alarm.h Weekdays assigns 1<<0 - monday, 1<<1 - tuesday,...
+    // we need to map x=1 to y=6, x=2 to y=0 , x=3 to y=1, ... => y = x+5 mod 7
+    int weekdayMask = 1 << ((currentWeekday + 5) % 7);
+    
+    if([pickedTime timeIntervalSinceNow] <= 0){
+        if(alarm.weekdaysFlag == 0){
+            // pick tomorrow
+            pickedDate = [DateUtils dateByAddingDays:1 ToDate:pickedDate];
+            // set weekdaysFlag bc it wasn't set before
+            alarm.weekdaysFlag = 1 << ((currentWeekday + 1 + 5) % 7);
+        }else{
+            // pick day with next selected weekday
+            pickedDate = [DateUtils dateOnNextWeekdayWithFlag:alarm.weekdaysFlag FromDate:pickedDate];
+        }
+        
+    }else{
+        if(alarm.weekdaysFlag == 0){
+            // picked Date is correct, need to set weekdaysFlag
+            alarm.weekdaysFlag = 1 << ((currentWeekday + 5) % 7);
+        }else if ((alarm.weekdaysFlag & weekdayMask) == 0){
+            pickedDate = [DateUtils dateOnNextWeekdayWithFlag:alarm.weekdaysFlag FromDate:pickedDate];
+        }
+        // picked date is correct if alarm.weekdaysFlag & weekdayMask) != 0
+        
+    }
+    
+    alarm.date = pickedDate;
+    
     [self.alarms addObject:alarm];
     [self.tableView reloadData];
     [self scheduleLocalNotificationWithAlarm:alarm];
