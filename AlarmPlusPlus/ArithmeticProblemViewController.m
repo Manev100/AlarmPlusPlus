@@ -28,7 +28,7 @@
 -(void) setupViewForDifficulty: (Difficulties) difficulty{
     ArithmeticProblemGenerator *APGen = [[ArithmeticProblemGenerator alloc] initWithDifficulty:difficulty];
     self.result = APGen.result;
-    [self.problemField setText: [APGen getResultString]];
+    [self.problemField setText: [APGen getProblemString]];
 }
 
 -(BOOL) confirmResult{

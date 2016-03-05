@@ -15,6 +15,7 @@
 - (id)initWithDictionary: (NSDictionary*) dictionary;
 - (void) setUpWithDifficulty: (Difficulties) difficulty;
 - (NSString*) getResultString;
+- (NSString*) getProblemString;
 
 typedef NS_OPTIONS(NSInteger, Operators) {
     OperatorPlus = 1 << 0,

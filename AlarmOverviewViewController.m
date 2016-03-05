@@ -24,20 +24,14 @@
     [super viewDidLoad];
     AppDelegate* appDelegate = [[UIApplication sharedApplication] delegate];
     self.alarms = [appDelegate getAlarmArray];
+    self.notficationsManager = [appDelegate getNotificationsManager];
     
-    // Register notification types
-    UIUserNotificationType types = UIUserNotificationTypeBadge |  UIUserNotificationTypeSound | UIUserNotificationTypeAlert;
-    
-    UIUserNotificationSettings *mySettings =
-    [UIUserNotificationSettings settingsForTypes:types categories:nil];
-    
-    [[UIApplication sharedApplication] registerUserNotificationSettings:mySettings];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     self.navigationItem.leftBarButtonItem = self.editButtonItem;
+}
+
+- (void) viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -113,7 +107,7 @@
         [self.alarms removeObjectAtIndex:indexPath.row];
         [self.tableView reloadData];
         if(deletedAlarm.active){
-            //TODO: dequeue alarm
+            [self.notficationsManager deactivateAlarm:deletedAlarm];
         }
         
     }
@@ -133,25 +127,21 @@
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
     
     Alarm *alarm = [self.alarms objectAtIndex:indexPath.row];
-    alarm.active = !alarm.active;
     
-    
-    //TODO: deaktivate/activate Notifications
+    if(!alarm.active){
+        [alarm activate];
+        [self.notficationsManager scheduleLocalNotificationWithAlarm:alarm];
+    }else{
+        alarm.active = false;
+        [self.notficationsManager deactivateAlarm:alarm];
+    }
+
     [self.tableView reloadData];
 }
 
 - (IBAction)test:(id)sender {
     AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
     [delegate presentAlarmViewforAlarm:nil];
-    /*
-     NSDate *testDate = [self getDateWithMinutesFromNow:1];
-     [self scheduleLocalNotificationWithDate:testDate];
-     
-     NSTimeInterval interval = [testDate timeIntervalSinceNow];
-     long seconds = lroundf(interval);
-     
-     [self confirmMessage: [NSString stringWithFormat:@"%ld", seconds]];
-     */
 }
 
 #pragma mark - Segue Handling
@@ -180,81 +170,21 @@
         }
     }
     
-    
-    // Parse Selected weekdays from segmented control
-    NSMutableArray *weekdaysArray = [Alarm weekdaysToArray];
-    NSIndexSet *selectedWeekdaysIndexSet = vc.weekdaysControl.selectedSegmentIndexes;
-    int weekdaysFlag = 0;
-    for (NSNumber *weekday in [weekdaysArray objectsAtIndexes:selectedWeekdaysIndexSet]){
-        weekdaysFlag += [weekday intValue];
-    }
-    alarm.weekdaysFlag = weekdaysFlag;
-    // no weekday set(weekdaysFlag == 0) is handled later
-    
     alarm.volume = vc.volumeSlider.value;
     alarm.repeat = vc.repeatLabel.isOn;
     
     alarm.name = vc.nameLabel.text;
     alarm.active = true;
     
-    // id should be unique. name + time of creating
-    double timeInterval = [[NSDate date] timeIntervalSince1970];
-    alarm.alarmId = [NSString stringWithFormat:@"%@%f", alarm.name, timeInterval];
-    
-    
-    // we now have to choose the correct next date the alarm is fired.
-    // if we pick a time that is earlier (or equal) than the current time, we
-    //  - pick tommorrow if no weekday is selected
-    //  - pick next day that is a selected weekday
-    // if we pick a time that is later than the current time, we
-    // - pick now if the weekday is the same or no weekday has been selected
-    // - pick next day that is a selected weekday
     NSDate *pickedTime = vc.datePicker.date;
+    NSIndexSet *selectedWeekdaysIndexSet = vc.weekdaysControl.selectedSegmentIndexes;
     
-    NSCalendar *cal = [NSCalendar currentCalendar];
-    
-    // extract year, month, day, hour, minute, we dont need seconds nad milliseconds
-    unsigned unitFlags = NSCalendarUnitYear | NSCalendarUnitMonth |  NSCalendarUnitDay | NSCalendarUnitHour | NSCalendarUnitMinute;
-    NSDateComponents *comps = [cal components:unitFlags fromDate:pickedTime];
-    
-    NSDate *pickedDate = [cal dateFromComponents:comps];
-    
-    // get current weekday
-    NSDateComponents *weekdayComp = [cal components:NSCalendarUnitWeekday fromDate:pickedDate];
-    int currentWeekday = (int)[weekdayComp weekday];
-    // we want to us NSDateCompoennt convenience methods to get weekdays,
-    // NSDateComponents weekday method assigns 1 - sunday, 2 - monday,..., 7 - saturday
-    // Alarm.h Weekdays assigns 1<<0 - monday, 1<<1 - tuesday,...
-    // we need to map x=1 to y=6, x=2 to y=0 , x=3 to y=1, ... => y = x+5 mod 7
-    int weekdayMask = 1 << ((currentWeekday + 5) % 7);
-    
-    if([pickedTime timeIntervalSinceNow] <= 0){
-        if(alarm.weekdaysFlag == 0){
-            // pick tomorrow
-            pickedDate = [DateUtils dateByAddingDays:1 ToDate:pickedDate];
-            // set weekdaysFlag bc it wasn't set before
-            alarm.weekdaysFlag = 1 << ((currentWeekday + 1 + 5) % 7);
-        }else{
-            // pick day with next selected weekday
-            pickedDate = [DateUtils dateOnNextWeekdayWithFlag:alarm.weekdaysFlag FromDate:pickedDate];
-        }
-        
-    }else{
-        if(alarm.weekdaysFlag == 0){
-            // picked Date is correct, need to set weekdaysFlag
-            alarm.weekdaysFlag = 1 << ((currentWeekday + 5) % 7);
-        }else if ((alarm.weekdaysFlag & weekdayMask) == 0){
-            pickedDate = [DateUtils dateOnNextWeekdayWithFlag:alarm.weekdaysFlag FromDate:pickedDate];
-        }
-        // picked date is correct if alarm.weekdaysFlag & weekdayMask) != 0
-        
-    }
-    
-    alarm.date = pickedDate;
+    // let the alarm initialise the remaining variables himself
+    [alarm finishAlarmSetupWithTime:pickedTime AndWeekdays:selectedWeekdaysIndexSet];
     
     [self.alarms addObject:alarm];
     [self.tableView reloadData];
-    [self scheduleLocalNotificationWithAlarm:alarm];
+    [self.notficationsManager scheduleLocalNotificationWithAlarm:alarm];
 }
 
 - (IBAction)unwindToPlayersViewControllerCancel:(UIStoryboardSegue *)unwindSegue{
@@ -269,53 +199,7 @@
     
 }
 
-#pragma mark - Notification Scheduling
 
-- (void)scheduleLocalNotificationWithDate:(NSDate *)fireDate {
-    /*
-    UIMutableUserNotificationAction *acceptAction = [[UIMutableUserNotificationAction alloc] init];
-    
-    acceptAction.identifier = @"ACCEPT_IDENTIFIER";
-    acceptAction.title = @"Accept";
-    acceptAction.activationMode = UIUserNotificationActivationModeBackground;
-    acceptAction.destructive = NO;
-    acceptAction.authenticationRequired = NO;
-    
-    UIMutableUserNotificationCategory *inviteCategory = [[UIMutableUserNotificationCategory alloc] init];
-    inviteCategory.identifier = @"ACCEPT_CATEGORY";
-    [inviteCategory setActions:@[acceptAction]
-                    forContext:UIUserNotificationActionContextDefault];
-    [inviteCategory setActions:@[acceptAction]
-                    forContext:UIUserNotificationActionContextMinimal];
-    
-    */
-    UILocalNotification *notification = [[UILocalNotification alloc]init];
-    //notification.repeatInterval = NSCalendarUnitMinute;
-    notification.fireDate = fireDate;
-    notification.alertBody = @"Wake up!!";
-    notification.timeZone = [NSTimeZone defaultTimeZone];
-    notification.soundName = UILocalNotificationDefaultSoundName;
-    notification.userInfo = [NSDictionary dictionaryWithObject:@"123456" forKey:@"alarm_id"];
-    //notification.category = @"ACCEPT_CATEGORY";
-
-    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-}
-
-- (void)scheduleLocalNotificationWithAlarm:(Alarm *)alarm {
-    UILocalNotification *notification = [[UILocalNotification alloc]init];
-    //notification.repeatInterval = NSCalendarUnitMinute;
-    notification.fireDate = alarm.date;
-    notification.alertBody = @"Wake up!!";
-    notification.timeZone = [NSTimeZone defaultTimeZone];
-    notification.soundName = UILocalNotificationDefaultSoundName;
-    notification.userInfo = [NSDictionary dictionaryWithObject:alarm.alarmId forKey:@"alarm_id"];
-    
-    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-}
-
-/*alternative:
-- (void)presentLocalNotificationNow:(UILocalNotification *)notification
-*/
 
 
 
@@ -345,13 +229,7 @@
     
 }
 
-/*
-//handle action
-- (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forLocalNotification:(UILocalNotification *)notification completionHandler:(void (^)(void))completionHandler{
-    
-    completionHandler();
-}
-*/
+
 
 // DETAILS NAV BAR ITEM ACTION SHEET HANDLING
 #pragma GCC diagnostic push

@@ -10,6 +10,9 @@
 
 @interface Alarm : NSObject <NSCoding>
 - (id)init;
+-(void) finishAlarmSetupWithTime: (NSDate*) pickedDate AndWeekdays: (NSIndexSet*) selectedWeekdays;
+-(void) setToNextDate;
+-(void) activate;
 
 typedef NS_ENUM(NSInteger, Difficulties) {
     DifficultyEasy = 0,
@@ -52,6 +55,7 @@ typedef NS_OPTIONS(NSInteger, Weekdays) {
 @property int weekdaysFlag;
 @property float volume;
 @property bool repeat;
-
 @property bool active;
+@property int repeatsLeft;
+
 @end

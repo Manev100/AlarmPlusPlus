@@ -8,6 +8,7 @@
 
 #import "AlarmViewController.h"
 #import "AppDelegate.h"
+#import "NotificationsManager.h"
 
 @interface AlarmViewController (){
     Alarm* myAlarm;
@@ -66,6 +67,12 @@
 - (IBAction)submitPressed:(id)sender {
     if([self.activeProblemViewController confirmResult]){
         [self.statisticsManager problemAnsweredCorrectly];
+        // schedule next alarm if there is one
+        [myAlarm setToNextDate];
+        if(myAlarm.active){
+            NotificationsManager* nm = [(AppDelegate*)[[UIApplication sharedApplication] delegate] getNotificationsManager];
+            [nm scheduleLocalNotificationWithAlarm:myAlarm];
+        }
         [self dismissViewControllerAnimated:YES completion:nil];
     }else{
         [self.statisticsManager problemAnsweredWrongly];

@@ -31,6 +31,7 @@
     
     self.statisticsManager = [[StatisticsManager alloc] init];
     self.alarms = [self loadAlarmsFromPlist];
+    self.notificationsManager = [[NotificationsManager alloc] init];
     
     return YES;
 }
@@ -64,9 +65,11 @@
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
     if ( application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground  )
     {
-        NSLog(@"Hello from background");
+        
     }
-    NSLog(@"Hello from foreground");
+    
+    // Stop repeating this notification
+    [[UIApplication sharedApplication] cancelLocalNotification:notification];
     
     // Look for alarm that fired notification
     NSString* firedAlarmId;
@@ -83,16 +86,16 @@
 }
 
 -(void) presentAlarmViewforAlarm: (Alarm*) alarm{
-    UINavigationController *nav = (UINavigationController *)self.window.rootViewController;
-
-    AlarmViewController *alarmVC = [nav.storyboard instantiateViewControllerWithIdentifier:@"alarmVC"];
+    //UINavigationController *nav = (UINavigationController *)self.window.rootViewController;
+    UIViewController *vc = [self topViewController];
+    AlarmViewController *alarmVC = [vc.storyboard instantiateViewControllerWithIdentifier:@"alarmVC"];
     
     if(alarm != nil){
         [alarmVC SetupWithAlarm:alarm];
     }else{
         NSLog(@"Alarm could not be found. Loading Default Settings...");
     }
-    [nav presentViewController:alarmVC animated:YES completion:nil];
+    [vc presentViewController:alarmVC animated:YES completion:nil];
   
     
 }
@@ -109,6 +112,14 @@
         self.statisticsManager = [[StatisticsManager alloc] init];
     }
     return self.statisticsManager;
+}
+
+-(NotificationsManager*) getNotificationsManager{
+    if(self.notificationsManager == nil){
+        self.notificationsManager = [[NotificationsManager alloc] init];
+    }
+    return self.notificationsManager;
+    
 }
 
 #pragma mark - Alarms Persistence
@@ -140,6 +151,25 @@
     return finalPath;
 }
 
+
+- (UIViewController*)topViewController {
+    return [self topViewControllerWithRootViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
+}
+
+- (UIViewController*)topViewControllerWithRootViewController:(UIViewController*)rootViewController {
+    if ([rootViewController isKindOfClass:[UITabBarController class]]) {
+        UITabBarController* tabBarController = (UITabBarController*)rootViewController;
+        return [self topViewControllerWithRootViewController:tabBarController.selectedViewController];
+    } else if ([rootViewController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* navigationController = (UINavigationController*)rootViewController;
+        return [self topViewControllerWithRootViewController:navigationController.visibleViewController];
+    } else if (rootViewController.presentedViewController) {
+        UIViewController* presentedViewController = rootViewController.presentedViewController;
+        return [self topViewControllerWithRootViewController:presentedViewController];
+    } else {
+        return rootViewController;
+    }
+}
 
 
 @end

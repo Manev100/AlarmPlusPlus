@@ -163,7 +163,7 @@
 - (NSString*) getResultString{
     
     NSString* output = [self getProblemString];
-    output = [NSString stringWithFormat:@"%@= %d", output, self.result];
+    output = [NSString stringWithFormat:@"%@%d", output, self.result];
     return output;
 }
 
@@ -180,6 +180,9 @@
         
         
     }
+    
+    output = [NSString stringWithFormat:@"%@= ", output];
+    
     return output;
 }
 
