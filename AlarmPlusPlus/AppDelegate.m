@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "AlarmViewController.h"
 #import "Alarm.h"
-
+#import "ProblemDefaults.h"
 
 @interface AppDelegate ()
 
@@ -28,6 +28,8 @@
          */
         NSLog(@"%@", notification.alertTitle);
     }
+    
+    [self checkForResetRequsts];
     
     self.statisticsManager = [[StatisticsManager alloc] init];
     self.alarms = [self loadAlarmsFromPlist];
@@ -51,6 +53,7 @@
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
+    [self checkForResetRequsts];
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
@@ -149,6 +152,43 @@
     NSString *documentsPath = [paths objectAtIndex:0];
     NSString *finalPath = [documentsPath stringByAppendingString:@"Alarms.plist"];
     return finalPath;
+}
+
+-(void) resetData{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    NSError *error;
+    if(![fileManager removeItemAtPath: [self getAlarmsPlistFileName] error:&error]){
+        NSLog(@"%@", error);
+    }
+    [self.alarms removeAllObjects];
+    [self.notificationsManager cancelAllNotifications];
+}
+
+-(void) checkForResetRequsts{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if([defaults boolForKey:@"reset_all"]){
+        [self resetData];
+        [self.statisticsManager resetData];
+        [ProblemDefaults resetValues];
+    }else {
+        if([defaults boolForKey:@"reset_alarms"]){
+            [self resetData];
+        }
+        if([defaults boolForKey:@"reset_statistics"]){
+            [self.statisticsManager resetData];
+        }
+        if([defaults boolForKey:@"reset_editor"]){
+            [ProblemDefaults resetValues];
+        }
+    }
+    
+    // set all to NO so it's not resetting again
+    [defaults setBool:NO forKey:@"reset_all"];
+    [defaults setBool:NO forKey:@"reset_alarms"];
+    [defaults setBool:NO forKey:@"reset_statistics"];
+    [defaults setBool:NO forKey:@"reset_editor"];
+    
 }
 
 

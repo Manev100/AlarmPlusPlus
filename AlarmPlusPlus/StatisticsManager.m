@@ -221,4 +221,11 @@
     return finalPath;
 }
 
+- (void) resetData{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+
+    [fileManager removeItemAtPath: [self getFilePath] error:NULL];
+    self.sessions = [self loadSessionsFromPlist];
+}
+
 @end

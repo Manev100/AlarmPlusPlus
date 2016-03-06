@@ -20,6 +20,7 @@
 -(void) problemAnsweredWrongly;
 -(void) nextProblem;
 -(BOOL) saveSessionsToPlist;
+-(void) resetData;
 
 -(NSDictionary*) evaluateGeneralStatistics;
 -(NSDictionary*) evaluateProblemTypeStatistics;

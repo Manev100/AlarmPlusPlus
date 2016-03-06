@@ -16,6 +16,7 @@
 -(void)scheduleLocalNotificationWithAlarm:(Alarm *)alarm;
 - (void) deactivateAlarm: (Alarm*) alarm;
 -(void) activateAlarm: (Alarm*) alarm;
+-(void) cancelAllNotifications;
 
 @property (strong, nonatomic) NSMutableArray* alarms;
 @end

@@ -213,4 +213,18 @@
     [self saveValuesFromDictionary:theDictionary ToFile:@"PrimeProblemValues.plist"];
 }
 
++(void) resetValues{
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *APPath = [documentsDirectory stringByAppendingString:@"ArithmeticProblemValues.plist"];
+    NSString *EqPath = [documentsDirectory stringByAppendingString:@"EquationProblemValues.plist"];
+    NSString *PrPath = [documentsDirectory stringByAppendingString:@"PrimeProblemValues.plist"];
+    
+    [fileManager removeItemAtPath: APPath error:NULL];
+    [fileManager removeItemAtPath: EqPath error:NULL];
+    [fileManager removeItemAtPath: PrPath error:NULL];
+    
+}
+
 @end

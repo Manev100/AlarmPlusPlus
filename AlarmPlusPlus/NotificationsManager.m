@@ -77,4 +77,9 @@
     }
 }
 
+-(void) cancelAllNotifications{
+    [[UIApplication sharedApplication] cancelAllLocalNotifications];
+    NSLog(@"All notifications canceled");
+}
+
 @end

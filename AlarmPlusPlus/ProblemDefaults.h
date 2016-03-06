@@ -16,4 +16,5 @@
 +(void) saveArithmeticProblemCustomDifficultyValues: (NSMutableDictionary*) theDictionary;
 +(void) saveEquationProblemCustomDifficultyValues: (NSMutableDictionary*) theDictionary;
 +(void) savePrimeProblemCustomDifficultyValues: (NSMutableDictionary*) theDictionary;
++(void) resetValues;
 @end
