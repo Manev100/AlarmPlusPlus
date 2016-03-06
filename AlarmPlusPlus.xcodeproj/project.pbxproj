@@ -32,6 +32,18 @@
 		D9E35D631C85E42500388E5E /* StatisticsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E35D621C85E42500388E5E /* StatisticsManager.m */; };
 		D9E35D661C8A1E3500388E5E /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E35D651C8A1E3500388E5E /* DateUtils.m */; };
 		D9E35D691C8B22E300388E5E /* NotificationsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E35D681C8B22E300388E5E /* NotificationsManager.m */; };
+		D9E35D6B1C8C8C6800388E5E /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D9E35D6A1C8C8C6700388E5E /* Settings.bundle */; };
+		D9E35D771C8CA2C700388E5E /* Beeps.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D9E35D6D1C8CA2C700388E5E /* Beeps.mp3 */; };
+		D9E35D781C8CA2C700388E5E /* Electronica.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D9E35D6E1C8CA2C700388E5E /* Electronica.mp3 */; };
+		D9E35D791C8CA2C700388E5E /* Hazard.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D9E35D6F1C8CA2C700388E5E /* Hazard.mp3 */; };
+		D9E35D7A1C8CA2C700388E5E /* Multi.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D9E35D701C8CA2C700388E5E /* Multi.mp3 */; };
+		D9E35D7B1C8CA2C700388E5E /* Nice.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D9E35D711C8CA2C700388E5E /* Nice.mp3 */; };
+		D9E35D7C1C8CA2C700388E5E /* Sun.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D9E35D721C8CA2C700388E5E /* Sun.mp3 */; };
+		D9E35D7D1C8CA2C700388E5E /* Rio.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D9E35D731C8CA2C700388E5E /* Rio.mp3 */; };
+		D9E35D7E1C8CA2C700388E5E /* School_Bell.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D9E35D741C8CA2C700388E5E /* School_Bell.mp3 */; };
+		D9E35D7F1C8CA2C700388E5E /* Ship.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D9E35D751C8CA2C700388E5E /* Ship.mp3 */; };
+		D9E35D801C8CA2C700388E5E /* Annoy.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D9E35D761C8CA2C700388E5E /* Annoy.mp3 */; };
+		D9E35D821C8CA3E700388E5E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E35D811C8CA3E700388E5E /* AVFoundation.framework */; };
 		D9F2EF791C78C58F006339AD /* PrimeEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F2EF781C78C58F006339AD /* PrimeEditorViewController.m */; };
 		D9F2EF7C1C78C5A6006339AD /* EqEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F2EF7B1C78C5A6006339AD /* EqEditorViewController.m */; };
 		D9F6DD2A1C21CC100079B212 /* StatisticsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D9F6DD291C21CC100079B212 /* StatisticsTableViewController.m */; };
@@ -108,6 +120,18 @@
 		D9E35D651C8A1E3500388E5E /* DateUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateUtils.m; sourceTree = "<group>"; };
 		D9E35D671C8B22E300388E5E /* NotificationsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationsManager.h; sourceTree = "<group>"; };
 		D9E35D681C8B22E300388E5E /* NotificationsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationsManager.m; sourceTree = "<group>"; };
+		D9E35D6A1C8C8C6700388E5E /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		D9E35D6D1C8CA2C700388E5E /* Beeps.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Beeps.mp3; sourceTree = "<group>"; };
+		D9E35D6E1C8CA2C700388E5E /* Electronica.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Electronica.mp3; sourceTree = "<group>"; };
+		D9E35D6F1C8CA2C700388E5E /* Hazard.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Hazard.mp3; sourceTree = "<group>"; };
+		D9E35D701C8CA2C700388E5E /* Multi.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Multi.mp3; sourceTree = "<group>"; };
+		D9E35D711C8CA2C700388E5E /* Nice.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Nice.mp3; sourceTree = "<group>"; };
+		D9E35D721C8CA2C700388E5E /* Sun.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Sun.mp3; sourceTree = "<group>"; };
+		D9E35D731C8CA2C700388E5E /* Rio.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Rio.mp3; sourceTree = "<group>"; };
+		D9E35D741C8CA2C700388E5E /* School_Bell.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = School_Bell.mp3; sourceTree = "<group>"; };
+		D9E35D751C8CA2C700388E5E /* Ship.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Ship.mp3; sourceTree = "<group>"; };
+		D9E35D761C8CA2C700388E5E /* Annoy.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Annoy.mp3; sourceTree = "<group>"; };
+		D9E35D811C8CA3E700388E5E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D9F2EF771C78C58F006339AD /* PrimeEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrimeEditorViewController.h; sourceTree = "<group>"; };
 		D9F2EF781C78C58F006339AD /* PrimeEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrimeEditorViewController.m; sourceTree = "<group>"; };
 		D9F2EF7A1C78C5A6006339AD /* EqEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EqEditorViewController.h; sourceTree = "<group>"; };
@@ -127,6 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9E35D821C8CA3E700388E5E /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +226,7 @@
 				D9B6D5D01C1DC5F200506C5B /* AlarmPlusPlusTests */,
 				D9B6D5DB1C1DC5F200506C5B /* AlarmPlusPlusUITests */,
 				D9B6D5B21C1DC5F200506C5B /* Products */,
+				D9E35D811C8CA3E700388E5E /* AVFoundation.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -240,9 +266,11 @@
 				D989425E1C6B8F9C00779BF9 /* Main.storyboard */,
 				D9B6D5B71C1DC5F200506C5B /* AppDelegate.h */,
 				D9B6D5B81C1DC5F200506C5B /* AppDelegate.m */,
+				D9E35D6A1C8C8C6700388E5E /* Settings.bundle */,
 				D9B6D5C31C1DC5F200506C5B /* Assets.xcassets */,
 				D9B6D5C51C1DC5F200506C5B /* LaunchScreen.storyboard */,
 				D9B6D5C81C1DC5F200506C5B /* Info.plist */,
+				D9E35D6C1C8CA26300388E5E /* Sounds */,
 				D9B6D5B41C1DC5F200506C5B /* Supporting Files */,
 			);
 			path = AlarmPlusPlus;
@@ -285,6 +313,23 @@
 				D9F6DD291C21CC100079B212 /* StatisticsTableViewController.m */,
 			);
 			name = Statistics;
+			sourceTree = "<group>";
+		};
+		D9E35D6C1C8CA26300388E5E /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				D9E35D6D1C8CA2C700388E5E /* Beeps.mp3 */,
+				D9E35D6E1C8CA2C700388E5E /* Electronica.mp3 */,
+				D9E35D6F1C8CA2C700388E5E /* Hazard.mp3 */,
+				D9E35D701C8CA2C700388E5E /* Multi.mp3 */,
+				D9E35D711C8CA2C700388E5E /* Nice.mp3 */,
+				D9E35D721C8CA2C700388E5E /* Sun.mp3 */,
+				D9E35D731C8CA2C700388E5E /* Rio.mp3 */,
+				D9E35D741C8CA2C700388E5E /* School_Bell.mp3 */,
+				D9E35D751C8CA2C700388E5E /* Ship.mp3 */,
+				D9E35D761C8CA2C700388E5E /* Annoy.mp3 */,
+			);
+			name = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -390,9 +435,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9E35D6B1C8C8C6800388E5E /* Settings.bundle in Resources */,
+				D9E35D7C1C8CA2C700388E5E /* Sun.mp3 in Resources */,
+				D9E35D7F1C8CA2C700388E5E /* Ship.mp3 in Resources */,
 				D9B6D5C71C1DC5F200506C5B /* LaunchScreen.storyboard in Resources */,
+				D9E35D791C8CA2C700388E5E /* Hazard.mp3 in Resources */,
+				D9E35D7E1C8CA2C700388E5E /* School_Bell.mp3 in Resources */,
+				D9E35D771C8CA2C700388E5E /* Beeps.mp3 in Resources */,
+				D9E35D7A1C8CA2C700388E5E /* Multi.mp3 in Resources */,
 				D9B6D5C41C1DC5F200506C5B /* Assets.xcassets in Resources */,
+				D9E35D781C8CA2C700388E5E /* Electronica.mp3 in Resources */,
+				D9E35D7D1C8CA2C700388E5E /* Rio.mp3 in Resources */,
+				D9E35D7B1C8CA2C700388E5E /* Nice.mp3 in Resources */,
 				D98942601C6B8F9C00779BF9 /* Main.storyboard in Resources */,
+				D9E35D801C8CA2C700388E5E /* Annoy.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

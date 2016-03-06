@@ -19,6 +19,7 @@
 @end
 
 @implementation AlarmOverviewViewController
+NSString *helloMessage = nil;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,6 +33,11 @@
 - (void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self.tableView reloadData];
+    if(helloMessage != nil){
+        [self confirmMessage:helloMessage];
+        helloMessage = nil;
+    }
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -131,17 +137,13 @@
     if(!alarm.active){
         [alarm activate];
         [self.notficationsManager scheduleLocalNotificationWithAlarm:alarm];
+        [self confirmMessage:[self confirmAlarmMessageForAlarm:alarm]];
     }else{
         alarm.active = false;
         [self.notficationsManager deactivateAlarm:alarm];
     }
 
     [self.tableView reloadData];
-}
-
-- (IBAction)test:(id)sender {
-    AppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-    [delegate presentAlarmViewforAlarm:nil];
 }
 
 #pragma mark - Segue Handling
@@ -151,8 +153,7 @@
     
     Alarm *alarm  = [Alarm new];
     
-    //alarm.ringtone = vc.ringtoneLabel.text;
-    alarm.ringtone = @"alarm.caf";
+    alarm.ringtone = vc.ringtoneLabel.text;
     
     //Parse difficulty
     for (int i = 0; i < DifficulyCount; ++i){
@@ -185,6 +186,7 @@
     [self.alarms addObject:alarm];
     [self.tableView reloadData];
     [self.notficationsManager scheduleLocalNotificationWithAlarm:alarm];
+    helloMessage = [self confirmAlarmMessageForAlarm:alarm];
 }
 
 - (IBAction)unwindToPlayersViewControllerCancel:(UIStoryboardSegue *)unwindSegue{
@@ -199,10 +201,6 @@
     
 }
 
-
-
-
-
 - (NSDate *)getDateWithMinutesFromNow: (int) num {
     NSDate *now = [NSDate date];
     NSCalendar *currentCal = [NSCalendar currentCalendar];
@@ -214,6 +212,19 @@
                             toDate:now
                             options:0];
     
+}
+
+
+-(NSString*) confirmAlarmMessageForAlarm: (Alarm*) alarm{
+    NSTimeInterval timeTillAlarm = [alarm.date timeIntervalSinceNow];
+    NSDateComponentsFormatter* formatter = [[NSDateComponentsFormatter alloc] init];
+    formatter.unitsStyle = NSDateComponentsFormatterUnitsStyleFull;
+    formatter.allowedUnits = NSCalendarUnitSecond | NSCalendarUnitMinute | NSCalendarUnitHour | NSCalendarUnitDay | NSCalendarUnitYear;
+    
+    // Use the configured formatter to generate the string.
+    NSString* outputString = [formatter stringFromTimeInterval:timeTillAlarm];
+    
+    return [NSString stringWithFormat:@"Alarm rings in %@.", outputString];
 }
 
 - (void)confirmMessage: (NSString*) message{
@@ -253,6 +264,7 @@
     switch (buttonIndex) {
         case 0:
             //settings
+            [[UIApplication sharedApplication] openURL:[NSURL  URLWithString:UIApplicationOpenSettingsURLString]];
             break;
         case 1:
             [self performSegueWithIdentifier:@"EditorSegue" sender:self];

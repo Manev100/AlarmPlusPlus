@@ -7,8 +7,11 @@
 //
 
 #import "PickAlarmsoundViewController.h"
+#import <AVFoundation/AVFoundation.h>
 
-@interface PickAlarmsoundViewController ()
+@interface PickAlarmsoundViewController (){
+    AVAudioPlayer *audioPlayer;
+}
 
 @end
 
@@ -20,14 +23,11 @@ NSUInteger selectedIndex;
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Need to be filled with default system sounds
-    alarmsounds = [NSArray arrayWithObjects:@"Ringring.mp3", @"Friday", @"Baby", @"Song", nil];
+    alarmsounds = [NSArray arrayWithObjects:@"Beeps.mp3", @"Electronica.mp3", @"Hazard.mp3", @"Multi.mp3", @"Nice.mp3", @"Sun.mp3", @"Rio.mp3", @"School_Bell.mp3", @"Ship.mp3", @"Annoy.mp3", nil];
     
     selectedIndex = [alarmsounds indexOfObject:self.selectedAlarmsound];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
     
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -77,50 +77,27 @@ NSUInteger selectedIndex;
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
     
     self.selectedAlarmsound = [alarmsounds objectAtIndex:indexPath.row];
+    [self playSound];
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+-(void) playSound{
+    if(audioPlayer != nil){
+        [audioPlayer stop];
+    }
+    
+    NSString *path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], self.selectedAlarmsound];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    
+    audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    [audioPlayer play];
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
 
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    if(audioPlayer != nil){
+        [audioPlayer stop];
+    }
 }
-*/
+
 
 @end

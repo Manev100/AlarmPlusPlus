@@ -6,13 +6,16 @@
 //  Copyright © 2016 Marc Neveling. All rights reserved.
 //
 
+#import <AVFoundation/AVFoundation.h>
 #import "AlarmViewController.h"
 #import "AppDelegate.h"
 #import "NotificationsManager.h"
 
+
 @interface AlarmViewController (){
     Alarm* myAlarm;
-    int tries;
+    int numberOfTries;
+    AVAudioPlayer *audioPlayer;
 }
 
 @end
@@ -27,6 +30,7 @@
     }
     [self.alarmName setText:myAlarm.name];
     
+    // Setup Timelabel
     [self updateTimeLabelToNow];
     [NSTimer scheduledTimerWithTimeInterval:1.0
                                      target:self
@@ -35,6 +39,7 @@
                                     repeats:YES];
     
     
+    // display selected Problem
     self.arithmeticContainer.alpha = 0;
     self.equationContainer.alpha = 0;
     self.primeContainer.alpha = 0;
@@ -51,10 +56,20 @@
     }
     
     [self.activeProblemViewController setupViewForDifficulty:myAlarm.difficulty];
-    tries = 3;
+    numberOfTries = 3;
     
+    // get statistics manager and start a new session
     self.statisticsManager = [(AppDelegate*)[[UIApplication sharedApplication] delegate] getStatisticsManager];
     [self.statisticsManager startNewSessionWithType: myAlarm.problem AndDifficulty: myAlarm.difficulty];
+    
+    // play alarm sound
+    NSString *path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], myAlarm.ringtone];
+    NSURL *soundUrl = [NSURL fileURLWithPath:path];
+    NSLog(@"%@ %f", myAlarm.ringtone, myAlarm.volume);
+    audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+    [audioPlayer setVolume:myAlarm.volume];
+    [audioPlayer setNumberOfLoops:200];
+    [audioPlayer play];
 }
 
 
@@ -73,19 +88,20 @@
             NotificationsManager* nm = [(AppDelegate*)[[UIApplication sharedApplication] delegate] getNotificationsManager];
             [nm scheduleLocalNotificationWithAlarm:myAlarm];
         }
+        [audioPlayer stop];
         [self dismissViewControllerAnimated:YES completion:nil];
     }else{
         [self.statisticsManager problemAnsweredWrongly];
-        tries--;
-        if(tries <= 0){
+        numberOfTries--;
+        if(numberOfTries <= 0){
             // problem failed
-            tries = 3;
+            numberOfTries = 3;
             [self.statisticsManager nextProblem];
             [self.activeProblemViewController setupViewForDifficulty:myAlarm.difficulty];
         }else{
             // flash screen red or something, music louder
         }
-        [self.triesLabel setText:[NSString stringWithFormat:@"Tries: %d", tries]];
+        [self.triesLabel setText:[NSString stringWithFormat:@"Tries: %d", numberOfTries]];
         
     }
 }
@@ -129,6 +145,7 @@
     [dateFormatter setDateFormat:@"hh:mm"];
     self.timeLabel.text = [dateFormatter stringFromDate: now];
 }
+
 
 /*
 #pragma mark - Navigation

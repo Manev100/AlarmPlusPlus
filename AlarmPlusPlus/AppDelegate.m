@@ -152,6 +152,7 @@
 }
 
 
+// find the topViewController so alarms are pushed from everywhere
 - (UIViewController*)topViewController {
     return [self topViewControllerWithRootViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
 }
