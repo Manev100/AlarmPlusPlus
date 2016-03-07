@@ -93,7 +93,7 @@
     // we need to map x=1 to y=6, x=2 to y=0 , x=3 to y=1, ... => y = x+5 mod 7
     int weekdayMask = 1 << ((currentWeekday + 5) % 7);
     
-    if([pickedTime timeIntervalSinceNow] <= 0){
+    if([pickedDate timeIntervalSinceNow] <= 0){
         if(self.weekdaysFlag == 0){
             // pick tomorrow
             pickedDate = [DateUtils dateByAddingDays:1 ToDate:pickedDate];

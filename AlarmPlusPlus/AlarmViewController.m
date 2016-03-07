@@ -92,6 +92,7 @@
         [self dismissViewControllerAnimated:YES completion:nil];
     }else{
         [self.statisticsManager problemAnsweredWrongly];
+        [self flashScreen];
         numberOfTries--;
         if(numberOfTries <= 0){
             // problem failed
@@ -144,6 +145,35 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"hh:mm"];
     self.timeLabel.text = [dateFormatter stringFromDate: now];
+}
+
+- (void)flashScreen{
+    
+    UIView *flashView;
+    //make the view if we haven't already and add it as a subview
+    if(flashView == nil)
+    {
+        flashView = [[UIView alloc]
+                     initWithFrame:CGRectMake(0,
+                                              0,
+                                              self.view.frame.size.width,
+                                              self.view.frame.size.height)];
+        flashView.backgroundColor = [UIColor redColor];
+        [self.view addSubview:flashView];
+    }
+    
+    [flashView setAlpha:1.0f];
+    
+    
+    //flash animation code
+    [UIView beginAnimations:@"flash screen" context:nil];
+    [UIView setAnimationDuration:0.3f];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    
+    [flashView setAlpha:0.0f];
+    
+    [UIView commitAnimations];
+
 }
 
 

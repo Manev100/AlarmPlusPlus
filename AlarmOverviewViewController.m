@@ -37,7 +37,6 @@ NSString *helloMessage = nil;
         [self confirmMessage:helloMessage];
         helloMessage = nil;
     }
-    
 }
 
 - (void)didReceiveMemoryWarning {
