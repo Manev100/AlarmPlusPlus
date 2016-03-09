@@ -12,7 +12,6 @@
 
 @interface NotificationsManager : NSObject
 -(id)init;
-//-(id)initWithAlarms: (NSMutableArray*) alarmsArray;
 -(void)scheduleLocalNotificationWithAlarm:(Alarm *)alarm;
 - (void) deactivateAlarm: (Alarm*) alarm;
 -(void) activateAlarm: (Alarm*) alarm;

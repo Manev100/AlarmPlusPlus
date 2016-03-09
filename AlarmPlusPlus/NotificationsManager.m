@@ -9,6 +9,7 @@
 #import "NotificationsManager.h"
 
 @implementation NotificationsManager
+#pragma mark - Initialization
 -(id)init{
     if(self = [super init]){
         // Register notification types
@@ -23,15 +24,9 @@
     return self;
 }
 
-/*
--(id)initWithAlarms: (NSMutableArray*) alarmsArray{
-    if(self = [self init]){
-        self.alarms = alarmsArray;
-    }
-    return self;
-}
-*/
-
+#pragma mark - Notification Scheduling
+/// Schedule a notifications for an alarm.
+/// The alarm ID is saved in the user Info so alarm and notification can be found.
 - (void)scheduleLocalNotificationWithAlarm:(Alarm *)alarm {
     UILocalNotification *notification = [[UILocalNotification alloc]init];
     notification.repeatInterval = NSCalendarUnitMinute;
@@ -47,6 +42,7 @@
 
 - (void) deactivateAlarm: (Alarm*) alarm{
     NSArray *notifications = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    // loop all scheduled notifications, find the notification corresponding to the alarm and cancel it
     for(UILocalNotification *notification in notifications){
         NSString* alarmId = [notification.userInfo objectForKey:@"alarm_id"];
         if([alarmId isEqualToString:alarm.alarmId]){

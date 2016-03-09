@@ -10,6 +10,7 @@
 #import "ProblemDefaults.h"
 
 @implementation EquationProblemGenerator
+#pragma mark - Initialization
 - (id)init{
     return [self initWithDifficulty:DifficultyNormal];
 }
@@ -29,22 +30,19 @@
     return self;
 }
 
+/// Loads default values from ProblemDefaults and continues to setup
 - (void) setUpWithDifficulty: (Difficulties) difficulty{
     [self setUpWithDictionary:[ProblemDefaults getEquationProblemDefaultsForDifficulty:difficulty]];
     [self computeProblem];
 }
 
+/// Extracts default values from dictionary and computes a equation problem with them
 - (void) setUpWithDictionary: (NSDictionary*) dictionary{
-    /*NSArray* requiredKeys = [NSArray arrayWithObjects:@"linAX",@"linAY", @"linBX", @"linBY",@"quadAX", @"quadAY", @"quadBX",@"quadBY", @"quadCX", @"quadCY", "lin", @"quad" , nil];
-    NSArray* objectsFound = [dictionary objectsForKeys:requiredKeys notFoundMarker:[NSNull null]];
-    if([objectsFound containsObject:[NSNull null]]){
-        NSLog(@"Invalid dictionary. Does not contain all necessary values.");
-    }
-    */
     self.equationRanges = dictionary;
     self.problemIsLinear = [(NSNumber*)[self.equationRanges objectForKey:@"lin"] boolValue];
     self.problemIsQuadratic = [(NSNumber*)[self.equationRanges objectForKey:@"quad"] boolValue];
     
+    // if the problem can be linear or quadratic, coinflip to decide which to choose
     if(self.problemIsLinear && self.problemIsQuadratic){
         int coinflip = arc4random_uniform(2);
         if(coinflip == 0){
@@ -57,8 +55,12 @@
     [self computeProblem];
 }
 
+#pragma mark - Computation
+/// Computes an equation problem and its result
 -(void) computeProblem{
     if(self.problemIsLinear){
+        // linear equation problem
+        // random two proper values and check if the problem is valid
         int rangeAX = [(NSNumber*)[self.equationRanges objectForKey:@"linAX"] intValue];
         int rangeAY = [(NSNumber*)[self.equationRanges objectForKey:@"linAY"] intValue];
         int rangeBX = [(NSNumber*)[self.equationRanges objectForKey:@"linBX"] intValue];
@@ -72,8 +74,11 @@
         self.a = [NSNumber numberWithInt:potentialA];
         self.b = [NSNumber numberWithInt:potentialB];
         
+        // compute result
         self.x1 = [NSNumber numberWithInt: (-potentialB)/potentialA];
     }else if(self.problemIsQuadratic){
+        // linear quadratic problem
+        // random three proper values and check if the problem is valid
         int rangeAX = [(NSNumber*)[self.equationRanges objectForKey:@"quadAX"] intValue];
         int rangeAY = [(NSNumber*)[self.equationRanges objectForKey:@"quadAY"] intValue];
         int rangeBX = [(NSNumber*)[self.equationRanges objectForKey:@"quadBX"] intValue];
@@ -90,6 +95,7 @@
             potentialB = arc4random_uniform((rangeBY - rangeBX) + 1) + rangeBX;
             potentialC = arc4random_uniform((rangeCY - rangeCX) + 1) + rangeCX;
             
+            // validation
             // a mustn't be zero
             BOOL aNonZero = (potentialA != 0);
             if(aNonZero){
@@ -117,51 +123,67 @@
         self.b = [NSNumber numberWithInt:potentialB];
         self.c = [NSNumber numberWithInt:potentialC];
         
+        // compute result
         self.x1 = [NSNumber numberWithInt: (-potentialB)/(2*potentialA) + sqrt(pow(potentialB/(2*potentialA),2) - (potentialC/potentialA))];
         self.x2 = [NSNumber numberWithInt: (-potentialB)/(2*potentialA) - sqrt(pow(potentialB/(2*potentialA),2) - (potentialC/potentialA))];
         
     }
-    NSLog(@"x1 = %@, x2 = %@", self.x1, self.x2);
 }
 
+#pragma mark - Output
+/// returns string of the equation
 - (NSString*) getResultString{
     NSString* output = @"";
+    // concatenate the componentes
+    // check for special cases so it looks nice
     if(self.problemIsLinear){
         if([self.a intValue] == 1){
+            // omit 1
             output = @"x ";
         }else if([self.a intValue] == -1){
+            // omit 1
             output = @"-x ";
         }else{
             output = [NSString stringWithFormat:@"%@x ", self.a];
         }
         
         if([self.b intValue] == 0){
+            // omit zeroes
             output = [output stringByAppendingFormat:@"= 0"];
         }else if([self.b intValue] < 0){
+            // looks nicer with space between - and number
             output = [output stringByAppendingFormat:@"- %d = 0", abs([self.b intValue]) ];
         }else{
+            // looks nicer with space between + and number
             output = [output stringByAppendingFormat:@"+ %@ = 0", self.b];
         }
     }else if (self.problemIsQuadratic){
         if([self.a intValue] == 1){
+            // omit 1
             output = @"x² ";
         }else if([self.a intValue] == -1){
+            // omit 1
             output = @"-x² ";
         }else{
             output = [NSString stringWithFormat:@"%@x² ", self.a];
         }
         
         if([self.b intValue] < 0){
+            // looks nicer with space between - and number
             output = [output stringByAppendingFormat:@"- %dx ", abs([self.b intValue]) ];
         }else if([self.b intValue] > 0){
+            // looks nicer with space between + and number
             output = [output stringByAppendingFormat:@"+ %@x ", self.b];
         }
         
         if([self.c intValue] == 0){
+            // omit zeroes
             output = [output stringByAppendingFormat:@"= 0"];
         }else if([self.c intValue] < 0){
+            // looks nicer with space between - and number
             output = [output stringByAppendingFormat:@"- %d = 0", abs([self.c intValue]) ];
         }else{
+            // looks nicer with space between + and number
             output = [output stringByAppendingFormat:@"+ %@ = 0", self.b];
         }
         

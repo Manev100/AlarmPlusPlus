@@ -22,7 +22,7 @@
 
 @implementation AlarmViewController
 
-
+#pragma mark - Setup
 - (void)viewDidLoad {
     [super viewDidLoad];
     if(myAlarm == nil){
@@ -72,53 +72,17 @@
     [audioPlayer play];
 }
 
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (IBAction)submitPressed:(id)sender {
-    if([self.activeProblemViewController confirmResult]){
-        [self.statisticsManager problemAnsweredCorrectly];
-        // schedule next alarm if there is one
-        [myAlarm setToNextDate];
-        if(myAlarm.active){
-            NotificationsManager* nm = [(AppDelegate*)[[UIApplication sharedApplication] delegate] getNotificationsManager];
-            [nm scheduleLocalNotificationWithAlarm:myAlarm];
-        }
-        [audioPlayer stop];
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }else{
-        [self.statisticsManager problemAnsweredWrongly];
-        [self flashScreen];
-        numberOfTries--;
-        if(numberOfTries <= 0){
-            // problem failed
-            numberOfTries = 3;
-            [self.statisticsManager nextProblem];
-            [self.activeProblemViewController setupViewForDifficulty:myAlarm.difficulty];
-        }else{
-            // flash screen red or something, music louder
-        }
-        [self.triesLabel setText:[NSString stringWithFormat:@"Tries: %d", numberOfTries]];
-        
-    }
-}
-
-
 - (void)SetupWithAlarm: (Alarm *) alarm{
     myAlarm = alarm;
 }
 
-//Access child viewcontrollers
+/// Access child viewcontrollers and save reference in a dictionary
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if(self.childProblemViewControllers == nil){
         self.childProblemViewControllers = [NSMutableDictionary dictionaryWithCapacity:ProblemTypeCount];
     }
-
+    
     NSString * segueName = segue.identifier;
     if ([segueName isEqualToString: @"container_embed_prime"]) {
         UIViewController * childViewController = (UIViewController *) [segue destinationViewController];
@@ -132,10 +96,45 @@
     }
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+/// Submit button pressed, checks if answer is correct and acts accordingly.
+- (IBAction)submitPressed:(id)sender {
+    if([self.activeProblemViewController confirmResult]){
+        /// answer is correct: needs to record statistics, schedule next alarm, stop sounds, and dismiss itself
+        [self.statisticsManager problemAnsweredCorrectly];
+        // schedule next alarm if there is one
+        [myAlarm setToNextDate];
+        if(myAlarm.active){
+            NotificationsManager* nm = [(AppDelegate*)[[UIApplication sharedApplication] delegate] getNotificationsManager];
+            [nm scheduleLocalNotificationWithAlarm:myAlarm];
+        }
+        [audioPlayer stop];
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }else{
+        // answer is wrong: record statistics, flash screen, maybe display a new problem
+        [self.statisticsManager problemAnsweredWrongly];
+        [self flashScreen];
+        numberOfTries--;
+        if(numberOfTries <= 0){
+            // failed to answer problem correctly, display new problem
+            numberOfTries = 3;
+            [self.statisticsManager nextProblem];
+            [self.activeProblemViewController setupViewForDifficulty:myAlarm.difficulty];
+        }
+        [self.triesLabel setText:[NSString stringWithFormat:@"Tries: %d", numberOfTries]];
+        
+    }
+}
+
+/// Dismiss numpad on touch Event
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [[self view] endEditing:YES];
 }
 
+#pragma mark - Time
 - (void)updateEverySecond {
     [self updateTimeLabelToNow];
 }
@@ -147,6 +146,8 @@
     self.timeLabel.text = [dateFormatter stringFromDate: now];
 }
 
+#pragma mark - Screen Flash
+/// Flash screen red
 - (void)flashScreen{
     
     UIView *flashView;
@@ -175,16 +176,5 @@
     [UIView commitAnimations];
 
 }
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

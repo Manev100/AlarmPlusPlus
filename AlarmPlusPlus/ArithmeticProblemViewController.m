@@ -25,12 +25,15 @@
     // Dispose of any resources that can be recreated.
 }
 
+/// setup the viewcontroller.
+/// compute a problem to display and save result
 -(void) setupViewForDifficulty: (Difficulties) difficulty{
     ArithmeticProblemGenerator *APGen = [[ArithmeticProblemGenerator alloc] initWithDifficulty:difficulty];
     self.result = APGen.result;
     [self.problemField setText: [APGen getProblemString]];
 }
 
+/// returns wether answer was correct
 -(BOOL) confirmResult{
     int input = [self.inputField.text intValue];
     if(self.result == input){
@@ -40,6 +43,7 @@
     }
 }
 
+/// add - or remove - in the answer if signbutton was tapped
 - (IBAction)signSwitchClicked:(id)sender {
     if ([self.inputField.text hasPrefix:@"-"]) {
         self.inputField.text = [self.inputField.text substringFromIndex:1];

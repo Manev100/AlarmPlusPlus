@@ -19,6 +19,7 @@
 -(void) problemAnsweredCorrectly;
 -(void) problemAnsweredWrongly;
 -(void) nextProblem;
+
 -(BOOL) saveSessionsToPlist;
 -(void) resetData;
 

@@ -20,9 +20,10 @@
 NSArray *alarmsounds;
 NSUInteger selectedIndex;
 
+#pragma mark - Initialization
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Need to be filled with default system sounds
+    // Ringtones
     alarmsounds = [NSArray arrayWithObjects:@"Beeps.mp3", @"Electronica.mp3", @"Hazard.mp3", @"Multi.mp3", @"Nice.mp3", @"Sun.mp3", @"Rio.mp3", @"School_Bell.mp3", @"Ship.mp3", @"Annoy.mp3", nil];
     
     selectedIndex = [alarmsounds indexOfObject:self.selectedAlarmsound];
@@ -40,6 +41,7 @@ NSUInteger selectedIndex;
 }
 
 
+#pragma mark - Table Data Source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -62,6 +64,7 @@ NSUInteger selectedIndex;
     return cell;
 }
 
+/// If a row is selected it sets a checkmark to this row and removes the ckeckmark from a previously selected row
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -80,6 +83,8 @@ NSUInteger selectedIndex;
     [self playSound];
 }
 
+#pragma mark - Sound
+/// Plays the sound of the selected row as a preview
 -(void) playSound{
     if(audioPlayer != nil){
         [audioPlayer stop];
@@ -92,7 +97,7 @@ NSUInteger selectedIndex;
     [audioPlayer play];
 }
 
-
+/// Stops sound when we leave the view
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if(audioPlayer != nil){
         [audioPlayer stop];

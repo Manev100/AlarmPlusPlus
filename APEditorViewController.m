@@ -12,6 +12,7 @@
 #import "Alarm.h"
 
 @interface APEditorViewController ()
+// textfield to tag Enum
 typedef NS_ENUM(NSInteger, APTextFields) {
     APRangeOfOperantsX = 100,
     APRangeOfOperantsY = 101,
@@ -23,11 +24,11 @@ typedef NS_ENUM(NSInteger, APTextFields) {
 int const MAX_NUMBER_OF_OPERANDS = 4;
 
 @implementation APEditorViewController
-
+#pragma mark - Setup
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    // init event handling
     for(UITextField* textField in self.rangeTextFields){
         [textField addTarget:self action:@selector(textFieldEditingEnds:) forControlEvents:UIControlEventEditingDidEnd];
     }
@@ -42,6 +43,8 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
     
     [self makePreview];
 }
+
+/// Load defaul values from ProblemDefaults
 -(void) loadDefaults{
     NSDictionary* defaultValues = [ProblemDefaults getArithmeticProblemDefaultsForDifficulty:DifficultyCustom];
     
@@ -52,9 +55,11 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
     
     self.numberOfOperantsField.text = [((NSNumber*)[defaultValues objectForKey:@"numberOfOperands"]) description];
     
+    // compute the indices(of the operators) that are selected from the flag
     int flag = [((NSNumber*)[defaultValues objectForKey:@"operatorsFlag"]) intValue];
     NSMutableIndexSet *selectedIndices = [NSMutableIndexSet indexSet];
     for(int i = 0; i < 4; i++){
+        // i = 0: is + selected, i = 1: is - selected, etc.
         int mask = 1 << i;
         if((flag & mask) != 0){
             [selectedIndices addIndex:i];
@@ -65,6 +70,12 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
     self.loadedDefaults = true;
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+#pragma mark - Utils
+/// returns Textfield assoziated with a tag
 -(UITextField*) findTextFieldByTag: (int) tag{
     for(UITextField* textField in self.rangeTextFields){
         if(textField.tag == tag){
@@ -74,9 +85,7 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
     return nil;
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
+
 
 #pragma mark - Table view data source
 
@@ -94,47 +103,54 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
     }
 }
 
+#pragma mark - User Interaction
+/// invert the currently edited textfield input
 - (IBAction)signButtonPressed:(id)sender{
     for(UITextField* textField in self.rangeTextFields){
+        // find textfield that is being edited currently
         if(textField.isEditing){
+            // change the sign of its content
             [self changeSign:textField];
         }
     }
 }
-
+/// invert a textfields input
 -(void) changeSign:(UITextField*) textField{
     if ([textField.text hasPrefix:@"-"]) {
+        // input is negative, make it positive
         textField.text = [textField.text substringFromIndex:1];
     }else{
+        // input is positive, make it negative
         textField.text = [@"-" stringByAppendingString: textField.text ];
     }
 }
 
 
-
-// number of operands needs to be between 2 and MAX_NUMBER_OF_OPERANDS
+/// Validate the input of the number of operands field
+/// number of operands needs to be between 2 and MAX_NUMBER_OF_OPERANDS
 -(void)numberOfOperandsFieldEditingEnds :(UITextField *)theTextField{
     int numberOfOperands = [theTextField.text intValue];
+    // if the input is out of bounds change it to fit the bound
     if(numberOfOperands < 2){
         theTextField.text = @"2";
     }else if(numberOfOperands> MAX_NUMBER_OF_OPERANDS){
         theTextField.text = [NSString stringWithFormat:@"%d", MAX_NUMBER_OF_OPERANDS];
     }
-    
+    // make preview if input is good
     if(self.countOfFaultyCells <= 0){
         [self makePreview];
     }
 }
 
+/// Validate input of a range textfield that has been edited
 -(void)textFieldEditingEnds :(UITextField *)theTextField{
-    
-    
+    // remember if we edited a good textfield or a bad one
     BOOL cellIsFaulty = false;
     if([theTextField.backgroundColor isEqual:[UIColor redColor]]){
         cellIsFaulty = true;
     }
     
-    
+    // find rangetextfield and its corresponding neighbor
     UITextField* otherTextField;
     int x,y;
     switch (theTextField.tag) {
@@ -162,6 +178,7 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
             break;
     }
     
+    // validate their inputs
     if( x > y && !cellIsFaulty){
         [theTextField setBackgroundColor:[UIColor redColor]];
         [otherTextField setBackgroundColor:[UIColor redColor]];
@@ -172,6 +189,7 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
         self.countOfFaultyCells--;
     }
     
+    // make preview if all inputs are good
     if(self.countOfFaultyCells <= 0){
         [self makePreview];
     }else{
@@ -179,14 +197,15 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
     }
 }
 
-// one operator needs to be selected
+/// one operator needs to be selected
 -(void)multiSelect:(MultiSelectSegmentedControl *)multiSelectSegmentedControl didChangeValue:(BOOL)selected atIndex:(NSUInteger)index {
     if([self.operatorsSegmentControl.selectedSegmentTitles count] <= 0){
         [self.operatorsSegmentControl setSelectedSegmentIndex:index];
     }
 }
 
-
+#pragma mark - Control
+/// Compute  a preview problem and display it
 -(void) makePreview{
     NSDictionary* inputValues = [self saveInputsInDictionary];
     ArithmeticProblemGenerator *APGen = [[ArithmeticProblemGenerator alloc] initWithDictionary:inputValues];
@@ -199,7 +218,8 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
 }
 
 
-
+#pragma mark - Persistence
+/// Get Inputs from the textfields and save them in a dictionary
 -(NSMutableDictionary*) saveInputsInDictionary{
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionaryWithCapacity:6];
     [dictionary setObject:@([[self findTextFieldByTag:APRangeOfOperantsX].text intValue]) forKey:@"operandsRangeX"];
@@ -208,6 +228,7 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
     [dictionary setObject:@([[self findTextFieldByTag:APRangeOfResultY].text intValue]) forKey:@"resultRangeY"];
     [dictionary setObject:@([self.numberOfOperantsField.text intValue]) forKey:@"numberOfOperands"];
     
+    // the selected indices need to be translated to a flag
     NSIndexSet* indexes =  self.operatorsSegmentControl.selectedSegmentIndexes;
     int flag = 0;
     for(int i = 0; i < 4; i++){
@@ -220,6 +241,7 @@ int const MAX_NUMBER_OF_OPERANDS = 4;
     return dictionary;
 }
 
+/// Gets Inputs in a dictionary and delegate ProblemDefaults to save them in a plist
 -(void) saveInputs{
     if(self.loadedDefaults){
         NSLog(@"Saving values to plist...");

@@ -24,6 +24,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+/// setup the viewcontroller.
+/// compute a problem to display and save result
 -(void) setupViewForDifficulty: (Difficulties) difficulty{
     EquationProblemGenerator* EqPGen = [[EquationProblemGenerator alloc] initWithDifficulty:difficulty];
     self.resultX1 = [EqPGen.x1 intValue];
@@ -34,6 +36,7 @@
     self.problemField.text = [EqPGen getResultString];
 }
 
+/// returns wether answer was correct
 -(BOOL) confirmResult{
     int input1 = [self.firstInputField.text intValue];
     int input2 = [self.secondInputField.text intValue];
@@ -50,18 +53,7 @@
     return false;
 }
 
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
+/// add - or remove - in the answer if signbutton was tapped
 - (IBAction)signSwitch1Clicked:(id)sender {
     if ([self.firstInputField.text hasPrefix:@"-"]) {
         self.firstInputField.text = [self.firstInputField.text substringFromIndex:1];
@@ -70,6 +62,7 @@
     }
 }
 
+/// add - or remove - in the answer if signbutton was tapped
 - (IBAction)signSwitch2Clicked:(id)sender {
     if ([self.secondInputField.text hasPrefix:@"-"]) {
         self.secondInputField.text = [self.secondInputField.text substringFromIndex:1];

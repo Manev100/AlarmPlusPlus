@@ -10,6 +10,7 @@
 
 @implementation DateUtils
 
+/// returns a date thats set to a defined amount of days from a given date
 +(NSDate*) dateByAddingDays: (int) days ToDate: (NSDate*) date{
      NSCalendar *cal = [NSCalendar currentCalendar];
     return [cal dateByAddingUnit:NSCalendarUnitDay
@@ -18,6 +19,9 @@
                          options:0];
     
 }
+
+/// returns a date that is closest to a given date but including only days which weekdays are included in the weekdaysFlag.
+/// lets say we have Wednesday, the 9th of March as the date and a weekdaysFlag including wednesday, friday and saturday. Then it would look for the closest friday since the next wednesday and saturday are later in the future.
 +(NSDate*) dateOnNextWeekdayWithFlag: (int) weekdaysFlag FromDate: (NSDate*) date{
     NSCalendar *cal = [NSCalendar currentCalendar];
     // get current weekday

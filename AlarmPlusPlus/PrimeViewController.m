@@ -25,27 +25,33 @@
     [super didReceiveMemoryWarning];
 }
 
+/// setup the viewcontroller.
+/// compute a problem to display, fill multisselectegmentedcontrol and save result
 -(void) setupViewForDifficulty: (Difficulties) difficulty{
+    // flush segmented control
     [self.primeSelectSegmentControl removeAllSegments];
     PrimesProblemGenerator * pPGen = [[PrimesProblemGenerator alloc] initWithDifficulty:difficulty];
-
+    // add numbers
     for(int i = 0; i< [pPGen.numberOfOptions intValue]; i++){
         NSNumber *numberToAdd = (NSNumber*)[pPGen.selectableNumbers objectAtIndex:i];
         NSString *numberString = [numberToAdd stringValue];
         [self.primeSelectSegmentControl insertSegmentWithTitle:numberString atIndex:i animated:false];
     }
-    
+    // flush selection
     [self.primeSelectSegmentControl selectAllSegments:false];
+    // save correct indices 
     self.correctSelections = pPGen.correctSelections;
     
 }
 
+/// returns wether answer was correct
 -(BOOL) confirmResult{
     if(self.correctSelections == nil){
         NSLog(@"Not appropiately initialised. Need to call setupViewForDifficulty first.");
         return false;
     }
     
+    // compare selected indices to the correct indices
     if([self.correctSelections isEqualToIndexSet:self.primeSelectSegmentControl.selectedSegmentIndexes]){
         return true;
     }

@@ -11,6 +11,7 @@
 #import "EquationProblemGenerator.h"
 
 @interface EqEditorViewController ()
+// textfield to tag Enum
 typedef NS_ENUM(NSInteger, EquationEditorFields) {
     EqLinAX = 10,
     EqLinAY = 11,
@@ -26,11 +27,11 @@ typedef NS_ENUM(NSInteger, EquationEditorFields) {
 @end
 
 @implementation EqEditorViewController
-
+#pragma mark - Setup
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
+    // init event handling
     for(UITextField* textField in self.rangeTextFields){
         [textField addTarget:self action:@selector(textFieldEditingEnds:) forControlEvents:UIControlEventEditingDidEnd];
     }
@@ -44,10 +45,55 @@ typedef NS_ENUM(NSInteger, EquationEditorFields) {
     // Dispose of any resources that can be recreated.
 }
 
+/// Load defaul values from ProblemDefaults
+-(void) loadDefaults{
+    NSDictionary* defaultValues = [ProblemDefaults getEquationProblemDefaultsForDifficulty:DifficultyCustom];
+    self.linearEquationsEnabled = [((NSNumber*)[defaultValues objectForKey:@"lin"]) boolValue];
+    self.quadraticEquationsEnabled = [((NSNumber*)[defaultValues objectForKey:@"quad"]) boolValue];
+    if(self.linearEquationsEnabled){
+        [self.linQuadSegmentControl setSelectedSegmentIndex:0];
+    }else{
+        [self.linQuadSegmentControl setSelectedSegmentIndex:1];
+    }
+    
+    [self findTextFieldByTag:EqLinAX].text = [((NSNumber*)[defaultValues objectForKey:@"linAX"]) description];
+    [self findTextFieldByTag:EqLinAY].text = [((NSNumber*)[defaultValues objectForKey:@"linAY"]) description];
+    [self findTextFieldByTag:EqLinBX].text = [((NSNumber*)[defaultValues objectForKey:@"linBX"]) description];
+    [self findTextFieldByTag:EqLinBY].text = [((NSNumber*)[defaultValues objectForKey:@"linBY"]) description];
+    [self findTextFieldByTag:EqQuadAX].text = [((NSNumber*)[defaultValues objectForKey:@"quadAX"]) description];
+    [self findTextFieldByTag:EqQuadAY].text = [((NSNumber*)[defaultValues objectForKey:@"quadAY"]) description];
+    [self findTextFieldByTag:EqQuadBX].text = [((NSNumber*)[defaultValues objectForKey:@"quadBX"]) description];
+    [self findTextFieldByTag:EqQuadBY].text = [((NSNumber*)[defaultValues objectForKey:@"quadBY"]) description];
+    [self findTextFieldByTag:EqQuadCX].text = [((NSNumber*)[defaultValues objectForKey:@"quadCX"]) description];
+    [self findTextFieldByTag:EqQuadCY].text = [((NSNumber*)[defaultValues objectForKey:@"quadCY"]) description];
+    
+    self.loadedDefaults = true;
+    
+}
+#pragma mark - Utils
+/// returns Textfield assoziated with a tag
+-(UITextField*) findTextFieldByTag: (int) tag{
+    for(UITextField* textField in self.rangeTextFields){
+        if(textField.tag == tag){
+            return textField;
+        }
+    }
+    return nil;
+}
+#pragma mark - Control
+/// Compute  a preview problem and display it
+-(void) makePreview{
+    EquationProblemGenerator *EPGen = [[EquationProblemGenerator alloc] initWithDictionary:[self saveInputsInDictionary]];
+    NSString *problemWithResult = [EPGen getResultString];
+    [self.previewLabel setText:problemWithResult];
+}
 
+#pragma mark - User Interaction
 
+/// Validate input of a range textfield that has been edited
 -(void)textFieldEditingEnds :(UITextField *)theTextField{
-    NSLog(@"%ld", (long)theTextField.tag);
+    
+    // find rangetextfield and its corresponding neighbor
     UITextField* otherTextField;
     BOOL linearEqEdited = true;
     int x,y;
@@ -112,66 +158,34 @@ typedef NS_ENUM(NSInteger, EquationEditorFields) {
             break;
     }
     
+    // validate their inputs
     if(y < x){
         theTextField.text = [NSString stringWithFormat:@"%d", y];
         otherTextField.text = [NSString stringWithFormat:@"%d", y];
     }
     
+    // make preview
     [self makePreview];
 }
 
--(void) makePreview{
-    EquationProblemGenerator *EPGen = [[EquationProblemGenerator alloc] initWithDictionary:[self saveInputsInDictionary]];
-    NSString *problemWithResult = [EPGen getResultString];
-    [self.previewLabel setText:problemWithResult];
-}
-
--(void) loadDefaults{
-    NSDictionary* defaultValues = [ProblemDefaults getEquationProblemDefaultsForDifficulty:DifficultyCustom];
-    self.linearEquationsEnabled = [((NSNumber*)[defaultValues objectForKey:@"lin"]) boolValue];
-    self.quadraticEquationsEnabled = [((NSNumber*)[defaultValues objectForKey:@"quad"]) boolValue];
-    if(self.linearEquationsEnabled){
-        [self.linQuadSegmentControl setSelectedSegmentIndex:0];
-    }else{
-        [self.linQuadSegmentControl setSelectedSegmentIndex:1];
-    }
-    
-    [self findTextFieldByTag:EqLinAX].text = [((NSNumber*)[defaultValues objectForKey:@"linAX"]) description];
-    [self findTextFieldByTag:EqLinAY].text = [((NSNumber*)[defaultValues objectForKey:@"linAY"]) description];
-    [self findTextFieldByTag:EqLinBX].text = [((NSNumber*)[defaultValues objectForKey:@"linBX"]) description];
-    [self findTextFieldByTag:EqLinBY].text = [((NSNumber*)[defaultValues objectForKey:@"linBY"]) description];
-    [self findTextFieldByTag:EqQuadAX].text = [((NSNumber*)[defaultValues objectForKey:@"quadAX"]) description];
-    [self findTextFieldByTag:EqQuadAY].text = [((NSNumber*)[defaultValues objectForKey:@"quadAY"]) description];
-    [self findTextFieldByTag:EqQuadBX].text = [((NSNumber*)[defaultValues objectForKey:@"quadBX"]) description];
-    [self findTextFieldByTag:EqQuadBY].text = [((NSNumber*)[defaultValues objectForKey:@"quadBY"]) description];
-    [self findTextFieldByTag:EqQuadCX].text = [((NSNumber*)[defaultValues objectForKey:@"quadCX"]) description];
-    [self findTextFieldByTag:EqQuadCY].text = [((NSNumber*)[defaultValues objectForKey:@"quadCY"]) description];
-    
-    self.loadedDefaults = true;
-    
-}
-
--(UITextField*) findTextFieldByTag: (int) tag{
-    for(UITextField* textField in self.rangeTextFields){
-        if(textField.tag == tag){
-            return textField;
-        }
-    }
-    return nil;
-}
-
+/// invert the currently edited textfield input
 - (IBAction)signButtonPressed:(id)sender {
     for(UITextField* textField in self.rangeTextFields){
+        // find textfield that is being edited currently
         if(textField.isEditing){
+            // change the sign of its content
             [self changeSign:textField];
         }
     }
 }
 
+/// invert a textfields input
 -(void) changeSign:(UITextField*) textField{
     if ([textField.text hasPrefix:@"-"]) {
+        // input is negative, make it positive
         textField.text = [textField.text substringFromIndex:1];
     }else{
+        // input is positive, make it negative
         textField.text = [@"-" stringByAppendingString: textField.text ];
     }
 }
@@ -196,7 +210,8 @@ typedef NS_ENUM(NSInteger, EquationEditorFields) {
     return 0;
 }
 
-
+#pragma mark - persistence
+/// Get Inputs from the textfields and save them in a dictionary
 -(NSMutableDictionary*) saveInputsInDictionary{
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionaryWithCapacity:6];
     [dictionary setObject:@([[self findTextFieldByTag:EqLinAX].text intValue]) forKey:@"linAX"];
@@ -221,6 +236,7 @@ typedef NS_ENUM(NSInteger, EquationEditorFields) {
     return dictionary;
 }
 
+/// Gets Inputs in a dictionary and delegate ProblemDefaults to save them in a plist
 -(void) saveInputs{
     if(self.loadedDefaults){
         NSLog(@"Saving values to plist...");

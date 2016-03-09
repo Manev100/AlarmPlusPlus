@@ -21,6 +21,7 @@
 @implementation AlarmOverviewViewController
 NSString *helloMessage = nil;
 
+#pragma mark - Initialization
 - (void)viewDidLoad {
     [super viewDidLoad];
     AppDelegate* appDelegate = [[UIApplication sharedApplication] delegate];
@@ -33,6 +34,7 @@ NSString *helloMessage = nil;
 - (void) viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
     [self.tableView reloadData];
+    // check to see if an alarm has been added and we need to display confirmation message
     if(helloMessage != nil){
         [self confirmMessage:helloMessage];
         helloMessage = nil;
@@ -57,7 +59,7 @@ NSString *helloMessage = nil;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     AlarmCellTableViewCell *cell;
     cell = (AlarmCellTableViewCell*)[tableView dequeueReusableCellWithIdentifier:@"alarmCell" forIndexPath:indexPath];
-    //TODO: fill alarms array correctely
+    
     Alarm *alarm = [self.alarms objectAtIndex:indexPath.row];
     cell.name.text = alarm.name;
     
@@ -105,7 +107,7 @@ NSString *helloMessage = nil;
     
     return cell;
 }
-
+/// Handling a delete request
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Alarm *deletedAlarm = (Alarm*) [self.alarms objectAtIndex:indexPath.row];
@@ -128,16 +130,19 @@ NSString *helloMessage = nil;
 }
 
 - (IBAction)activeButtonPressed:(id)sender {
+    // find row that needs to be activated/deactivated
     CGPoint touchPoint = [sender convertPoint:CGPointZero toView:self.tableView];
     NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:touchPoint];
     
     Alarm *alarm = [self.alarms objectAtIndex:indexPath.row];
     
     if(!alarm.active){
+        // activate alarm, schedule notification, confirm activation to user
         [alarm activate];
         [self.notficationsManager scheduleLocalNotificationWithAlarm:alarm];
         [self confirmMessage:[self confirmAlarmMessageForAlarm:alarm]];
     }else{
+        // deactivate alarm, cancel notification
         alarm.active = false;
         [self.notficationsManager deactivateAlarm:alarm];
     }
@@ -146,7 +151,8 @@ NSString *helloMessage = nil;
 }
 
 #pragma mark - Segue Handling
-
+/// Return from alarmAddView
+/// Initialize added alarm, schedule it and confirm to user
 - (IBAction)unwindToPlayersViewControllerAdd:(UIStoryboardSegue *)unwindSegue{
     AlarmAddViewController *vc = [unwindSegue sourceViewController];
     
@@ -185,35 +191,27 @@ NSString *helloMessage = nil;
     [self.alarms addObject:alarm];
     [self.tableView reloadData];
     [self.notficationsManager scheduleLocalNotificationWithAlarm:alarm];
+    // set the flag, that an new alarm has been added and a confirmation needs to be displayed.
+    // we cannot display it here since we are still segueing and the view hasn't appeared yet
     helloMessage = [self confirmAlarmMessageForAlarm:alarm];
 }
 
+/// alarm add canceled
 - (IBAction)unwindToPlayersViewControllerCancel:(UIStoryboardSegue *)unwindSegue{
     
 }
 
+/// return from editor
 - (IBAction)unwindToEditorDone:(UIStoryboardSegue *)unwindSegue{
     [(EditorTabBarController*)unwindSegue.sourceViewController.tabBarController saveAllInputs];
 }
 
+/// return from statistics
 - (IBAction)unwindToStatisticsBack:(UIStoryboardSegue *)unwindSegue{
     
 }
 
-- (NSDate *)getDateWithMinutesFromNow: (int) num {
-    NSDate *now = [NSDate date];
-    NSCalendar *currentCal = [NSCalendar currentCalendar];
-    
-    NSDateComponents *offsetComponents = [[NSDateComponents alloc] init];
-    [offsetComponents setMinute:num];
-    [offsetComponents setSecond:0];
-    return [currentCal dateByAddingComponents:offsetComponents
-                            toDate:now
-                            options:0];
-    
-}
-
-
+#pragma mark - Alarm Confirmation
 -(NSString*) confirmAlarmMessageForAlarm: (Alarm*) alarm{
     NSTimeInterval timeTillAlarm = [alarm.date timeIntervalSinceNow];
     NSDateComponentsFormatter* formatter = [[NSDateComponentsFormatter alloc] init];
@@ -240,10 +238,10 @@ NSString *helloMessage = nil;
 }
 
 
-
-// DETAILS NAV BAR ITEM ACTION SHEET HANDLING
+#pragma mark - Action Sheet Handling
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+/// displays navigation actionsheet
 - (IBAction)detailsButtonClicked:(id)sender {
     UIActionSheet *actionSheet = [[UIActionSheet alloc]
                                             initWithTitle:nil
@@ -266,6 +264,7 @@ NSString *helloMessage = nil;
             [[UIApplication sharedApplication] openURL:[NSURL  URLWithString:UIApplicationOpenSettingsURLString]];
             break;
         case 1:
+            //editor
             [self performSegueWithIdentifier:@"EditorSegue" sender:self];
             break;
         case 2:

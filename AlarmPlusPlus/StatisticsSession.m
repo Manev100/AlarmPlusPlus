@@ -9,7 +9,7 @@
 #import "StatisticsSession.h"
 
 @implementation StatisticsSession
-
+#pragma mark - Initialization
 -(id) init{
     if(self = [super init]){
         self.startingTime = [NSDate date];
@@ -27,10 +27,12 @@
     return self;
 }
 
+#pragma mark - Session Control
 -(void) endSession{
     self.endingTime = [NSDate date];
 }
 
+#pragma mark - NSCoding
 - (id) initWithCoder:(NSCoder *) decoder{
     if(self = [super init]){
         self.startingTime = [decoder decodeObjectForKey:@"startdate"];

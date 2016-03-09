@@ -29,7 +29,7 @@
     return self;
 }
 
-// sets weekdaysflag, id, date and repeatsLeft
+/// sets weekdaysflag, id, date and repeatsLeft, since they can be computed by the initially picked time (included in pickedDate) and the selected weekdays
 -(void) finishAlarmSetupWithTime: (NSDate*) pickedDate AndWeekdays: (NSIndexSet*) selectedWeekdays{
     [self computeWeekdaysFlagFromIndexSet: selectedWeekdays];
     [self makeId];
@@ -51,7 +51,7 @@
 }
 
 
-
+/// computes the weekdaysFlag from an indexset that includes indices from 0 to 6. If 0 is in selectedWeekdaysIndexSet it means that monday was selected, if 1 it means tuesday, etc.
 -(void) computeWeekdaysFlagFromIndexSet: (NSIndexSet*) selectedWeekdaysIndexSet{
     NSMutableArray *weekdaysArray = [Alarm weekdaysToArray];
     int weekdaysFlag = 0;
@@ -61,21 +61,22 @@
     self.weekdaysFlag = weekdaysFlag;
 }
 
-
-
+/// chooses a unique id. It takes the current date (the time of creating the alarm) and computes the timeInterval sice 1970.
+/// Since no two alarms can be created at the exact same moment, this is a unique double value. In addition the name is also added.
 -(void) makeId{
     double timeInterval = [[NSDate date] timeIntervalSince1970];
     self.alarmId = [NSString stringWithFormat:@"%@%f", self.name, timeInterval];
 }
 
+/// we now have to choose the correct next date the alarm is fired.
+/// if we pick a time that is earlier (or equal) than the current time, we
+///  - pick tommorrow if no weekday is selected
+///  - pick next day that is a selected weekday
+/// if we pick a time that is later than the current time, we
+/// - pick now if the weekday is the same or no weekday has been selected
+/// - pick next day that is a selected weekday
 -(void) pickDateWithTime: (NSDate*) pickedTime{
-    // we now have to choose the correct next date the alarm is fired.
-    // if we pick a time that is earlier (or equal) than the current time, we
-    //  - pick tommorrow if no weekday is selected
-    //  - pick next day that is a selected weekday
-    // if we pick a time that is later than the current time, we
-    // - pick now if the weekday is the same or no weekday has been selected
-    // - pick next day that is a selected weekday
+    
     NSCalendar *cal = [NSCalendar currentCalendar];
     
     // extract year, month, day, hour, minute, we dont need seconds nad milliseconds
@@ -121,7 +122,7 @@
 
 #pragma mark - Controlling Dates
 
-// sets the date to the next time the alarm rings, deactivates if no repeats left
+/// sets the date to the next time the alarm rings, deactivates if no repeats left
 -(void) setToNextDate{
     self.repeatsLeft--;
     if(self.repeat == NO && self.repeatsLeft <= 0){
@@ -131,7 +132,7 @@
     }
 }
 
-// set the active boolean, set next date to nearest weekday, set repeatsLeft to number of weekdays
+/// set the active boolean, set next date to nearest weekday, set repeatsLeft to number of weekdays
 -(void) activate{
     if(!self.active){
         self.active = true;
@@ -146,6 +147,8 @@
     }
 }
 
+/// sets the date to the nearest weekday set in the weekdaysFlag
+/// it computes the next date the alarm should ring
 -(void) setToNextDateFromNow{
     NSCalendar *cal = [NSCalendar currentCalendar];
     NSDate *now = [NSDate date];

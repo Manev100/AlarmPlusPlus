@@ -29,15 +29,18 @@
     self.currentSession = [[StatisticsSession alloc] initWithType:type AndDifficulty:difficulty];
 }
 
+/// If a correct answer has been given we record the try and end the session
 -(void) problemAnsweredCorrectly{
     [self tryMade];
     [self endCurrentSession];
 }
 
+/// If a wrong answer has been given we record the try
 -(void) problemAnsweredWrongly{
     [self tryMade];
 }
 
+/// No tries left, new problem was presented
 -(void) nextProblem{
     int oldProblems = [self.currentSession.numberOfProblems intValue];
     self.currentSession.numberOfProblems = @(oldProblems + 1);
@@ -57,21 +60,21 @@
 }
 
 #pragma mark - Statistics Output
-
+/// Takes all sessions and computes general statistics
+/// returns dictionary that includes these statistics
 -(NSDictionary*) evaluateGeneralStatistics{
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
     double totalTimeInSeconds = 0.0;
     int numberOfTries = 0;
     int numberOfSolves = (int)[self.sessions count];
     
-    
+    // look at sessions one by one and and add to the corresponding statistics
     for(StatisticsSession* session in self.sessions){
         totalTimeInSeconds += [session.endingTime timeIntervalSinceDate:session.startingTime];
         numberOfTries += [session.numberOfTries intValue];
     }
     
-    
-    
+    // add statistics to the dictionary
     [dict setObject:@((int)totalTimeInSeconds) forKey:@"totalTime"];
     [dict setObject:@(numberOfTries-numberOfSolves) forKey:@"wrongTries"];
     [dict setObject:@(numberOfSolves) forKey:@"solves"];
@@ -86,6 +89,8 @@
     return dict;
 }
 
+/// Takes all sessions and computes difficulty statistics
+/// returns dictionary that includes these statistics
 -(NSDictionary*) evaluateDifficultyStatistics{
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
     
@@ -98,6 +103,7 @@
     int numberOfCustomProblemsSolved = 0;
     int numberOfCustomProblemsTried = 0;
     
+    // look at sessions one by one and and add to the corresponding statistics
     for(StatisticsSession* session in self.sessions){
         switch(session.difficulty){
             case DifficultyEasy:
@@ -121,6 +127,7 @@
         }
     }
     
+    // add statistics to the dictionary
     [dict setObject:@(numberOfEasyProblemsTried) forKey:@"easyTries"];
     [dict setObject:@(numberOfEasyProblemsSolved) forKey:@"easySolves"];
     [dict setObject:@(numberOfNormalProblemsTried) forKey:@"normalTries"];
@@ -143,6 +150,8 @@
     return dict;
 }
 
+/// Takes all sessions and computes problem type statistics
+/// returns dictionary that includes these statistics
 -(NSDictionary*) evaluateProblemTypeStatistics{
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
     
@@ -153,7 +162,7 @@
     int numberOfPrimeProblemsTried = 0;
     int numberOfPrimeProblemsSolved = 0;
     
-    
+    // look at sessions one by one and and add to the corresponding statistics
     for(StatisticsSession* session in self.sessions){
         switch(session.problemType){
             case ProblemTypeArithmetic:
@@ -173,6 +182,7 @@
         }
     }
     
+    // add statistics to the dictionary
     [dict setObject:@(numberOfArithmeticProblemsTried) forKey:@"aPTried"];
     [dict setObject:@(numberOfArithmeticProblemsSolved) forKey:@"aPSolved"];
     [dict setObject:@(numberOfEquationProblemsTried) forKey:@"eqPTried"];

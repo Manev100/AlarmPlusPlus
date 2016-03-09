@@ -10,7 +10,7 @@
 #import "ProblemDefaults.h"
 
 @implementation ArithmeticProblemGenerator
-
+#pragma mark - Initialization
 - (id)init{
     return [self initWithDifficulty:DifficultyNormal];
 }
@@ -29,12 +29,15 @@
     }
     return self;
 }
-
+/// Loads default values from ProblemDefaults and continues to setup
 - (void) setUpWithDifficulty: (Difficulties) difficulty{
     NSDictionary* defaultValues = [ProblemDefaults getArithmeticProblemDefaultsForDifficulty:difficulty];
     [self setUpWithDictionary:defaultValues];
 }
+
+/// Extracts default values from dictionary and computes a arithmetic problem with them
 - (void)setUpWithDictionary: (NSDictionary*) dictionary{
+    // first check if dictionary has all required values
     NSArray* requiredKeys = [NSArray arrayWithObjects:@"operandsRangeX",@"operandsRangeY", @"resultRangeX",@"resultRangeY", @"operatorsFlag",@"numberOfOperands", nil];
     NSArray* objectsFound = [dictionary objectsForKeys:requiredKeys notFoundMarker:[NSNull null]];
     if([objectsFound containsObject:[NSNull null]]){
@@ -51,7 +54,10 @@
     [self computeResult];
 }
 
+#pragma mark - Computation
+/// Computes an arithmetic problem and its result, and returns if one could be found
 - (BOOL) computeResult{
+    // the operands and operators of the problem
     self.operands = [NSMutableArray arrayWithCapacity:[self.numberOfOperands intValue]];
     self.operators = [NSMutableArray arrayWithCapacity:[self.numberOfOperands intValue]-1];
     
@@ -117,9 +123,14 @@
     return true;
 }
 
+/// Solves an arithmetic problem with operands stored in self.operands and self.operators.
+/// Returns the result
 - (int) evaluateProblem{
     NSMutableArray *operandsCpy = [NSMutableArray arrayWithArray:self.operands];
     NSMutableArray *operatorsCpy = [NSMutableArray arrayWithArray:self.operators];
+    // For every step we have a subproblem a $ b , with $ being +,-,* or /
+    // we solve this subproblem and save its result in a's spot in the operands array
+    // we then delete $ and b from the arrays and continue
     
     // first loop to look for division/multiplication first
     for(int j=0; j< [operatorsCpy count]; j++){
@@ -128,7 +139,7 @@
             
             int a = [[operandsCpy objectAtIndex:j] intValue];
             int b = [[operandsCpy objectAtIndex:j+1] intValue];
-            
+            // Solve multiplication/division subproblem
             if(operation == OperatorMultiply ){
                 [operandsCpy replaceObjectAtIndex:j withObject:[NSNumber numberWithInt:a*b]];
             }else{
@@ -146,6 +157,7 @@
         int a = [[operandsCpy objectAtIndex:0] intValue];
         int b = [[operandsCpy objectAtIndex:1] intValue];
         
+        // solve plus and minus subproblems
         if(operation == OperatorPlus){
             [operandsCpy replaceObjectAtIndex:0 withObject:[NSNumber numberWithInt:a+b]];
         }else if(operation == OperatorMinus){
@@ -160,6 +172,8 @@
     return [[operandsCpy objectAtIndex:0] intValue];
 }
 
+#pragma mark - Output
+/// Output string of problem + result
 - (NSString*) getResultString{
     
     NSString* output = [self getProblemString];
@@ -167,6 +181,7 @@
     return output;
 }
 
+/// Outputs string of problem
 - (NSString*) getProblemString{
     NSString* output = [NSString stringWithFormat:@"%@ ",[self.operands objectAtIndex:0]];
     for(int i = 0; i< [self.numberOfOperands intValue] -1 ; i++){
@@ -186,13 +201,16 @@
     return output;
 }
 
+#pragma mark - Utils
 -(int) randomNumberInRangeX:(int) x andY: (int)y{
     return arc4random_uniform(y-x+1)+x;
 }
 
-// + 1, - 10, * 100, / 1000
-// flag mustn't be 0 or something like ...0000
+/// Outputs a random operator that is selected in an operators flag.
+/// + 0001, - 0010, * 0100, / 1000
+/// flag mustn't be 0 or something like ...0000
 -(int) randomOperatorForFlag: (int) flag{
+    // try random operator and check if it's bit is set
     BOOL opFound = false;
     while(!opFound){
         int mask = 1<<arc4random_uniform(4);
@@ -203,6 +221,7 @@
     return 1;
 }
 
+/// Outputs a String sign for an operator enum
 -(NSString*) getSignForOperator: (Operators) op{
     NSString *output = @"";
     switch (op) {

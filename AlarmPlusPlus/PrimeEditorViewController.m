@@ -11,6 +11,7 @@
 #import "ProblemDefaults.h"
 
 @interface PrimeEditorViewController ()
+// textfield to tag Enum
 typedef NS_ENUM(NSInteger, PrimesTextFields) {
     PrimesNumberOfOptions = 100,
     PrimesNumberOfPrimes = 101,
@@ -24,7 +25,7 @@ int const MAX_NUMBER_OF_PRIMES = 12;
 int const MAX_PRIME = 200;
 
 @implementation PrimeEditorViewController
-
+#pragma mark - Setup
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -44,20 +45,25 @@ int const MAX_PRIME = 200;
     self.maxPrimeField.text = [maxPrime description];
 }
 
+#pragma mark - Control
+/// Compute  a preview problem and display it
 -(void) makePreview{
     PrimesProblemGenerator * pPGen = [[PrimesProblemGenerator alloc] initWithDictionary:[self saveInputsInDictionary]];
     
+    // fill multiselectsegmentedcontrol
     [self.previewSegmentControl removeAllSegments];
     for(int i = 0; i< [pPGen.numberOfOptions intValue]; i++){
         NSNumber *numberToAdd = (NSNumber*)[pPGen.selectableNumbers objectAtIndex:i];
         NSString *numberString = [numberToAdd stringValue];
         [self.previewSegmentControl insertSegmentWithTitle:numberString atIndex:i animated:false];
     }
-    
+    // deselect all
     [self.previewSegmentControl selectAllSegments:false];
     self.loadedDefaults = true;
 }
 
+#pragma mark - User Interaction
+/// Listen for editing ends control event on the textfields
 -(void) setUpUserInteraction{
     [self.numberOfOptionsField addTarget:self action:@selector(numFieldEditingEnds:) forControlEvents:UIControlEventEditingDidEnd];
     [self.numberOfPrimesField addTarget:self action:@selector(numFieldEditingEnds:) forControlEvents:UIControlEventEditingDidEnd];
@@ -69,6 +75,8 @@ int const MAX_PRIME = 200;
 // Validating input
 -(void)numFieldEditingEnds :(UITextField *)theTextField{
     int value;
+    // which textfield was edited.
+    // check if input is in bounds, else set it to be in bounds
     switch (theTextField.tag) {
         case PrimesNumberOfOptions:
             value  = [theTextField.text intValue];
@@ -104,15 +112,18 @@ int const MAX_PRIME = 200;
     [self makePreview];
 }
 
+/// Validate the input of the 3 textfields
 -(void) validateInput{
     int numOfOptions = [self.numberOfOptionsField.text intValue];
     int numOfPrimes = [self.numberOfPrimesField.text intValue];
     int maxPrime = [self.maxPrimeField.text intValue];
     
+    // there cant be more primes than options
     if(numOfOptions < numOfPrimes){
         numOfOptions = numOfPrimes;
     }
     
+    // maxPrime needs to be high enough so that there are enough primes
     // not good, need to retrieve primes list and count primes up to maxPrime
     if(maxPrime/2 + 1  < numOfPrimes){
         numOfPrimes = maxPrime/2 + 1;
@@ -143,6 +154,8 @@ int const MAX_PRIME = 200;
     return 0;
 }
 
+#pragma mark - Persistence
+/// Get Inputs from the textfields and save them in a dictionary
 -(NSMutableDictionary*) saveInputsInDictionary{
     NSMutableDictionary* dictionary = [NSMutableDictionary dictionaryWithCapacity:3];
     [dictionary setObject:@([self.numberOfOptionsField.text intValue]) forKey:@"numberOfOptions"];
@@ -152,6 +165,7 @@ int const MAX_PRIME = 200;
     return dictionary;
 }
 
+/// Gets Inputs in a dictionary and delegate ProblemDefaults to save them in a plist
 -(void) saveInputs{
     if(self.loadedDefaults){
         NSLog(@"Saving values to plist...");

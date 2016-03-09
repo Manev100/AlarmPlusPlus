@@ -9,6 +9,9 @@
 #import "ProblemDefaults.h"
 
 @implementation ProblemDefaults
+
+#pragma mark - Default Values Dictionaries
+/// Returns a dictionary with the defaults for a given problem difficulty for arithmetic problems
 +(NSDictionary*) getArithmeticProblemDefaultsForDifficulty: (Difficulties) difficulty{
     NSMutableDictionary* theDictionary = [NSMutableDictionary dictionaryWithCapacity:6];
     switch (difficulty) {
@@ -39,6 +42,7 @@
             break;
             
         case DifficultyCustom:
+            // values for the customdifficulty are loaded from a plist if it exists
             theDictionary = [self loadValuesFromFile:@"ArithmeticProblemValues.plist"];
             if(theDictionary == nil){
                 NSLog(@"No plist found, creating plist with default values...");
@@ -62,6 +66,7 @@
     return theDictionary;
 }
 
+/// Returns a dictionary with the defaults for a given problem difficulty for equation problems
 +(NSDictionary*) getEquationProblemDefaultsForDifficulty: (Difficulties) difficulty{
     NSMutableDictionary* theDictionary = [NSMutableDictionary dictionaryWithCapacity:15];
     switch (difficulty) {
@@ -110,6 +115,7 @@
             break;
             
         case DifficultyCustom:
+            // values for the customdifficulty are loaded from a plist if it exists
             theDictionary = [self loadValuesFromFile:@"EquationProblemValues.plist"];
             if(theDictionary == nil){
                 NSLog(@"No plist found, creating plist with default values...");
@@ -139,6 +145,7 @@
     return theDictionary;
 }
 
+/// Returns a dictionary with the defaults for a given problem difficulty for prime problems
 +(NSDictionary*) getPrimeProblemDefaultsForDifficulty: (Difficulties) difficulty{
     NSMutableDictionary* theDictionary = [NSMutableDictionary dictionaryWithCapacity:3];
     switch (difficulty) {
@@ -160,6 +167,7 @@
             break;
             
         case DifficultyCustom:
+            // values for the customdifficulty are loaded from a plist if it exists
             theDictionary = [self loadValuesFromFile:@"PrimeProblemValues.plist"];
             if(theDictionary == nil){
                 NSLog(@"No plist found, creating plist with default values...");
@@ -180,7 +188,10 @@
     return theDictionary;
 }
 
+#pragma mark - Persistence
+/// Returns a dictionary with Values from a plist with a given filename
 +(NSMutableDictionary*) loadValuesFromFile: (NSString*) filename{
+    // build path
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
     NSString *finalPath = [documentsPath stringByAppendingString:filename];
@@ -193,27 +204,36 @@
     }
 }
 
+/// Save a dictionary to a plist with a given filename
 +(BOOL)saveValuesFromDictionary:(NSMutableDictionary*) theDictionary ToFile:(NSString*) fileName{
+    // build path
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
     NSString *finalPath = [documentsPath stringByAppendingString:fileName];
     
     return [theDictionary writeToFile:finalPath atomically:YES];
 }
-
+/// Saves a dictionary to the arithmetic problems plist
+/// Expects a dictionary with arithmetic problem values
 +(void) saveArithmeticProblemCustomDifficultyValues: (NSMutableDictionary*) theDictionary{
     [self saveValuesFromDictionary:theDictionary ToFile:@"ArithmeticProblemValues.plist"];
 }
 
+/// Saves a dictionary to the equation problems plist
+/// Expects a dictionary with equation problem values
 +(void) saveEquationProblemCustomDifficultyValues: (NSMutableDictionary*) theDictionary{
     [self saveValuesFromDictionary:theDictionary ToFile:@"EquationProblemValues.plist"];
 }
 
+/// Saves a dictionary to the prime problems plist
+/// Expects a dictionary with prime problem values
 +(void) savePrimeProblemCustomDifficultyValues: (NSMutableDictionary*) theDictionary{
     [self saveValuesFromDictionary:theDictionary ToFile:@"PrimeProblemValues.plist"];
 }
 
+/// Resets all plists with default values by deleting them
 +(void) resetValues{
+    // build paths
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
@@ -221,6 +241,7 @@
     NSString *EqPath = [documentsDirectory stringByAppendingString:@"EquationProblemValues.plist"];
     NSString *PrPath = [documentsDirectory stringByAppendingString:@"PrimeProblemValues.plist"];
     
+    // remove files
     [fileManager removeItemAtPath: APPath error:NULL];
     [fileManager removeItemAtPath: EqPath error:NULL];
     [fileManager removeItemAtPath: PrPath error:NULL];

@@ -17,7 +17,7 @@
 
 @implementation AppDelegate
 
-
+#pragma mark - Overrides
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     UILocalNotification *notification = [launchOptions valueForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if(notification != NULL){
@@ -66,10 +66,6 @@
 }
 
 -(void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
-    if ( application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground  )
-    {
-        
-    }
     
     // Stop repeating this notification
     [[UIApplication sharedApplication] cancelLocalNotification:notification];
@@ -88,6 +84,8 @@
     [self presentAlarmViewforAlarm:firedAlarm];
 }
 
+#pragma mark - Alarm Firing
+/// presents the alarm by instantiating an AlarmViewController and pushing it to the front
 -(void) presentAlarmViewforAlarm: (Alarm*) alarm{
     //UINavigationController *nav = (UINavigationController *)self.window.rootViewController;
     UIViewController *vc = [self topViewController];
@@ -103,8 +101,10 @@
     
 }
 
+#pragma mark - Getters
+
 -(NSMutableArray *) getAlarmArray{
-    if(self.alarms == NULL){
+    if(self.alarms == nil){
         self.alarms = [NSMutableArray arrayWithCapacity:20];
     }
     return self.alarms;
@@ -126,7 +126,7 @@
 }
 
 #pragma mark - Alarms Persistence
-
+/// saves the alarms array to the alarms plist
 -(BOOL) saveAlarmsToPlist{
     NSLog(@"Saving alarms...");
     BOOL status = [NSKeyedArchiver archiveRootObject:self.alarms toFile:[self getAlarmsPlistFileName]];
@@ -137,6 +137,7 @@
     return true;
 }
 
+/// returns the alarms array by loading it from the alarms plist, returns an empty array if the plist can't be found
 -(NSMutableArray*) loadAlarmsFromPlist{
     NSLog(@"Loading alarms...");
     NSMutableArray* loadedAlarms = [NSKeyedUnarchiver unarchiveObjectWithFile:[self getAlarmsPlistFileName]];;
@@ -147,6 +148,7 @@
     return loadedAlarms;
 }
 
+/// returns full path to the alarms plist
 -(NSString*) getAlarmsPlistFileName{
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsPath = [paths objectAtIndex:0];
@@ -154,6 +156,7 @@
     return finalPath;
 }
 
+/// resets alarms by deleting the plist and canceling all notifications
 -(void) resetData{
     NSFileManager *fileManager = [NSFileManager defaultManager];
 
@@ -165,6 +168,7 @@
     [self.notificationsManager cancelAllNotifications];
 }
 
+/// Checks the user defaults if the user requested to reset alarms, statistics and or the editor
 -(void) checkForResetRequsts{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     if([defaults boolForKey:@"reset_all"]){
@@ -192,11 +196,12 @@
 }
 
 
-// find the topViewController so alarms are pushed from everywhere
+/// find the topViewController so alarms can be pushed from everywhere
 - (UIViewController*)topViewController {
     return [self topViewControllerWithRootViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
 }
 
+/// calls itself recursivley until it reaches the top viewcontroller
 - (UIViewController*)topViewControllerWithRootViewController:(UIViewController*)rootViewController {
     if ([rootViewController isKindOfClass:[UITabBarController class]]) {
         UITabBarController* tabBarController = (UITabBarController*)rootViewController;
