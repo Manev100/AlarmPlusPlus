@@ -56,7 +56,6 @@
 -(void) activateAlarm: (Alarm*) alarm{
     [alarm setToNextDate];
     [self scheduleLocalNotificationWithAlarm:alarm];
-    
 }
 
 - (void) rescheduleLocalNotificationWithAlarm:(Alarm *)alarm{

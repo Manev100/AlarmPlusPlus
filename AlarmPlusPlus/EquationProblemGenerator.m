@@ -184,7 +184,7 @@
             output = [output stringByAppendingFormat:@"- %d = 0", abs([self.c intValue]) ];
         }else{
             // looks nicer with space between + and number
-            output = [output stringByAppendingFormat:@"+ %@ = 0", self.b];
+            output = [output stringByAppendingFormat:@"+ %@ = 0", self.c];
         }
         
     }

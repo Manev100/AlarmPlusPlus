@@ -99,7 +99,7 @@
             // need to be careful when we divide
             if(operator == OperatorDivide){
                 // randomize a number so that it is a multiple of the divisor and in the operands range
-                // x and y changes then last operand is negative
+                // x and y changes when last operand is negative
                 if(lastOperand > 0){
                     lastOperand = [self randomNumberInRangeX:opRangeX/lastOperand   andY:opRangeY/lastOperand]*lastOperand;
                 }else if(lastOperand < 0){

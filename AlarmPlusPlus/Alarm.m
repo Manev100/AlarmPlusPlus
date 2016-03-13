@@ -90,7 +90,7 @@
     int currentWeekday = (int)[weekdayComp weekday];
     // we want to us NSDateCompoennt convenience methods to get weekdays,
     // NSDateComponents weekday method assigns 1 - sunday, 2 - monday,..., 7 - saturday
-    // Alarm.h Weekdays assigns 1<<0 - monday, 1<<1 - tuesday,...
+    // Alarm.h Weekdays assigns 1<<0 to monday, 1<<1 to tuesday,...
     // we need to map x=1 to y=6, x=2 to y=0 , x=3 to y=1, ... => y = x+5 mod 7
     int weekdayMask = 1 << ((currentWeekday + 5) % 7);
     

@@ -65,7 +65,6 @@
     // play alarm sound
     NSString *path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], myAlarm.ringtone];
     NSURL *soundUrl = [NSURL fileURLWithPath:path];
-    NSLog(@"%@ %f", myAlarm.ringtone, myAlarm.volume);
     audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
     [audioPlayer setVolume:myAlarm.volume];
     [audioPlayer setNumberOfLoops:200];
